@@ -10,6 +10,10 @@ var client_id = process.env.SPOTIFY_CLIENT_ID; // Your client id
 var client_secret = process.env.SPOTIFY_CLIENT_SECRET; // Your client secret
 var redirect_uri = 'http://localhost:3000/pp/authorize/callback'; // Your redirect uri
 
+var spotifyID
+var spotifyAccessToken 
+var spotifyRefreshToken
+
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'))
     .use(cookieParser());
@@ -27,6 +31,13 @@ app.get('/', function(req, res){
  * @param  {number} length The length of the string
  * @return {string} The generated string
  */
+
+function saveSpotifyInfo(spotifyId, accessToken, refreshToken) {
+  console.log(spotifyId)
+  console.log(accessToken)
+  console.log(refreshToken)
+};
+
 var generateRandomString = function(length) {
   var text = '';
   var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -88,28 +99,30 @@ app.get('/pp/authorize/callback', function(req, res) {
     request.post(authOptions, function(error, response, body) {
       if (!error && response.statusCode === 200) {
 
-        var access_token = body.access_token,
-            refresh_token = body.refresh_token;
+        spotifyAccessToken = body.access_token,
+        spotifyRefreshToken = body.refresh_token;
 
         var options = {
           url: 'https://api.spotify.com/v1/me',
-          headers: { 'Authorization': 'Bearer ' + access_token },
+          headers: { 'Authorization': 'Bearer ' + spotifyAccessToken },
           json: true
         };
 
         // use the access token to access the Spotify Web API
         request.get(options, function(error, response, body) {
+          spotifyId = body.id;
           console.log(body);
+          saveSpotifyInfo(spotifyId, spotifyAccessToken, spotifyRefreshToken);
         });
 
         // we can also pass the token to the browser to make requests from there
-        res.redirect('/#' +
+        res.redirect('/pp/event' +
           querystring.stringify({
-            access_token: access_token,
-            refresh_token: refresh_token
+            spotifyAccessToken: spotifyAccessToken,
+            spotifyRefreshToken: spotifyRefreshToken
           }));
       } else {
-        res.redirect('/#' +
+        res.redirect('/' +
           querystring.stringify({
             error: 'invalid_token'
           }));
