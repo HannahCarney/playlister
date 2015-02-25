@@ -16,6 +16,9 @@ var spotifyRefreshToken;
 var userName;
 var beaconMajor;
 var beaconMinor;
+var partyName;
+var partyPlaylist;
+var partyDate;
 
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'))
@@ -45,6 +48,12 @@ function saveUserInfo(userName, beaconMajor, beaconMinor) {
   console.log(userName);
   console.log(beaconMajor);
   console.log(beaconMinor);
+};
+
+function saveEventInfo(partyName, partyPlaylist, partyDate) {
+  console.log(partyName);
+  console.log(partyPartylist);
+  console.log(partyDate);
 };
 
 
@@ -152,6 +161,13 @@ app.post('/pp/user', function(req, res){
 app.get('/pp/event', function(req, res){
   saveUserInfo(userName, beaconMajor, beaconMinor);
   res.render('event');
+});
+
+app.post('/pp/event', function(req, res){
+  partyName = req.body.eventName;
+  partyPlaylistName = req.body.eventPlaylist;
+  partyDate = req.body.eventDate;
+  res.redirect('/pp/event');
 });
 
 app.get('/refresh_token', function(req, res) {

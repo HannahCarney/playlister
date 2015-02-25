@@ -3,3 +3,5 @@ function saveSpotifyInfo(spotifyId, accessToken, refreshToken) {
   console.log(accessToken)
   console.log(refreshToken)
 };
+
+module.exports = interface;
