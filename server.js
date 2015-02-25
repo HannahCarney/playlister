@@ -10,9 +10,12 @@ var client_id = process.env.SPOTIFY_CLIENT_ID; // Your client id
 var client_secret = process.env.SPOTIFY_CLIENT_SECRET; // Your client secret
 var redirect_uri = 'http://localhost:3000/pp/authorize/callback'; // Your redirect uri
 
-var spotifyID
-var spotifyAccessToken 
-var spotifyRefreshToken
+var spotifyID;
+var spotifyAccessToken;
+var spotifyRefreshToken;
+var userName;
+var beaconMajor;
+var beaconMinor;
 
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'))
@@ -32,11 +35,18 @@ app.get('/', function(req, res){
  * @return {string} The generated string
  */
 
-function saveSpotifyInfo(spotifyId, accessToken, refreshToken) {
-  console.log(spotifyId)
-  console.log(accessToken)
-  console.log(refreshToken)
+function saveSpotifyInfo(spotifyID, accessToken, refreshToken) {
+  console.log(spotifyID);
+  console.log(accessToken);
+  console.log(refreshToken);
 };
+
+function saveUserInfo(userName, beaconMajor, beaconMinor) {
+  console.log(userName);
+  console.log(beaconMajor);
+  console.log(beaconMinor);
+};
+
 
 var generateRandomString = function(length) {
   var text = '';
@@ -110,18 +120,15 @@ app.get('/pp/authorize/callback', function(req, res) {
 
         // use the access token to access the Spotify Web API
         request.get(options, function(error, response, body) {
-          spotifyId = body.id;
+          spotifyID = body.id;
           console.log(body);
-          saveSpotifyInfo(spotifyId, spotifyAccessToken, spotifyRefreshToken);
+          saveSpotifyInfo(spotifyID, spotifyAccessToken, spotifyRefreshToken);
         });
 
         // we can also pass the token to the browser to make requests from there
-        res.redirect('/pp/event' +
-          querystring.stringify({
-            spotifyAccessToken: spotifyAccessToken,
-            spotifyRefreshToken: spotifyRefreshToken
-          }));
-      } else {
+        res.redirect('/pp/user');
+      }
+      else {
         res.redirect('/' +
           querystring.stringify({
             error: 'invalid_token'
@@ -129,6 +136,22 @@ app.get('/pp/authorize/callback', function(req, res) {
       }
     });
   }
+});
+
+app.get('/pp/user', function(req, res){
+  res.render('user', {userName: spotifyID});
+});
+
+app.post('/pp/user', function(req, res){
+  userName = req.body.userName;
+  beaconMajor = req.body.beaconMajor;
+  beaconMinor = req.body.beaconMinor;
+  res.redirect('/pp/event');
+});
+
+app.get('/pp/event', function(req, res){
+  saveUserInfo(userName, beaconMajor, beaconMinor);
+  res.render('event');
 });
 
 app.get('/refresh_token', function(req, res) {

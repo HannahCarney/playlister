@@ -6,17 +6,10 @@ var host = 'http://localhost:3000/';
     casper.start(host);
   });
 
-  after(function(){
-    setTimeout(function() {
-      phantom.exit();
-    }, 0);
-  });
-
-  it('should say hello world', function(){
-    // casper.thenOpen(host + '/', function() {
-    casper.then(function(
-      expect('body').to.have.text('Hello World');
+  it('should say Welcome to Party Planner', function(){
+    casper.then(function() {
+      expect('body').to.include.text('Welcome to Party Planner');
     });
   });
 
-};
+});
