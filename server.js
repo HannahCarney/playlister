@@ -4,6 +4,7 @@ var request = require('request');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var expressLayouts = require('express-ejs-layouts');
 var server = require('http').createServer(app);
 
 var client_id = process.env.SPOTIFY_CLIENT_ID; // Your client id
@@ -25,6 +26,7 @@ app.use(express.static(__dirname + '/public'))
     .use(cookieParser());
 app.use(bodyParser.urlencoded({'extended':'true'}));
 app.use(bodyParser.json());
+app.use(expressLayouts);
 
 app.set('port', (process.env.PORT || 3000));
 
