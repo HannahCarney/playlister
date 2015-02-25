@@ -17,7 +17,7 @@ var userName;
 var beaconMajor;
 var beaconMinor;
 var partyName;
-var partyPlaylist;
+var partyPlaylistName;
 var partyDate;
 
 app.set('view engine', 'ejs');
@@ -50,9 +50,9 @@ function saveUserInfo(userName, beaconMajor, beaconMinor) {
   console.log(beaconMinor);
 };
 
-function saveEventInfo(partyName, partyPlaylist, partyDate) {
+function saveEventInfo(partyName, partyPlaylistName, partyDate) {
   console.log(partyName);
-  console.log(partyPartylist);
+  console.log(partyPlaylistName);
   console.log(partyDate);
 };
 
@@ -167,7 +167,13 @@ app.post('/pp/event', function(req, res){
   partyName = req.body.eventName;
   partyPlaylistName = req.body.eventPlaylist;
   partyDate = req.body.eventDate;
-  res.redirect('/pp/event');
+  res.redirect('/pp/completed');
+});
+
+app.get('/pp/completed', function(req, res){
+  saveEventInfo(partyName, partyPlaylistName, partyDate);
+  res.render('completed', { partyName: partyName,
+    partyPlaylistName: partyPlaylistName, partyDate: partyDate});
 });
 
 app.get('/refresh_token', function(req, res) {
