@@ -7,6 +7,7 @@ var resultsPlaceholder = document.getElementById('results');
 var playingCssClass = 'playing';
 var audioObject = null;
 var lastOne;
+var selectedSongId;
 
 var fetchTracks = function (trackId, callback) {
     $.ajax({
@@ -44,10 +45,11 @@ results.addEventListener('click', function (e) {
                 audioObject.pause();
             }
             fetchTracks(target.getAttribute('data-track-id'), function (data) {
+                selectedSongId = data.uri;
+                songId(selectedSongId);
                 audioObject = new Audio(data.preview_url);
                 audioObject.play();
-                target.classList.add(playingCssClass);
-                          
+                target.classList.add(playingCssClass);                          
                 audioObject.addEventListener('pause', function () {
                   target.classList.remove(playingCssClass);
                 });
@@ -55,11 +57,17 @@ results.addEventListener('click', function (e) {
                   target.classList.add(playingCssClass);
 
                 });
-            lastOne = target
+            lastOne = target;
             });
         }
     }
 });
+
+function songId(song) {
+    var song = song;
+    $('#selected-song').val(song);
+    console.log(song);
+};
 
 document.getElementById('song-choices').addEventListener('submit', function (e) {
     e.preventDefault();

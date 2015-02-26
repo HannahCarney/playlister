@@ -303,6 +303,13 @@ app.get('/pg/get_songs', function(req, res){
   res.render('getSongs', {pgName: pgPartyName, pgDate: pgPartyDate});
 });
 
+app.post('/pg/get_songs', function(req, res) {
+  // var email = req.body.email;
+  // var song = req.body.selectedSong;
+  res.render('thankYou', {email: req.body.email, song: req.body.selectedSong});
+  console.log(req.body.selectedSong);
+});
+
 server.listen(app.get('port'), function(){
   console.log('Server running at ' + app.get('port'));
 });
