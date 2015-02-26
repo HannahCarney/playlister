@@ -1,8 +1,8 @@
 $(document).ready(function() {
 
 // find template and compile it
-var templateSource = document.getElementById('results-template').innerHTML;
-var template = Handlebars.compile(templateSource);
+var source = document.getElementById('results-template').innerHTML;
+var template = Handlebars.compile(source);
 var resultsPlaceholder = document.getElementById('results');
 var playingCssClass = 'playing';
 var audioObject = null;
