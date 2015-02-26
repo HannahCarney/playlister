@@ -18,8 +18,15 @@ describe('party goer enters songs', function(){
     });
   });
 
+  it('should say Search for a Track', function() {
+    casper.thenOpen(host + 'pg/get_songs', function(){
+      expect('body').to.include.text("Search for a Track");
+    });   
+  });
+
+
   it('should have a search button', function(){
-    caspert.thenOpen(host + 'pg/get_songs', function(){
+    casper.thenOpen(host + 'pg/get_songs', function(){
       expect('#song-choices').to.be.inDOM;
     });
   });

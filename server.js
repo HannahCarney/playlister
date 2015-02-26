@@ -256,12 +256,12 @@ app.post('/pp/event', function(req, res){
           }
         console.log('playlist id after callback: ' + playlistId);
         });
-        // 
+        //
     }, function(err) {
       console.log('Something went wrong! ', err);
     });
 
- 
+
 
 
   res.redirect('/pp/completed');
@@ -298,7 +298,7 @@ app.get('/refresh_token', function(req, res) {
 });
 
 app.get('/pg/get_songs', function(req, res){
-  var pgPartyName = "Dummy Party"; 
+  var pgPartyName = "Dummy Party";
   var pgPartyDate = "Dummy Date";
   res.render('getSongs', {pgName: pgPartyName, pgDate: pgPartyDate});
 });
