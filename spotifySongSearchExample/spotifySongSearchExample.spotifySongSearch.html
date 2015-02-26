@@ -1,0 +1,15 @@
+<div class="container">
+    <h1>Search for a Track</h1>
+    <p>Type a track name and click on "Search". Then, click on any track from the results to get a 30 second preview.</p>
+    <form id="search-form">
+        <input type="text" id="query" value="" class="form-control" placeholder="Type a track name"/>
+        <input type="submit" id="search" class="btn btn-primary" value="Search" />
+    </form>
+    <div id="results"></div>
+</div>
+<script id="results-template" type="text/x-handlebars-template">
+    {{#each tracks.items}}
+    <div>{{artists.0.name}}: {{name}}</div>
+    <div style="background-image:url({{album.images.0.url}})" data-track-id="{{id}}" class="cover"></div>
+    {{/each}}
+</script>

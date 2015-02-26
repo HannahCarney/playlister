@@ -7,6 +7,12 @@ var bodyParser = require('body-parser');
 var expressLayouts = require('express-ejs-layouts');
 var server = require('http').createServer(app);
 
+// Database
+var mongo = require('mongodb');
+var monk = require('monk');
+var db = monk('localhost:27017/playlister');
+
+
 var client_id = process.env.SPOTIFY_CLIENT_ID; // Your client id
 var client_secret = process.env.SPOTIFY_CLIENT_SECRET; // Your client secret
 var redirect_uri = 'http://localhost:3000/pp/authorize/callback'; // Your redirect uri
@@ -27,6 +33,12 @@ app.use(express.static(__dirname + '/public'))
 app.use(bodyParser.urlencoded({'extended':'true'}));
 app.use(bodyParser.json());
 app.use(expressLayouts);
+
+// Make our db accessible to our router
+app.use(function(req,res,next){
+    req.db = db;
+    next();
+});
 
 app.set('port', (process.env.PORT || 3000));
 
@@ -134,6 +146,28 @@ app.get('/pp/authorize/callback', function(req, res) {
           spotifyID = body.id;
           console.log(body);
           saveSpotifyInfo(spotifyID, spotifyAccessToken, spotifyRefreshToken);
+          // Set our internal DB variable
+          var db = req.db;
+
+          // Set our collection
+          var collection = db.get('partygoeraccessdetails');
+
+          // Submit to the DB
+          collection.insert({
+              "spotifyID" : spotifyID,
+              "spotifyAccessToken" : spotifyAccessToken,
+              "spotifyRefreshToken" : spotifyRefreshToken
+          }, function (err, doc) {
+              if (err) {
+                  // If it failed, return error
+                  console.log("There was a problem adding the information to the database.");
+              }
+              else {
+                  // If it worked, set the header so the address bar doesn't still say /adduser
+                  console.log("Party Goer Access Details saved successfully");
+              }
+          });
+
         });
 
         // we can also pass the token to the browser to make requests from there
@@ -157,6 +191,23 @@ app.post('/pp/user', function(req, res){
   userName = req.body.userName;
   beaconMajor = req.body.beaconMajor;
   beaconMinor = req.body.beaconMinor;
+
+  var db = req.db;
+  var collection = db.get('partyPlannerBeacon');
+  collection.insert({
+    "spotifyID" : spotifyID,
+    "beaconMajor" : beaconMajor,
+    "beaconMinor" : beaconMinor
+  }, function(err, doc) {
+    if (err) {
+      console.log("FAILED: Party Planner Beacon write to db")
+    }
+    else {
+      console.log("SUCCESS: Party Planner Beacon write to db")
+    }
+  });
+
+
   res.redirect('/pp/event');
 });
 
@@ -169,6 +220,24 @@ app.post('/pp/event', function(req, res){
   partyName = req.body.eventName;
   partyPlaylistName = req.body.eventPlaylist;
   partyDate = req.body.eventDate;
+
+  var db = req.db;
+  var collection = db.get('partyPlannerEvent');
+  collection.insert({
+    "spotifyID" : spotifyID,
+    "partyName" : partyName,
+    "partyPlaylistName" : partyPlaylistName,
+    "partyDate" : partyDate
+  }, function(err, doc) {
+    if (err) {
+      console.log("FAILED: Party Planner Event write to db")
+    }
+    else {
+      console.log("SUCCESS: Party Planner Event write to db")
+    }
+  });
+
+
   res.redirect('/pp/completed');
 });
 
