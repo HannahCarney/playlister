@@ -6,6 +6,7 @@ var template = Handlebars.compile(source);
 var resultsPlaceholder = document.getElementById('results');
 var playingCssClass = 'playing';
 var audioObject = null;
+var lastOne;
 
 var fetchTracks = function (trackId, callback) {
     $.ajax({
@@ -30,7 +31,11 @@ var searchTracks = function (query) {
 };
 
 results.addEventListener('click', function (e) {
+
     var target = e.target;
+    if (lastOne !== undefined) {
+      lastOne.classList.remove(playingCssClass);  
+    }
     if (target !== null && target.classList.contains('cover')) {
         if (target.classList.contains(playingCssClass)) {
             audioObject.pause();
@@ -42,12 +47,15 @@ results.addEventListener('click', function (e) {
                 audioObject = new Audio(data.preview_url);
                 audioObject.play();
                 target.classList.add(playingCssClass);
-                audioObject.addEventListener('ended', function () {
-                    target.classList.remove(playingCssClass);
-                });
+                          
                 audioObject.addEventListener('pause', function () {
-                    target.classList.remove(playingCssClass);
+                  target.classList.remove(playingCssClass);
                 });
+                 audioObject.addEventListener('ended', function () {
+                  target.classList.add(playingCssClass);
+
+                });
+            lastOne = target
             });
         }
     }
