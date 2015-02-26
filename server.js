@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressLayouts = require('express-ejs-layouts');
 var server = require('http').createServer(app);
+var SpotifyWebApi = require('spotify-web-api-node');
 
 // Database
 var mongo = require('mongodb');
@@ -13,8 +14,8 @@ var monk = require('monk');
 var db = monk('localhost:27017/playlister');
 
 
-var client_id = process.env.SPOTIFY_CLIENT_ID; // Your client id
-var client_secret = process.env.SPOTIFY_CLIENT_SECRET; // Your client secret
+var clientId = process.env.SPOTIFY_CLIENT_ID; // Your client id
+var clientSecret = process.env.SPOTIFY_CLIENT_SECRET; // Your client secret
 var redirect_uri = 'http://localhost:3000/pp/authorize/callback'; // Your redirect uri
 
 var spotifyID;
@@ -93,7 +94,7 @@ app.get('/login', function(req, res) {
   res.redirect('https://accounts.spotify.com/authorize?' +
     querystring.stringify({
       response_type: 'code',
-      client_id: client_id,
+      client_id: clientId,
       scope: scope,
       redirect_uri: redirect_uri,
       state: state
@@ -124,7 +125,7 @@ app.get('/pp/authorize/callback', function(req, res) {
         grant_type: 'authorization_code'
       },
       headers: {
-        'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+        'Authorization': 'Basic ' + (new Buffer(clientId + ':' + clientSecret).toString('base64'))
       },
       json: true
     };
@@ -200,10 +201,10 @@ app.post('/pp/user', function(req, res){
     "beaconMinor" : beaconMinor
   }, function(err, doc) {
     if (err) {
-      console.log("FAILED: Party Planner Beacon write to db")
+      console.log("FAILED: Party Planner Beacon write to db");
     }
     else {
-      console.log("SUCCESS: Party Planner Beacon write to db")
+      console.log("SUCCESS: Party Planner Beacon write to db");
     }
   });
 
@@ -221,21 +222,46 @@ app.post('/pp/event', function(req, res){
   partyPlaylistName = req.body.eventPlaylist;
   partyDate = req.body.eventDate;
 
-  var db = req.db;
-  var collection = db.get('partyPlannerEvent');
-  collection.insert({
-    "spotifyID" : spotifyID,
-    "partyName" : partyName,
-    "partyPlaylistName" : partyPlaylistName,
-    "partyDate" : partyDate
-  }, function(err, doc) {
-    if (err) {
-      console.log("FAILED: Party Planner Event write to db")
-    }
-    else {
-      console.log("SUCCESS: Party Planner Event write to db")
-    }
+  var spotifyApi = new SpotifyWebApi({
+    clientId : clientId,
+    clientSecret : clientSecret,
+    redirectUri : 'http://localhost:3000/pp/playlist/callback'
   });
+
+  spotifyApi.setAccessToken(spotifyAccessToken);
+
+  var playlistId;
+
+  spotifyApi.createPlaylist(spotifyID, partyPlaylistName, { 'public' : true })
+    .then(function(data) {
+      console.log('Created playlist');
+      console.log(typeof (data.id));
+      playlistId = data.id;
+      console.log('playlist id: ' + playlistId);
+      // database storing infos
+        var db = req.db;
+        var collection = db.get('partyPlannerEvent');
+        collection.insert({
+          "spotifyID" : spotifyID,
+          "partyName" : partyName,
+          "partyPlaylistName" : partyPlaylistName,
+          "playlistId" : playlistId,
+          "partyDate" : partyDate
+        }, function(err, doc) {
+          if (err) {
+            console.log("FAILED: Party Planner Event write to db");
+          }
+          else {
+            console.log("SUCCESS: Party Planner Event write to db");
+          }
+        console.log('playlist id after callback: ' + playlistId);
+        });
+        // 
+    }, function(err) {
+      console.log('Something went wrong! ', err);
+    });
+
+ 
 
 
   res.redirect('/pp/completed');
@@ -253,7 +279,7 @@ app.get('/refresh_token', function(req, res) {
   var refresh_token = req.query.refresh_token;
   var authOptions = {
     url: 'https://accounts.spotify.com/api/token',
-    headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
+    headers: { 'Authorization': 'Basic ' + (new Buffer(clientId + ':' + clientSecret).toString('base64')) },
     form: {
       grant_type: 'refresh_token',
       refresh_token: refresh_token
