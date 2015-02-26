@@ -54,21 +54,21 @@ app.get('/', function(req, res){
  */
 
 function saveSpotifyInfo(spotifyID, accessToken, refreshToken) {
-  console.log(spotifyID);
-  console.log(accessToken);
-  console.log(refreshToken);
+  // console.log(spotifyID);
+  // console.log(accessToken);
+  // console.log(refreshToken);
 }
 
 function saveUserInfo(userName, beaconMajor, beaconMinor) {
-  console.log(userName);
-  console.log(beaconMajor);
-  console.log(beaconMinor);
+  // console.log(userName);
+  // console.log(beaconMajor);
+  // console.log(beaconMinor);
 }
 
 function saveEventInfo(partyName, partyPlaylistName, partyDate) {
-  console.log(partyName);
-  console.log(partyPlaylistName);
-  console.log(partyDate);
+  // console.log(partyName);
+  // console.log(partyPlaylistName);
+  // console.log(partyDate);
 }
 
 
@@ -145,7 +145,7 @@ app.get('/pp/authorize/callback', function(req, res) {
         // use the access token to access the Spotify Web API
         request.get(options, function(error, response, body) {
           spotifyID = body.id;
-          console.log(body);
+          // console.log(body);
           saveSpotifyInfo(spotifyID, spotifyAccessToken, spotifyRefreshToken);
           // Set our internal DB variable
           var db = req.db;
@@ -295,6 +295,12 @@ app.get('/refresh_token', function(req, res) {
       });
     }
   });
+});
+
+app.get('/pg/get_songs', function(req, res){
+  var pgPartyName = "Dummy Party"; 
+  var pgPartyDate = "Dummy Date";
+  res.render('getSongs', {pgName: pgPartyName, pgDate: pgPartyDate});
 });
 
 server.listen(app.get('port'), function(){
