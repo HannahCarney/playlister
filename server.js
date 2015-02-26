@@ -44,19 +44,19 @@ function saveSpotifyInfo(spotifyID, accessToken, refreshToken) {
   console.log(spotifyID);
   console.log(accessToken);
   console.log(refreshToken);
-};
+}
 
 function saveUserInfo(userName, beaconMajor, beaconMinor) {
   console.log(userName);
   console.log(beaconMajor);
   console.log(beaconMinor);
-};
+}
 
 function saveEventInfo(partyName, partyPlaylistName, partyDate) {
   console.log(partyName);
   console.log(partyPlaylistName);
   console.log(partyDate);
-};
+}
 
 
 var generateRandomString = function(length) {
@@ -120,7 +120,7 @@ app.get('/pp/authorize/callback', function(req, res) {
     request.post(authOptions, function(error, response, body) {
       if (!error && response.statusCode === 200) {
 
-        spotifyAccessToken = body.access_token,
+        spotifyAccessToken = body.access_token;
         spotifyRefreshToken = body.refresh_token;
 
         var options = {
