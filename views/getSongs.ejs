@@ -1,11 +1,13 @@
 <body>
 <link rel="stylesheet" type="text/css" href="/css/getSongs.css">
-Please enter your song choices for <%- pgName %> on <%- pgDate %>
+Please enter your song choices for <%- ppPartyName %> on <%- ppPartyDate %>
 
 <form action='/pg/get_songs' method='POST' id="party-email-form">
   <label for="email">Email:</label>
   <input type="email" name="email">
   <input type="hidden" name="selectedSong" id="selected-song">
+  <input type="hidden" name="ppPartyName"><%- ppPartyName %></input>
+  <input type="hidden" name="ppPartyDate"><%- ppPartyDate %></input>
   <input type="submit" value="submit">
 </form>
 

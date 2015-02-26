@@ -298,15 +298,32 @@ app.get('/refresh_token', function(req, res) {
 });
 
 app.get('/pg/get_songs', function(req, res){
-  var pgPartyName = "Dummy Party";
-  var pgPartyDate = "Dummy Date";
-  res.render('getSongs', {pgName: pgPartyName, pgDate: pgPartyDate});
+  var ppPartyName = "Dummy Party";
+  var ppPartyDate = "Dummy Date";
+  res.render('getSongs', {ppPartyName: ppPartyName, ppPartyDate: ppPartyDate});
 });
 
 app.post('/pg/get_songs', function(req, res) {
   // var email = req.body.email;
   // var song = req.body.selectedSong;
-  res.render('thankYou', {email: req.body.email, song: req.body.selectedSong});
+  var db = req.db;
+  var collection = db.get('partyGoerSongChoice');
+  collection.insert({
+    "ppPartyName" : req.body.ppPartyName,
+    "ppPartyDate" : req.body.ppPartyDate,
+    "pgEmail" : req.body.email,
+    "pgSongChoice" : req.body.selectedSong
+  }, function(err, doc) {
+    if (err) {
+      console.log("FAILED: Party Goer Song Choice write to db");
+    }
+    else {
+      console.log("SUCCESS: Party Goer Song Choice write to db");
+    }
+  });
+  res.render('thankYou', {email: req.body.email, song: req.body.selectedSong,
+                  ppPartyName : req.body.ppPartyName,
+                  ppPartyDate : req.body.ppPartyDate,  });
   console.log(req.body.selectedSong);
 });
 
