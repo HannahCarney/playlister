@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var expressLayouts = require('express-ejs-layouts');
 var server = require('http').createServer(app);
 var SpotifyWebApi = require('spotify-web-api-node');
-var URL_CALLBACK = "http://localhost:3000/pp/authorize/callback"
+
 // Database
 var mongo = require('mongodb');
 var monk = require('monk');
@@ -16,7 +16,7 @@ var db = monk('localhost:27017/playlister');
 
 var clientId = process.env.SPOTIFY_CLIENT_ID; // Your client id
 var clientSecret = process.env.SPOTIFY_CLIENT_SECRET; // Your client secret
-var redirect_uri = "http://localhost:3000/pp/authorize/callback"; // Your redirect uri
+var redirect_uri = "https://testplaylister.herokuapp.com/pp/authorize/callback"; // Your redirect uri
 
 
 // var spotifyID;
