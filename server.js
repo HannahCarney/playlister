@@ -24,9 +24,10 @@ var redirect_uri = process.env.FIRST_CALLBACK; // Your redirect uri
 var stateKey = 'spotify_auth_state';
 
 // Glocal Variables
-var userName;
-var beaconMajor;
-var beaconMinor;
+var spotifyID;
+// var userName;
+// var beaconMajor;
+// var beaconMinor;
 var partyName;
 var partyPlaylistName;
 var partyDate;
@@ -128,7 +129,7 @@ app.get('/pp/authorize/callback', function(req, res) {
 
         // use access token to get party planner credentials from Spotify API
         request.get(options, function(error, response, body) {
-          var spotifyID = body.id;
+          spotifyID = body.id;
 
           var collection = req.db.get('ppSpotifyCredentials');
 
@@ -164,22 +165,20 @@ app.get('/pp/user', function(req, res){
 });
 
 app.post('/pp/user', function(req, res){
-  userName = req.body.userName;
-  beaconMajor = req.body.beaconMajor;
-  beaconMinor = req.body.beaconMinor;
+  var beaconMajor = req.body.beaconMajor;
+  var beaconMinor = req.body.beaconMinor;
 
-  var db = req.db;
-  var collection = db.get('partyPlannerBeacon');
+  var collection = req.db.get('ppBeacon');
   collection.insert({
     "spotifyID" : spotifyID,
     "beaconMajor" : beaconMajor,
     "beaconMinor" : beaconMinor
   }, function(err, doc) {
     if (err) {
-      console.log("FAILED: Party Planner Beacon write to db");
+      console.log("FAILED: write to ppBeacon");
     }
     else {
-      console.log("SUCCESS: Party Planner Beacon write to db");
+      console.log("SUCCESS: write to ppBeacon");
     }
   });
 
