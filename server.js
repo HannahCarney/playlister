@@ -7,16 +7,18 @@ var bodyParser = require('body-parser');
 var expressLayouts = require('express-ejs-layouts');
 var server = require('http').createServer(app);
 var SpotifyWebApi = require('spotify-web-api-node');
+var mongoose = require('mongoose');
 
 // Database
 var mongo = require('mongodb');
-var monk = require('monk');
-var db = monk('localhost:27017/playlister');
 
 
 var clientId = process.env.SPOTIFY_CLIENT_ID; // Your client id
 var clientSecret = process.env.SPOTIFY_CLIENT_SECRET; // Your client secret
 var redirect_uri = "https://testplaylister.herokuapp.com/pp/authorize/callback"; // Your redirect uri
+var database = require('./config/database');
+app.set('dbUrl', database.db[process.env.NODE_ENV || "development"]);
+mongoose.connect(app.get('dbUrl'));
 
 
 // var spotifyID;
@@ -38,7 +40,7 @@ app.use(expressLayouts);
 
 // Make our db accessible to our router
 app.use(function(req,res,next){
-    req.db = db;
+    req.db = database.db;
     next();
 });
 

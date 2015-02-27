@@ -1,8 +1,6 @@
 module.exports = {
   db: {
-  production: "mongodb://" + process.env.MONGO_TT_USER + ":" +
-  process.env.MONGO_TT_PASS + "@ds029911.mongolab.com:29911/tabletennisladder",
-  development: "mongodb://localhost/sports_ladder_development",
-  test: "mongodb://localhost/sports_ladder_test" 
+  production: "mongodb://ds049631.mongolab.com:49631/heroku_app34408189",
+  development: 'localhost:27017/playlister'
   }
 };
