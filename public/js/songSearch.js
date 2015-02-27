@@ -7,6 +7,7 @@ var resultsPlaceholder = document.getElementById('results');
 var playingCssClass = 'playing';
 var audioObject = null;
 var lastOne;
+var selectedSongId;
 
 var fetchTracks = function (trackId, callback) {
     $.ajax({
@@ -46,6 +47,8 @@ results.addEventListener('click', function (e) {
             fetchTracks(target.getAttribute('data-track-id'), function (data) {
                 audioObject = new Audio(data.preview_url);
                 audioObject.play();
+                audioObject = selectedSongId
+                console.log(selectedSongId)
                 target.classList.add(playingCssClass);
                           
                 audioObject.addEventListener('pause', function () {
