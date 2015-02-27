@@ -20,14 +20,12 @@ var monk = require('monk')
 var SpotifyWebApi = require('spotify-web-api-node');
 var clientId = process.env.SPOTIFY_CLIENT_ID; // Your client id
 var clientSecret = process.env.SPOTIFY_CLIENT_SECRET; // Your client secret
-var redirect_uri = process.env.FIRST_CALLBACK; // Your redirect uri
+var redirect_uri_first = process.env.FIRST_CALLBACK; // Your redirect uri
+var redirect_uri_second = process.env.SECOND_CALLBACK; // Your redirect uri
 var stateKey = 'spotify_auth_state';
 
 // Glocal Variables
 var spotifyID;
-// var userName;
-// var beaconMajor;
-// var beaconMinor;
 var partyName;
 var partyPlaylistName;
 var partyDate;
@@ -81,7 +79,7 @@ app.get('/login', function(req, res) {
       response_type: 'code',
       client_id: clientId,
       scope: scope,
-      redirect_uri: redirect_uri,
+      redirect_uri: redirect_uri_first,
       state: state
     }));
 });
@@ -106,7 +104,7 @@ app.get('/pp/authorize/callback', function(req, res) {
       url: 'https://accounts.spotify.com/api/token',
       form: {
         code: code,
-        redirect_uri: redirect_uri,
+        redirect_uri: redirect_uri_first,
         grant_type: 'authorization_code'
       },
       headers: {
@@ -182,19 +180,17 @@ app.post('/pp/user', function(req, res){
     }
   });
 
-
   res.redirect('/pp/event');
 });
 
 app.get('/pp/event', function(req, res){
-
   res.render('event');
 });
 
 app.post('/pp/event', function(req, res){
-  partyName = req.body.eventName;
-  partyPlaylistName = req.body.eventPlaylist;
-  partyDate = req.body.eventDate;
+  var partyName = req.body.eventName;
+  var partyPlaylistName = req.body.eventPlaylist;
+  var partyDate = req.body.eventDate;
 
   var spotifyApi = new SpotifyWebApi({
     clientId : clientId,
@@ -202,19 +198,24 @@ app.post('/pp/event', function(req, res){
     redirectUri : process.env.SECOND_CALLBACK
   });
 
+
+  var collection = req.db.get('ppSpotifyCredentials');
+  var ppSpotifyAccessTokenDB = collection.findOne( { spotifyID: spotifyID },
+                {spotifyAccessToken: 1, _id: 0});
+                // .limit(1).sort({$natural:-1});
+  var spotifyAccessToken = ppSpotifyAccessTokenDB.spotifyAccessToken;
+  console.log(ppSpotifyAccessTokenDB);
+  console.log(spotifyAccessToken);
   spotifyApi.setAccessToken(spotifyAccessToken);
 
-  var playlistId;
+  // var playlistId;
 
   spotifyApi.createPlaylist(spotifyID, partyPlaylistName, { 'public' : true })
     .then(function(data) {
-      console.log('Created playlist');
-      console.log(typeof (data.id));
-      playlistId = data.id;
-      console.log('playlist id: ' + playlistId);
+      var playlistId = data.id;
+
       // database storing infos
-        var db = req.db;
-        var collection = db.get('partyPlannerEvent');
+        var collection = req.db.get('ppEvent');
         collection.insert({
           "spotifyID" : spotifyID,
           "partyName" : partyName,
@@ -223,20 +224,16 @@ app.post('/pp/event', function(req, res){
           "partyDate" : partyDate
         }, function(err, doc) {
           if (err) {
-            console.log("FAILED: Party Planner Event write to db");
+            console.log("FAILED: write to ppEvent");
           }
           else {
-            console.log("SUCCESS: Party Planner Event write to db");
+            console.log("SUCCESS: write to ppEvent");
           }
-        console.log('playlist id after callback: ' + playlistId);
         });
         //
     }, function(err) {
       console.log('Something went wrong! ', err);
     });
-
-
-
 
   res.redirect('/pp/completed');
 });
