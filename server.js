@@ -1,31 +1,29 @@
+// Server
 var express = require('express');
 var app = express();
+var server = require('http').createServer(app);
+
+// Dependencies
 var request = require('request');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressLayouts = require('express-ejs-layouts');
-var server = require('http').createServer(app);
-var SpotifyWebApi = require('spotify-web-api-node');
-// var mongoose = require('mongoose');
-var mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost/playlister';
-var monk = require('monk')
-   , db = monk(mongoUri);
-
-
 
 // Database
 var mongo = require('mongodb');
+var mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost:27017/playlister';
+var monk = require('monk')
+   , db = monk(mongoUri);
 
-
+// Spotify Requirements
+var SpotifyWebApi = require('spotify-web-api-node');
 var clientId = process.env.SPOTIFY_CLIENT_ID; // Your client id
 var clientSecret = process.env.SPOTIFY_CLIENT_SECRET; // Your client secret
 var redirect_uri = process.env.FIRST_CALLBACK; // Your redirect uri
-// var database = require('./config/database');
-// app.set('dbUrl', database.db[process.env.NODE_ENV]) || "development") ;
-// mongoose.connect(app.get('dbUrl'));
+var stateKey = 'spotify_auth_state';
 
-
+// Glocal Variables
 var spotifyID;
 var spotifyAccessToken;
 var spotifyRefreshToken;
@@ -36,6 +34,7 @@ var partyName;
 var partyPlaylistName;
 var partyDate;
 
+// Server Set-up
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'))
     .use(cookieParser());
@@ -51,17 +50,17 @@ app.use(function(req,res,next){
 
 app.set('port', (process.env.PORT || 3000));
 
+// Routes
 app.get('/', function(req, res){
   res.render('index');
 });
 
 /**
- * Generates a random string containing numbers and letters
- * @param  {number} length The length of the string
- * @return {string} The generated string
- */
-
-
+  * Used in Spotify Authorization to generate a required state variable
+  * Generates a random string containing numbers and letters
+  * @param  {number} length The length of the string
+  * @return {string} The generated string
+  */
 var generateRandomString = function(length) {
   var text = '';
   var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -71,8 +70,6 @@ var generateRandomString = function(length) {
   }
   return text;
 };
-
-var stateKey = 'spotify_auth_state';
 
 app.get('/login', function(req, res) {
 
