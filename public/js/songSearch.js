@@ -35,7 +35,7 @@ results.addEventListener('click', function (e) {
 
     var target = e.target;
     if (lastOne !== undefined) {
-      lastOne.classList.remove(playingCssClass);  
+      lastOne.classList.remove(playingCssClass);
     }
     if (target !== null && target.classList.contains('cover')) {
         if (target.classList.contains(playingCssClass)) {
@@ -46,10 +46,10 @@ results.addEventListener('click', function (e) {
             }
             fetchTracks(target.getAttribute('data-track-id'), function (data) {
                 selectedSongId = data.uri;
-                songId(selectedSongId);
+                storeSelectedData();
                 audioObject = new Audio(data.preview_url);
                 audioObject.play();
-                target.classList.add(playingCssClass);                          
+                target.classList.add(playingCssClass);
                 audioObject.addEventListener('pause', function () {
                   target.classList.remove(playingCssClass);
                 });
@@ -63,10 +63,11 @@ results.addEventListener('click', function (e) {
     }
 });
 
-function songId(song) {
-    var song = song;
-    $('#selected-song').val(song);
-    console.log(song);
+function storeSelectedData() {
+    $('#selected-song').val(selectedSongId);
+    $('#pp-party-name-hidden').val($('#pp-party-name').text());
+    $('#pp-party-date-hidden').val($('#pp-party-date').text());
+    // console.log(song);
 };
 
 document.getElementById('song-choices').addEventListener('submit', function (e) {
