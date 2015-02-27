@@ -16,7 +16,7 @@ var db = monk('localhost:27017/playlister');
 
 var clientId = process.env.SPOTIFY_CLIENT_ID; // Your client id
 var clientSecret = process.env.SPOTIFY_CLIENT_SECRET; // Your client secret
-var redirect_uri = 'http://localhost:3000/pp/authorize/callback'; // Your redirect uri
+var redirect_uri = 'https://turnup-tunein.herokuapp.com/pp/authorize/callback'; // Your redirect uri
 
 var spotifyID;
 var spotifyAccessToken;
@@ -225,7 +225,7 @@ app.post('/pp/event', function(req, res){
   var spotifyApi = new SpotifyWebApi({
     clientId : clientId,
     clientSecret : clientSecret,
-    redirectUri : 'http://localhost:3000/pp/playlist/callback'
+    redirectUri : 'https://turnup-tunein.herokuapp.com/pp/playlist/callback'
   });
 
   spotifyApi.setAccessToken(spotifyAccessToken);
