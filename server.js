@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 var expressLayouts = require('express-ejs-layouts');
 var server = require('http').createServer(app);
 var SpotifyWebApi = require('spotify-web-api-node');
+var mongoose = require('mongoose');
+mongoose.connect(process.env.MONGODB_DEVELOPMENT_URI)
 
 // Database
 var mongo = require('mongodb');
@@ -42,14 +44,6 @@ app.use(function(req,res,next){
 });
 
 app.set('port', (process.env.PORT || 3000));
-var database = require('./config/database');
-app.set(process.env.MONGO_DEVELOPMENT_URI, database.db[process.env.NODE_ENV || "development"]);
-
-var mongoose = require('mongoose');
-
-mongoose.connect(process.env.MONGO_DEVELOPMENT_URI);
-
-
 
 app.get('/', function(req, res){
   res.render('index');
