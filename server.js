@@ -7,7 +7,12 @@ var bodyParser = require('body-parser');
 var expressLayouts = require('express-ejs-layouts');
 var server = require('http').createServer(app);
 var SpotifyWebApi = require('spotify-web-api-node');
-var mongoose = require('mongoose');
+// var mongoose = require('mongoose');
+var mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost/playlister';
+var monk = require('monk')
+   , db = monk(mongoUri);
+
+
 
 // Database
 var mongo = require('mongodb');
@@ -15,21 +20,21 @@ var mongo = require('mongodb');
 
 var clientId = process.env.SPOTIFY_CLIENT_ID; // Your client id
 var clientSecret = process.env.SPOTIFY_CLIENT_SECRET; // Your client secret
-var redirect_uri = "https://testplaylister.herokuapp.com/pp/authorize/callback"; // Your redirect uri
-var database = require('./config/database');
-app.set('dbUrl', database.db[process.env.NODE_ENV]);
-mongoose.connect(app.get('dbUrl'));
+var redirect_uri = process.env.FIRST_CALLBACK; // Your redirect uri
+// var database = require('./config/database');
+// app.set('dbUrl', database.db[process.env.NODE_ENV]) || "development") ;
+// mongoose.connect(app.get('dbUrl'));
 
 
-// var spotifyID;
-// var spotifyAccessToken;
-// var spotifyRefreshToken;
-// var userName;
-// var beaconMajor;
-// var beaconMinor;
-// var partyName;
-// var partyPlaylistName;
-// var partyDate;
+var spotifyID;
+var spotifyAccessToken;
+var spotifyRefreshToken;
+var userName;
+var beaconMajor;
+var beaconMinor;
+var partyName;
+var partyPlaylistName;
+var partyDate;
 
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'))
@@ -40,7 +45,7 @@ app.use(expressLayouts);
 
 // Make our db accessible to our router
 app.use(function(req,res,next){
-    req.db = database.db;
+    req.db = db;
     next();
 });
 
@@ -55,24 +60,6 @@ app.get('/', function(req, res){
  * @param  {number} length The length of the string
  * @return {string} The generated string
  */
-
-function saveSpotifyInfo(spotifyID, accessToken, refreshToken) {
-  // console.log(spotifyID);
-  // console.log(accessToken);
-  // console.log(refreshToken);
-}
-
-function saveUserInfo(userName, beaconMajor, beaconMinor) {
-  // console.log(userName);
-  // console.log(beaconMajor);
-  // console.log(beaconMinor);
-}
-
-function saveEventInfo(partyName, partyPlaylistName, partyDate) {
-  // console.log(partyName);
-  // console.log(partyPlaylistName);
-  // console.log(partyDate);
-}
 
 
 var generateRandomString = function(length) {
@@ -149,7 +136,7 @@ app.get('/pp/authorize/callback', function(req, res) {
         request.get(options, function(error, response, body) {
           spotifyID = body.id;
           // console.log(body);
-          saveSpotifyInfo(spotifyID, spotifyAccessToken, spotifyRefreshToken);
+          // saveSpotifyInfo(spotifyID, spotifyAccessToken, spotifyRefreshToken);
           // Set our internal DB variable
           var db = req.db;
 
@@ -216,7 +203,7 @@ app.post('/pp/user', function(req, res){
 });
 
 app.get('/pp/event', function(req, res){
-  saveUserInfo(userName, beaconMajor, beaconMinor);
+
   res.render('event');
 });
 
@@ -228,7 +215,7 @@ app.post('/pp/event', function(req, res){
   var spotifyApi = new SpotifyWebApi({
     clientId : clientId,
     clientSecret : clientSecret,
-    redirectUri : 'https://testplaylister.herokuapp.com/pp/playlist/callback'
+    redirectUri : process.env.SECOND_CALLBACK
   });
 
   spotifyApi.setAccessToken(spotifyAccessToken);
@@ -271,7 +258,6 @@ app.post('/pp/event', function(req, res){
 });
 
 app.get('/pp/completed', function(req, res){
-  saveEventInfo(partyName, partyPlaylistName, partyDate);
   res.render('completed', { partyName: partyName,
     partyPlaylistName: partyPlaylistName, partyDate: partyDate});
 });
