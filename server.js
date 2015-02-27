@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var expressLayouts = require('express-ejs-layouts');
 var server = require('http').createServer(app);
 var SpotifyWebApi = require('spotify-web-api-node');
-
+var URL_CALLBACK = "http://localhost:3000/pp/authorize/callback"
 // Database
 var mongo = require('mongodb');
 var monk = require('monk');
@@ -16,18 +16,16 @@ var db = monk('localhost:27017/playlister');
 
 var clientId = process.env.SPOTIFY_CLIENT_ID; // Your client id
 var clientSecret = process.env.SPOTIFY_CLIENT_SECRET; // Your client secret
-var redirect_uri = process.env.HEROKU_CALLBACK || process.env.URL_CALLBACK; // Your redirect uri
- app.set('dbUrl', database.db[process.env.NODE_ENV || "development"]);
-
-var spotifyID;
-var spotifyAccessToken;
-var spotifyRefreshToken;
-var userName;
-var beaconMajor;
-var beaconMinor;
-var partyName;
-var partyPlaylistName;
-var partyDate;
+var redirect_uri = "http://localhost:3000/pp/authorize/callback"; // Your redirect uri
+// var spotifyID;
+// var spotifyAccessToken;
+// var spotifyRefreshToken;
+// var userName;
+// var beaconMajor;
+// var beaconMinor;
+// var partyName;
+// var partyPlaylistName;
+// var partyDate;
 
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'))
@@ -226,7 +224,7 @@ app.post('/pp/event', function(req, res){
   var spotifyApi = new SpotifyWebApi({
     clientId : clientId,
     clientSecret : clientSecret,
-    redirectUri : 'http://localhost:3000/pp/playlist/callback'
+    redirectUri : 'https://testplaylister.herokuapp.com/pp/playlist/callback'
   });
 
   spotifyApi.setAccessToken(spotifyAccessToken);
