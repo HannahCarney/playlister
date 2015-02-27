@@ -17,7 +17,7 @@ var clientId = process.env.SPOTIFY_CLIENT_ID; // Your client id
 var clientSecret = process.env.SPOTIFY_CLIENT_SECRET; // Your client secret
 var redirect_uri = "https://testplaylister.herokuapp.com/pp/authorize/callback"; // Your redirect uri
 var database = require('./config/database');
-app.set('dbUrl', database.db[process.env.NODE_ENV || "development"]);
+app.set('dbUrl', database.db[process.env.NODE_ENV]);
 mongoose.connect(app.get('dbUrl'));
 
 
