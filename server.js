@@ -24,9 +24,6 @@ var redirect_uri = process.env.FIRST_CALLBACK; // Your redirect uri
 var stateKey = 'spotify_auth_state';
 
 // Glocal Variables
-var spotifyID;
-var spotifyAccessToken;
-var spotifyRefreshToken;
 var userName;
 var beaconMajor;
 var beaconMinor;
@@ -120,8 +117,8 @@ app.get('/pp/authorize/callback', function(req, res) {
     request.post(authOptions, function(error, response, body) {
       if (!error && response.statusCode === 200) {
 
-        spotifyAccessToken = body.access_token;
-        spotifyRefreshToken = body.refresh_token;
+        var spotifyAccessToken = body.access_token;
+        var spotifyRefreshToken = body.refresh_token;
 
         var options = {
           url: 'https://api.spotify.com/v1/me',
@@ -129,36 +126,27 @@ app.get('/pp/authorize/callback', function(req, res) {
           json: true
         };
 
-        // use the access token to access the Spotify Web API
+        // use access token to get party planner credentials from Spotify API
         request.get(options, function(error, response, body) {
-          spotifyID = body.id;
-          // console.log(body);
-          // saveSpotifyInfo(spotifyID, spotifyAccessToken, spotifyRefreshToken);
-          // Set our internal DB variable
-          var db = req.db;
+          var spotifyID = body.id;
 
-          // Set our collection
-          var collection = db.get('partygoeraccessdetails');
+          var collection = req.db.get('ppSpotifyCredentials');
 
-          // Submit to the DB
           collection.insert({
               "spotifyID" : spotifyID,
               "spotifyAccessToken" : spotifyAccessToken,
               "spotifyRefreshToken" : spotifyRefreshToken
           }, function (err, doc) {
               if (err) {
-                  // If it failed, return error
-                  console.log("There was a problem adding the information to the database.");
+                  console.log("FAILURE: writing to ppSpotifyCredentials");
               }
               else {
-                  // If it worked, set the header so the address bar doesn't still say /adduser
-                  console.log("Party Goer Access Details saved successfully");
+                  console.log("SUCCESS: writing to ppSpotifyCredentials");
               }
           });
 
         });
 
-        // we can also pass the token to the browser to make requests from there
         res.redirect('/pp/user');
       }
       else {
@@ -172,7 +160,7 @@ app.get('/pp/authorize/callback', function(req, res) {
 });
 
 app.get('/pp/user', function(req, res){
-  res.render('user', {userName: spotifyID});
+  res.render('user');
 });
 
 app.post('/pp/user', function(req, res){
