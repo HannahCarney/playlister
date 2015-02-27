@@ -16,7 +16,8 @@ var db = monk('localhost:27017/playlister');
 
 var clientId = process.env.SPOTIFY_CLIENT_ID; // Your client id
 var clientSecret = process.env.SPOTIFY_CLIENT_SECRET; // Your client secret
-var redirect_uri = process.env.URL_CALLBACK; // Your redirect uri
+var redirect_uri = process.env.HEROKU_CALLBACK || process.env.URL_CALLBACK; // Your redirect uri
+ app.set('dbUrl', database.db[process.env.NODE_ENV || "development"]);
 
 var spotifyID;
 var spotifyAccessToken;
