@@ -233,9 +233,6 @@ app.post('/pp/event', function(req, res){
     res.redirect('/pp/completed');
   };
 
-  // var spotifyAccessToken;
-  // var spotifyRefreshToken;
-
   var collection = req.db.get('ppSpotifyCredentials');
   collection.find( { spotifyID: spotifyID },{
       fields : { spotifyAccessToken: 1, spotifyRefreshToken : 1, _id: 0},
@@ -244,39 +241,6 @@ app.post('/pp/event', function(req, res){
     }
     , callback);
 
-
-  // console.log('Outside callback:' + spotifyAccessToken); // undefined
-
-// need to put this within the callback
-  // spotifyApi.setAccessToken('myAccessToken');
-  // spotifyApi.setRefreshToken('myRefreshToken');
-
-  // spotifyApi.createPlaylist(spotifyID, partyPlaylistName, { 'public' : true })
-  //   .then(function(data) {
-  //     var playlistId = data.id;
-  //
-  //     // database storing infos
-  //       var collection = req.db.get('ppEvent');
-  //       collection.insert({
-  //         "spotifyID" : spotifyID,
-  //         "partyName" : partyName,
-  //         "partyPlaylistName" : partyPlaylistName,
-  //         "playlistId" : playlistId,
-  //         "partyDate" : partyDate
-  //       }, function(err, doc) {
-  //         if (err) {
-  //           console.log("FAILED: write to ppEvent");
-  //         }
-  //         else {
-  //           console.log("SUCCESS: write to ppEvent");
-  //         }
-  //       });
-  //       //
-  //   }, function(err) {
-  //     console.log('Something went wrong! ', err);
-  //   });
-  //
-  // res.redirect('/pp/completed');
 });
 
 app.get('/pp/completed', function(req, res){
@@ -308,10 +272,10 @@ app.get('/refresh_token', function(req, res) {
   });
 });
 
-app.get('/pg/get_songs/:partyInfo', function(req, res){
-  var partyInfo = req.params.partyInfo
-  var pgPartyName = partyInfo.partyName;
-  var pgPartyDate = partyInfo.partyDate;
+app.get('/pg/get_songs/:partyName/:partyDate', function(req, res){
+  // var partyInfo = req.params.partyInfo
+  var pgPartyName = req.params.partyName;
+  var pgPartyDate = req.params.partyDate;
   res.render('getSongs', {pgName: pgPartyName, pgDate: pgPartyDate});
 });
 
