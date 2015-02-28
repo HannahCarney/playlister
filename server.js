@@ -198,17 +198,32 @@ app.post('/pp/event', function(req, res){
     redirectUri : process.env.SECOND_CALLBACK
   });
 
+  var callback = function(err, doc) {
+    if (err) {
+      console.log(err);
+    }
+    spotifyAccessToken = doc[0].spotifyAccessToken;
+    spotifyRefreshToken = doc[0].spotifyRefreshToken;
+    console.log('Within Callback: ' + spotifyAccessToken);
+  };
+
+  var spotifyAccessToken;
+  var spotifyRefreshToken;
 
   var collection = req.db.get('ppSpotifyCredentials');
-  var ppSpotifyAccessTokenDB = collection.findOne( { spotifyID: spotifyID },
-                {spotifyAccessToken: 1, _id: 0});
-                // .limit(1).sort({$natural:-1});
-  var spotifyAccessToken = ppSpotifyAccessTokenDB.spotifyAccessToken;
-  console.log(ppSpotifyAccessTokenDB);
-  console.log(spotifyAccessToken);
-  spotifyApi.setAccessToken(spotifyAccessToken);
+  collection.find( { spotifyID: spotifyID },{
+      fields : { spotifyAccessToken: 1, spotifyRefreshToken : 1, _id: 0},
+      limit : 1,
+      sort : {$natural : -1}
+    }
+    , callback);
 
-  // var playlistId;
+
+  console.log('Outside callback:' + spotifyAccessToken);
+
+// need to put this within the callback
+  spotifyApi.setAccessToken('myAccessToken');
+  spotifyApi.setRefreshToken('myRefreshToken');
 
   spotifyApi.createPlaylist(spotifyID, partyPlaylistName, { 'public' : true })
     .then(function(data) {
@@ -267,9 +282,10 @@ app.get('/refresh_token', function(req, res) {
   });
 });
 
-app.get('/pg/get_songs', function(req, res){
-  var pgPartyName = "Dummy Party";
-  var pgPartyDate = "Dummy Date";
+app.get('/pg/get_songs/:partyInfo', function(req, res){
+  var partyInfo = req.params.partyInfo
+  var pgPartyName = partyInfo.partyName;
+  var pgPartyDate = partyInfo.partyDate;
   res.render('getSongs', {pgName: pgPartyName, pgDate: pgPartyDate});
 });
 
