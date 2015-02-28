@@ -230,7 +230,10 @@ app.post('/pp/event', function(req, res){
         console.log('Something went wrong! ', err);
       });
 
-    res.redirect('/pp/completed');
+    res.redirect('/pp/completed/'
+      + partyName + '/'
+      + partyDate + '/'
+      + partyPlaylistName);
   };
 
   var collection = req.db.get('ppSpotifyCredentials');
@@ -243,9 +246,15 @@ app.post('/pp/event', function(req, res){
 
 });
 
-app.get('/pp/completed', function(req, res){
-  res.render('completed', { partyName: partyName,
-    partyPlaylistName: partyPlaylistName, partyDate: partyDate});
+app.get('/pp/completed/:partyName/:partyDate/:partyPlaylistName', function(req, res){
+  var partyName = req.params.partyName;
+  var partyDate = req.params.partyDate;
+  var partyPlaylistName = req.params.partyPlaylistName;
+  var getSongsLink = "http://localhost:3000/pg/get_songs/"
+      + partyName + '/'
+      + partyDate;
+  res.render('completed', { partyName: partyName, partyDate: partyDate
+      , partyPlaylistName: partyPlaylistName, getSongsLink: getSongsLink } );
 });
 
 app.get('/refresh_token', function(req, res) {
@@ -273,7 +282,6 @@ app.get('/refresh_token', function(req, res) {
 });
 
 app.get('/pg/get_songs/:partyName/:partyDate', function(req, res){
-  // var partyInfo = req.params.partyInfo
   var pgPartyName = req.params.partyName;
   var pgPartyDate = req.params.partyDate;
   res.render('getSongs', {pgName: pgPartyName, pgDate: pgPartyDate});
