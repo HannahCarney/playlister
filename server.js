@@ -26,9 +26,6 @@ var stateKey = 'spotify_auth_state';
 
 // Glocal Variables
 var spotifyID;
-// var partyName;
-// var partyPlaylistName;
-// var partyDate;
 
 // Server Set-up
 app.set('view engine', 'ejs');
@@ -282,15 +279,36 @@ app.get('/refresh_token', function(req, res) {
 });
 
 app.get('/pg/get_songs', function(req, res){
-  var pgPartyName = req.params.partyName;
-  var pgPartyDate = req.params.partyDate;
-  res.render('getSongs', {pgName: pgPartyName, pgDate: pgPartyDate});
+  var ppPartyName = req.params.partyName;
+  var ppPartyDate = req.params.partyDate;
+  res.render('getSongs', {ppPartyName: ppPartyName, ppPartyDate: ppPartyDate});
 });
 
 app.get('/pg/get_songs/:partyName/:partyDate', function(req, res){
-  var pgPartyName = req.params.partyName;
-  var pgPartyDate = req.params.partyDate;
-  res.render('getSongs', {pgName: pgPartyName, pgDate: pgPartyDate});
+  var ppPartyName = req.params.partyName;
+  var ppPartyDate = req.params.partyDate;
+  res.render('getSongs', {ppPartyName: ppPartyName, ppPartyDate: ppPartyDate});
+});
+
+app.post('/pg/get_songs', function(req, res) {
+  var db = req.db;
+  var collection = db.get('partyGoerSongChoice');
+  collection.insert({
+    "ppPartyName" : req.body.ppPartyName,
+    "ppPartyDate" : req.body.ppPartyDate,
+    "pgEmail" : req.body.email,
+    "pgSongChoice" : req.body.selectedSong
+  }, function(err, doc) {
+    if (err) {
+      console.log("FAILED: Party Goer Song Choice write to db");
+    }
+    else {
+      console.log("SUCCESS: Party Goer Song Choice write to db");
+    }
+  });
+  res.render('thankYou', {email: req.body.email, song: req.body.selectedSong,
+                  ppPartyName : req.body.ppPartyName,
+                  ppPartyDate : req.body.ppPartyDate,  });
 });
 
 server.listen(app.get('port'), function(){
