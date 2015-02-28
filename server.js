@@ -87,8 +87,6 @@ app.get('/', function(req, res){
 //       state: state
 //     }));
 // });
-
-// DONE TO HERE
 //
 // app.get('/pp/authorize/callback', function(req, res) {
 //
@@ -167,6 +165,8 @@ app.get('/', function(req, res){
 // app.get('/pp/user', function(req, res){
 //   res.render('user');
 // });
+
+// DONE TO HERE
 //
 // app.post('/pp/user', function(req, res){
 //   var beaconMajor = req.body.beaconMajor;

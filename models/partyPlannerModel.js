@@ -58,13 +58,21 @@ exports.authorizeSpotifyCallback = function(req, res) {
           spotifyID = body.id;
           saveTokensToDatabase(req, spotifyID, spotifyAccessToken, spotifyRefreshToken);
         });
-        res.redirect('/pp/user');
+        res.redirect('/partyplanner/beacon');
       }
       else {
         res.redirect('/' + querystring.stringify({error: 'invalid_token'}));
       }
     });
   }
+};
+
+exports.saveBeacon = function(req, res) {
+  var beaconMajor = req.body.beaconMajor;
+  var beaconMinor = req.body.beaconMinor;
+  var collection = req.db.get('ppBeacon');
+  saveBeaconToDatabase(collection, beaconMajor, beaconMinor);
+  res.redirect('/pp/event');
 };
 
 
@@ -99,5 +107,20 @@ var saveTokensToDatabase = function(req, spotifyID, spotifyAccessToken, spotifyR
       else {
           console.log("SUCCESS: writing to ppSpotifyCredentials");
       }
+  });
+};
+
+var saveBeaconToDatabase = function(collection, beaconMajor, beaconMinor) {
+  collection.insert({
+    "spotifyID" : spotifyID,
+    "beaconMajor" : beaconMajor,
+    "beaconMinor" : beaconMinor
+  }, function(err, doc) {
+    if (err) {
+      console.log("FAILED: write to ppBeacon");
+    }
+    else {
+      console.log("SUCCESS: write to ppBeacon");
+    }
   });
 };
