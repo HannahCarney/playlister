@@ -165,8 +165,6 @@ app.get('/', function(req, res){
 // app.get('/pp/user', function(req, res){
 //   res.render('user');
 // });
-
-// DONE TO HERE
 //
 // app.post('/pp/user', function(req, res){
 //   var beaconMajor = req.body.beaconMajor;
@@ -189,6 +187,7 @@ app.get('/', function(req, res){
 //   res.redirect('/pp/event');
 // });
 //
+// DONE TO HERE
 // app.get('/pp/event', function(req, res){
 //   res.render('event');
 // });

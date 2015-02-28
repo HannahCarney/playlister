@@ -15,3 +15,7 @@ exports.beacon = function(req, res) {
 exports.saveBeacon = function(req, res) {
   partyPlannerModel.saveBeacon(req, res);
 };
+
+exports.eventDetails = function(req, res) {
+  res.render('partyPlanner/eventDetails');
+};

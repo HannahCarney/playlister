@@ -72,7 +72,7 @@ exports.saveBeacon = function(req, res) {
   var beaconMinor = req.body.beaconMinor;
   var collection = req.db.get('ppBeacon');
   saveBeaconToDatabase(collection, beaconMajor, beaconMinor);
-  res.redirect('/pp/event');
+  res.redirect('/partyplanner/eventdetails');
 };
 
 

@@ -11,6 +11,7 @@ router.get('/beacon', partyPlannerController.beacon);
 
 router.post('/beacon', partyPlannerController.saveBeacon);
 
+router.get('/eventdetails', partyPlannerController.eventDetails);
 
 
 module.exports = router;
