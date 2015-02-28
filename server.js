@@ -17,7 +17,7 @@ var monk = require('monk')
    , db = monk(mongoUri);
 
 // Spotify Requirements
-var SpotifyWebApi = require('spotify-web-api-node');
+var SpotifyWebApi = require('spotify-web-api-node'); // put in partyPlannerModel
 var clientId = process.env.SPOTIFY_CLIENT_ID; // put in partyPlannerModel
 var clientSecret = process.env.SPOTIFY_CLIENT_SECRET; // put in partyPlannerModel
 var redirect_uri_first = process.env.FIRST_CALLBACK; // put in partyPlannerModel

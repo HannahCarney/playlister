@@ -13,5 +13,9 @@ router.post('/beacon', partyPlannerController.saveBeacon);
 
 router.get('/eventdetails', partyPlannerController.eventDetails);
 
+router.post('/eventdetails', partyPlannerController.saveEventDetails);
+
+router.get('/completed/:partyName/:partyDate/:playlistName', partyPlannerController.completed);
+
 
 module.exports = router;
