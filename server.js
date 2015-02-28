@@ -4,8 +4,8 @@ var app = express();
 var server = require('http').createServer(app);
 
 // Dependencies
-var request = require('request');
-var querystring = require('querystring');
+var request = require('request'); //put in partyPlannerModel
+var querystring = require('querystring'); //put in partyPlannerModel
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressLayouts = require('express-ejs-layouts');
@@ -18,14 +18,15 @@ var monk = require('monk')
 
 // Spotify Requirements
 var SpotifyWebApi = require('spotify-web-api-node');
-var clientId = process.env.SPOTIFY_CLIENT_ID; // Your client id
-var clientSecret = process.env.SPOTIFY_CLIENT_SECRET; // Your client secret
-var redirect_uri_first = process.env.FIRST_CALLBACK; // Your redirect uri
+var clientId = process.env.SPOTIFY_CLIENT_ID; // put in partyPlannerModel
+var clientSecret = process.env.SPOTIFY_CLIENT_SECRET; // put in partyPlannerModel
+var redirect_uri_first = process.env.FIRST_CALLBACK; // put in partyPlannerModel
 var redirect_uri_second = process.env.SECOND_CALLBACK; // Your redirect uri
-var stateKey = 'spotify_auth_state';
+var stateKey = 'spotify_auth_state'; //put in partyPlannerModel
 
 //router
 var partyGoer = require('./routes/partyGoer');
+var partyPlanner = require('./routes/partyPlanner');
 
 // Glocal Variables
 var spotifyID;
@@ -45,13 +46,14 @@ app.use(function(req,res,next){
 });
 
 app.use('/partygoer', partyGoer);
+app.use('/partyplanner', partyPlanner);
 
 app.set('port', (process.env.PORT || 3000));
 
 // // Routes
-// app.get('/', function(req, res){
-//   res.render('index');
-// });
+app.get('/', function(req, res){
+  res.render('index');
+});
 //
 // /**
 //   * Used in Spotify Authorization to generate a required state variable
@@ -85,6 +87,8 @@ app.set('port', (process.env.PORT || 3000));
 //       state: state
 //     }));
 // });
+
+// DONE TO HERE
 //
 // app.get('/pp/authorize/callback', function(req, res) {
 //
@@ -283,38 +287,7 @@ app.set('port', (process.env.PORT || 3000));
 //   });
 // });
 //
-// app.get('/pg/get_songs', function(req, res){
-//   var ppPartyName = req.params.partyName;
-//   var ppPartyDate = req.params.partyDate;
-//   res.render('getSongs', {ppPartyName: ppPartyName, ppPartyDate: ppPartyDate});
-// });
-//
-// app.get('/pg/get_songs/:partyName/:partyDate', function(req, res){
-//   var ppPartyName = req.params.partyName;
-//   var ppPartyDate = req.params.partyDate;
-//   res.render('getSongs', {ppPartyName: ppPartyName, ppPartyDate: ppPartyDate});
-// });
-//
-// app.post('/pg/get_songs', function(req, res) {
-//   var db = req.db;
-//   var collection = db.get('partyGoerSongChoice');
-//   collection.insert({
-//     "ppPartyName" : req.body.ppPartyName,
-//     "ppPartyDate" : req.body.ppPartyDate,
-//     "pgEmail" : req.body.email,
-//     "pgSongChoice" : req.body.selectedSong
-//   }, function(err, doc) {
-//     if (err) {
-//       console.log("FAILED: Party Goer Song Choice write to db");
-//     }
-//     else {
-//       console.log("SUCCESS: Party Goer Song Choice write to db");
-//     }
-//   });
-//   res.render('thankYou', {email: req.body.email, song: req.body.selectedSong,
-//                   ppPartyName : req.body.ppPartyName,
-//                   ppPartyDate : req.body.ppPartyDate,  });
-// });
+
 
 server.listen(app.get('port'), function(){
   console.log('Server running at ' + app.get('port'));

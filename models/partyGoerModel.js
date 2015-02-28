@@ -20,8 +20,6 @@ exports.saveSongChoices = function(req, res) {
 };
 
 
-
-
 // helper functions
 var renderThankYouPage = function(req, res){
   res.render('partyGoer/thankYou', {email: req.body.email,
