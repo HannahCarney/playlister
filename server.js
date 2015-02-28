@@ -1,35 +1,40 @@
+// Server
 var express = require('express');
 var app = express();
+var server = require('http').createServer(app);
+
+// Dependencies
 var request = require('request');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressLayouts = require('express-ejs-layouts');
+
 var server = require('http').createServer(app);
 var SpotifyWebApi = require('spotify-web-api-node');
 var mongoose = require('mongoose');
-mongoose.connect(process.env.MONGODB_DEVELOPMENT_URI)
+mongoose.connect(process.env.MONGODB_DEVELOPMENT_URI);
 
 // Database
 var mongo = require('mongodb');
-var monk = require('monk');
-var db = monk('localhost:27017/playlister');
+var mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost:27017/playlister';
+var monk = require('monk')
+   , db = monk(mongoUri);
 
-
+// Spotify Requirements
+var SpotifyWebApi = require('spotify-web-api-node');
 var clientId = process.env.SPOTIFY_CLIENT_ID; // Your client id
 var clientSecret = process.env.SPOTIFY_CLIENT_SECRET; // Your client secret
-var redirect_uri = 'https://turnup-tunein.herokuapp.com/pp/authorize/callback'; // Your redirect uri
 
+var redirect_uri_first = process.env.FIRST_CALLBACK; // Your redirect uri
+var redirect_uri_second = process.env.SECOND_CALLBACK; // Your redirect uri
+var stateKey = 'spotify_auth_state';
+
+
+// Glocal Variables
 var spotifyID;
-var spotifyAccessToken;
-var spotifyRefreshToken;
-var userName;
-var beaconMajor;
-var beaconMinor;
-var partyName;
-var partyPlaylistName;
-var partyDate;
 
+// Server Set-up
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'))
     .use(cookieParser());
@@ -45,35 +50,17 @@ app.use(function(req,res,next){
 
 app.set('port', (process.env.PORT || 3000));
 
+// Routes
 app.get('/', function(req, res){
   res.render('index');
 });
 
 /**
- * Generates a random string containing numbers and letters
- * @param  {number} length The length of the string
- * @return {string} The generated string
- */
-
-function saveSpotifyInfo(spotifyID, accessToken, refreshToken) {
-  // console.log(spotifyID);
-  // console.log(accessToken);
-  // console.log(refreshToken);
-}
-
-function saveUserInfo(userName, beaconMajor, beaconMinor) {
-  // console.log(userName);
-  // console.log(beaconMajor);
-  // console.log(beaconMinor);
-}
-
-function saveEventInfo(partyName, partyPlaylistName, partyDate) {
-  // console.log(partyName);
-  // console.log(partyPlaylistName);
-  // console.log(partyDate);
-}
-
-
+  * Used in Spotify Authorization to generate a required state variable
+  * Generates a random string containing numbers and letters
+  * @param  {number} length The length of the string
+  * @return {string} The generated string
+  */
 var generateRandomString = function(length) {
   var text = '';
   var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -83,8 +70,6 @@ var generateRandomString = function(length) {
   }
   return text;
 };
-
-var stateKey = 'spotify_auth_state';
 
 app.get('/login', function(req, res) {
 
@@ -98,7 +83,7 @@ app.get('/login', function(req, res) {
       response_type: 'code',
       client_id: clientId,
       scope: scope,
-      redirect_uri: redirect_uri,
+      redirect_uri: redirect_uri_first,
       state: state
     }));
 });
@@ -123,7 +108,7 @@ app.get('/pp/authorize/callback', function(req, res) {
       url: 'https://accounts.spotify.com/api/token',
       form: {
         code: code,
-        redirect_uri: redirect_uri,
+        redirect_uri: redirect_uri_first,
         grant_type: 'authorization_code'
       },
       headers: {
@@ -135,8 +120,8 @@ app.get('/pp/authorize/callback', function(req, res) {
     request.post(authOptions, function(error, response, body) {
       if (!error && response.statusCode === 200) {
 
-        spotifyAccessToken = body.access_token;
-        spotifyRefreshToken = body.refresh_token;
+        var spotifyAccessToken = body.access_token;
+        var spotifyRefreshToken = body.refresh_token;
 
         var options = {
           url: 'https://api.spotify.com/v1/me',
@@ -144,36 +129,27 @@ app.get('/pp/authorize/callback', function(req, res) {
           json: true
         };
 
-        // use the access token to access the Spotify Web API
+        // use access token to get party planner credentials from Spotify API
         request.get(options, function(error, response, body) {
           spotifyID = body.id;
-          // console.log(body);
-          saveSpotifyInfo(spotifyID, spotifyAccessToken, spotifyRefreshToken);
-          // Set our internal DB variable
-          var db = req.db;
 
-          // Set our collection
-          var collection = db.get('partygoeraccessdetails');
+          var collection = req.db.get('ppSpotifyCredentials');
 
-          // Submit to the DB
           collection.insert({
               "spotifyID" : spotifyID,
               "spotifyAccessToken" : spotifyAccessToken,
               "spotifyRefreshToken" : spotifyRefreshToken
           }, function (err, doc) {
               if (err) {
-                  // If it failed, return error
-                  console.log("There was a problem adding the information to the database.");
+                  console.log("FAILURE: writing to ppSpotifyCredentials");
               }
               else {
-                  // If it worked, set the header so the address bar doesn't still say /adduser
-                  console.log("Party Goer Access Details saved successfully");
+                  console.log("SUCCESS: writing to ppSpotifyCredentials");
               }
           });
 
         });
 
-        // we can also pass the token to the browser to make requests from there
         res.redirect('/pp/user');
       }
       else {
@@ -187,92 +163,104 @@ app.get('/pp/authorize/callback', function(req, res) {
 });
 
 app.get('/pp/user', function(req, res){
-  res.render('user', {userName: spotifyID});
+  res.render('user');
 });
 
 app.post('/pp/user', function(req, res){
-  userName = req.body.userName;
-  beaconMajor = req.body.beaconMajor;
-  beaconMinor = req.body.beaconMinor;
+  var beaconMajor = req.body.beaconMajor;
+  var beaconMinor = req.body.beaconMinor;
 
-  var db = req.db;
-  var collection = db.get('partyPlannerBeacon');
+  var collection = req.db.get('ppBeacon');
   collection.insert({
     "spotifyID" : spotifyID,
     "beaconMajor" : beaconMajor,
     "beaconMinor" : beaconMinor
   }, function(err, doc) {
     if (err) {
-      console.log("FAILED: Party Planner Beacon write to db");
+      console.log("FAILED: write to ppBeacon");
     }
     else {
-      console.log("SUCCESS: Party Planner Beacon write to db");
+      console.log("SUCCESS: write to ppBeacon");
     }
   });
-
 
   res.redirect('/pp/event');
 });
 
 app.get('/pp/event', function(req, res){
-  saveUserInfo(userName, beaconMajor, beaconMinor);
   res.render('event');
 });
 
 app.post('/pp/event', function(req, res){
-  partyName = req.body.eventName;
-  partyPlaylistName = req.body.eventPlaylist;
-  partyDate = req.body.eventDate;
+  var partyName = req.body.eventName;
+  var partyPlaylistName = req.body.eventPlaylist;
+  var partyDate = req.body.eventDate;
 
   var spotifyApi = new SpotifyWebApi({
     clientId : clientId,
     clientSecret : clientSecret,
-    redirectUri : 'https://turnup-tunein.herokuapp.com/pp/playlist/callback'
+
+    redirectUri : process.env.SECOND_CALLBACK
+
   });
 
-  spotifyApi.setAccessToken(spotifyAccessToken);
+  var callback = function(err, doc) {
+    if (err) {
+      console.log(err);
+    }
+    spotifyApi.setAccessToken(doc[0].spotifyAccessToken);
+    spotifyApi.setRefreshToken(doc[0].spotifyRefreshToken);
 
-  var playlistId;
+    spotifyApi.createPlaylist(spotifyID, partyPlaylistName, { 'public' : true })
+      .then(function(data) {
+        var playlistId = data.id;
 
-  spotifyApi.createPlaylist(spotifyID, partyPlaylistName, { 'public' : true })
-    .then(function(data) {
-      console.log('Created playlist');
-      console.log(typeof (data.id));
-      playlistId = data.id;
-      console.log('playlist id: ' + playlistId);
-      // database storing infos
-        var db = req.db;
-        var collection = db.get('partyPlannerEvent');
-        collection.insert({
-          "spotifyID" : spotifyID,
-          "partyName" : partyName,
-          "partyPlaylistName" : partyPlaylistName,
-          "playlistId" : playlistId,
-          "partyDate" : partyDate
-        }, function(err, doc) {
-          if (err) {
-            console.log("FAILED: Party Planner Event write to db");
-          }
-          else {
-            console.log("SUCCESS: Party Planner Event write to db");
-          }
-        console.log('playlist id after callback: ' + playlistId);
-        });
-        //
-    }, function(err) {
-      console.log('Something went wrong! ', err);
-    });
+        // database storing infos
+          var collection = req.db.get('ppEvent');
+          collection.insert({
+            "spotifyID" : spotifyID,
+            "partyName" : partyName,
+            "partyPlaylistName" : partyPlaylistName,
+            "playlistId" : playlistId,
+            "partyDate" : partyDate
+          }, function(err, doc) {
+            if (err) {
+              console.log("FAILED: write to ppEvent");
+            }
+            else {
+              console.log("SUCCESS: write to ppEvent");
+            }
+          });
+          //
+      }, function(err) {
+        console.log('Something went wrong! ', err);
+      });
 
+    res.redirect('/pp/completed/'
+      + partyName + '/'
+      + partyDate + '/'
+      + partyPlaylistName);
+  };
 
+  var collection = req.db.get('ppSpotifyCredentials');
+  collection.find( { spotifyID: spotifyID },{
+      fields : { spotifyAccessToken: 1, spotifyRefreshToken : 1, _id: 0},
+      limit : 1,
+      sort : {$natural : -1}
+    }
+    , callback);
 
-
-  res.redirect('/pp/completed');
 });
 
-app.get('/pp/completed', function(req, res){
-  saveEventInfo(partyName, partyPlaylistName, partyDate);
-  res.render('completed', { partyName: partyName,
-    partyPlaylistName: partyPlaylistName, partyDate: partyDate});
+app.get('/pp/completed/:partyName/:partyDate/:partyPlaylistName', function(req, res){
+  var partyName = req.params.partyName;
+  var partyDate = req.params.partyDate;
+  var partyPlaylistName = req.params.partyPlaylistName;
+  var getSongsLink = "http://localhost:3000/pg/get_songs/"
+      + partyName + '/'
+      + partyDate;
+  res.render('completed', { partyName: partyName, partyDate: partyDate
+      , partyPlaylistName: partyPlaylistName, getSongsLink: getSongsLink } );
 });
 
 app.get('/refresh_token', function(req, res) {
@@ -300,14 +288,18 @@ app.get('/refresh_token', function(req, res) {
 });
 
 app.get('/pg/get_songs', function(req, res){
-  var ppPartyName = "Dummy Party";
-  var ppPartyDate = "Dummy Date";
+  var ppPartyName = req.params.partyName;
+  var ppPartyDate = req.params.partyDate;
+  res.render('getSongs', {ppPartyName: ppPartyName, ppPartyDate: ppPartyDate});
+});
+
+app.get('/pg/get_songs/:partyName/:partyDate', function(req, res){
+  var ppPartyName = req.params.partyName;
+  var ppPartyDate = req.params.partyDate;
   res.render('getSongs', {ppPartyName: ppPartyName, ppPartyDate: ppPartyDate});
 });
 
 app.post('/pg/get_songs', function(req, res) {
-  // var email = req.body.email;
-  // var song = req.body.selectedSong;
   var db = req.db;
   var collection = db.get('partyGoerSongChoice');
   collection.insert({
@@ -326,7 +318,6 @@ app.post('/pg/get_songs', function(req, res) {
   res.render('thankYou', {email: req.body.email, song: req.body.selectedSong,
                   ppPartyName : req.body.ppPartyName,
                   ppPartyDate : req.body.ppPartyDate,  });
-  console.log(req.body.selectedSong);
 });
 
 server.listen(app.get('port'), function(){
