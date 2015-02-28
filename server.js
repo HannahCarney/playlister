@@ -26,9 +26,9 @@ var stateKey = 'spotify_auth_state';
 
 // Glocal Variables
 var spotifyID;
-var partyName;
-var partyPlaylistName;
-var partyDate;
+// var partyName;
+// var partyPlaylistName;
+// var partyDate;
 
 // Server Set-up
 app.set('view engine', 'ejs');
@@ -279,6 +279,12 @@ app.get('/refresh_token', function(req, res) {
       });
     }
   });
+});
+
+app.get('/pg/get_songs', function(req, res){
+  var pgPartyName = req.params.partyName;
+  var pgPartyDate = req.params.partyDate;
+  res.render('getSongs', {pgName: pgPartyName, pgDate: pgPartyDate});
 });
 
 app.get('/pg/get_songs/:partyName/:partyDate', function(req, res){

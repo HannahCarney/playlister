@@ -35,7 +35,7 @@ results.addEventListener('click', function (e) {
 
     var target = e.target;
     if (lastOne !== undefined) {
-      lastOne.classList.remove(playingCssClass);  
+      lastOne.classList.remove(playingCssClass);
     }
     if (target !== null && target.classList.contains('cover')) {
         if (target.classList.contains(playingCssClass)) {
@@ -50,7 +50,7 @@ results.addEventListener('click', function (e) {
                 audioObject = selectedSongId
                 console.log(selectedSongId)
                 target.classList.add(playingCssClass);
-                          
+
                 audioObject.addEventListener('pause', function () {
                   target.classList.remove(playingCssClass);
                 });
@@ -67,5 +67,5 @@ results.addEventListener('click', function (e) {
 document.getElementById('song-choices').addEventListener('submit', function (e) {
     e.preventDefault();
     searchTracks(document.getElementById('query').value);
-}, false);
+    }, false);
 });
