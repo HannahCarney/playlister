@@ -4,6 +4,6 @@ var partyGoerController = require('../controllers/partyGoerController');
 
 router.get('/getsongs/:partyName/:partyDate', partyGoerController.getSongs);
 
-router.post('/pg/getsongs', partyGoerController.postSongs);
+router.post('/getsongs', partyGoerController.postSongs);
 
 module.exports = router;
