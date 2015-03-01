@@ -72,10 +72,12 @@ exports.authorizeSpotifyCallback = function(req, res) {
 };
 
 exports.saveBeacon = function(req, res) {
-  var beaconMajor = req.body.beaconMajor;
-  var beaconMinor = req.body.beaconMinor;
-  var collection = req.db.get('ppBeacon');
-  saveBeaconToDatabase(collection, beaconMajor, beaconMinor);
+  var db = req.db;
+  var collectionName = 'ppBeacon';
+  var collectionObject = {"spotifyID" : spotifyID,
+                          "beaconMajor" : req.body.beaconMajor,
+                          "beaconMinor" : req.body.beaconMinor};
+  helpers.saveToDatabase(db, collectionName, collectionObject);
   res.redirect('/partyplanner/eventdetails');
 };
 
@@ -149,19 +151,12 @@ var generateRandomString = function(length) {
 };
 
 var saveTokensToDatabase = function(req, spotifyID, spotifyAccessToken, spotifyRefreshToken) {
-  var collection = req.db.get('ppSpotifyCredentials');
-  collection.insert({
-      "spotifyID"           : spotifyID,
-      "spotifyAccessToken"  : spotifyAccessToken,
-      "spotifyRefreshToken" : spotifyRefreshToken
-  }, function (err, doc) {
-      if (err) {
-          console.log("FAILURE: writing to ppSpotifyCredentials");
-      }
-      else {
-          console.log("SUCCESS: writing to ppSpotifyCredentials");
-      }
-  });
+  var db = req.db;
+  var collectionName = 'ppSpotifyCredentials';
+  collectionObject = {"spotifyID" : spotifyID,
+                      "spotifyAccessToken"  : spotifyAccessToken,
+                      "spotifyRefreshToken" : spotifyRefreshToken};
+  helpers.saveToDatabase(db, collectionName, collectionObject);
 };
 
 var saveBeaconToDatabase = function(collection, beaconMajor, beaconMinor) {
