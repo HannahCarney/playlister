@@ -1,4 +1,4 @@
-
+var helpers = require('./helpers');
 
 exports.getBeacon = function(req, res) {
   var pgEmail = req.param('email');
@@ -49,13 +49,17 @@ exports.getBeacon = function(req, res) {
 
   // Start point db retrieval based on url params
   var db = req.db;
-  var collection = db.get('pgSongChoice');
-  collection.find({ pgEmail: pgEmail, ppPartyDate: todaysDate },
-                  { fields : { ppPartyName: 1, _id: 0},
-                    limit : 1,
-                    sort : {$natural : -1}
-                  }
-    , retrieveSpotifyID);
+  var collectionName = 'pgSongChoice';
+  var matcher = { pgEmail: pgEmail, ppPartyDate: todaysDate };
+  var fields = { ppPartyName: 1, _id: 0};
+  var callback = retrieveSpotifyID;
+  helpers.readFromDatabase(db, collectionName, matcher, fields, callback);
+  // collection.find({ pgEmail: pgEmail, ppPartyDate: todaysDate },
+  //                 { fields : { ppPartyName: 1, _id: 0},
+  //                   limit : 1,
+  //                   sort : {$natural : -1}
+  //                 }
+  //   , retrieveSpotifyID);
 };
 
 exports.addSongs = function(req, res) {
