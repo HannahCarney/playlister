@@ -7,13 +7,13 @@ router.get('/authorize', partyPlannerController.authorize);
 
 router.get('/authorize/callback', partyPlannerController.authorizeCallback);
 
-router.get('/beacon', partyPlannerController.beacon);
+router.get('/beacon/:spotifyID', partyPlannerController.beacon);
 
-router.post('/beacon', partyPlannerController.saveBeacon);
+router.post('/beacon/:spotifyID', partyPlannerController.saveBeacon);
 
-router.get('/eventdetails', partyPlannerController.eventDetails);
+router.get('/eventdetails/:spotifyID', partyPlannerController.eventDetails);
 
-router.post('/eventdetails', partyPlannerController.saveEventDetails);
+router.post('/eventdetails/:spotifyID', partyPlannerController.saveEventDetails);
 
 router.get('/completed/:partyName/:partyDate/:playlistName', partyPlannerController.completed);
 

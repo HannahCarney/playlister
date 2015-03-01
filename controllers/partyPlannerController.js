@@ -9,7 +9,8 @@ exports.authorizeCallback = function(req, res) {
 };
 
 exports.beacon = function(req, res) {
-  res.render('partyPlanner/beacon');
+  var spotifyID = req.params.spotifyID;
+  res.render('partyPlanner/beacon', {spotifyID: spotifyID});
 };
 
 exports.saveBeacon = function(req, res) {
@@ -17,7 +18,8 @@ exports.saveBeacon = function(req, res) {
 };
 
 exports.eventDetails = function(req, res) {
-  res.render('partyPlanner/eventDetails');
+  var spotifyID = req.params.spotifyID;
+  res.render('partyPlanner/eventDetails', {spotifyID: spotifyID});
 };
 
 exports.saveEventDetails = function(req, res) {

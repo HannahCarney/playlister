@@ -1,6 +1,7 @@
 <h1>Please register your party beacon</h1>
 
-  <form action="/partyplanner/beacon" method="post" id="beacon-details-form">
+  <form action="/partyplanner/beacon/<%-spotifyID %>" method="post" id="beacon-details-form">
+    <input type="hidden" name="spotifyID" id="spotifyID">
     <label for="beaconMajor">Beacon (major)</label>
     <input name="beaconMajor" type="text">
     <label for="beaconMinor">Beacon (minor)</label>
