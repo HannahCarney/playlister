@@ -1,4 +1,5 @@
-var helpers = require('./helpers');
+var helpersDatabase = require('./helpersDatabase');
+var helpersSpotify = require('./helpersSpotify');
 
 exports.getBeacon = function(req, res) {
   // Variables currently known
@@ -13,27 +14,27 @@ exports.getBeacon = function(req, res) {
 
   // Callback methods to build relationships between DBs
   var retrieveSpotifyID = function(err, doc) {
-    helpers.errorHandling(err);
+    helpersDatabase.errorHandling(err);
     ppPartyName = doc[0].ppPartyName;
     var collectionName = 'ppEvent';
     var matcher = { partyName: ppPartyName, partyDate: todaysDate };
     var fields = { spotifyID: 1, _id:0};
     var callback = retrieveBeacon;
-    helpers.readFromDatabase(db, collectionName, matcher, fields, callback);
+    helpersDatabase.readFromDatabase(db, collectionName, matcher, fields, callback);
   };
 
   var retrieveBeacon = function(err, doc) {
-    helpers.errorHandling(err);
+    helpersDatabase.errorHandling(err);
     ppSpotifyID = doc[0].spotifyID;
     var collectionName = 'ppBeacon';
     var matcher = { spotifyID: ppSpotifyID };
     var fields = {beaconMajor: 1, beaconMinor: 1, _id: 0};
     var callback = returnBeacon;
-    helpers.readFromDatabase(db, collectionName, matcher, fields, callback);
+    helpersDatabase.readFromDatabase(db, collectionName, matcher, fields, callback);
   };
 
   var returnBeacon = function(err, doc) {
-    helpers.errorHandling(err);
+    helpersDatabase.errorHandling(err);
     beaconMajor = doc[0].beaconMajor;
     beaconMinor = doc[0].beaconMinor;
     res.render('mobileApp/returnBeacons', {beaconMajor: beaconMajor,
@@ -46,7 +47,7 @@ exports.getBeacon = function(req, res) {
   var matcher = { pgEmail: pgEmail, ppPartyDate: todaysDate };
   var fields = { ppPartyName: 1, _id: 0};
   var callback = retrieveSpotifyID;
-  helpers.readFromDatabase(db, collectionName, matcher, fields, callback);
+  helpersDatabase.readFromDatabase(db, collectionName, matcher, fields, callback);
 };
 
 exports.addSongs = function(req, res) {
@@ -66,7 +67,7 @@ exports.addSongs = function(req, res) {
   var pgSongChoice;
 
   var retrieveAccessTokens = function(err, doc) {
-    helpers.errorHandling(err);
+    helpersDatabase.errorHandling(err);
     ppSpotifyID = doc[0].spotifyID;
     collection = db.get('ppSpotifyCredentials');
     collection.find({ spotifyID: ppSpotifyID },
@@ -78,39 +79,39 @@ exports.addSongs = function(req, res) {
   };
 
   var retrieveEventDetails = function(err, doc) {
-    helpers.errorHandling(err);
+    helpersDatabase.errorHandling(err);
     ppSpotifyAccessToken = doc[0].spotifyAccessToken;
     ppSpotifyRefreshToken = doc[0].spotifyRefreshToken;
     var collectionName = 'ppEvent';
     var matcher = { spotifyID: ppSpotifyID, partyDate: todaysDate };
     var fields = {playlistID: 1, partyName: 1, _id: 0};
     var callback = retrieveSongChoices;
-    helpers.readFromDatabase(db, collectionName, matcher, fields, callback);
+    helpersDatabase.readFromDatabase(db, collectionName, matcher, fields, callback);
   };
 
   var retrieveSongChoices = function(err, doc) {
-    helpers.errorHandling(err);
+    helpersDatabase.errorHandling(err);
     ppPlaylistID = doc[0].playlistID;
     ppPartyName = doc[0].partyName;
     var collectionName = 'pgSongChoice';
     var matcher = { ppPartyName: ppPartyName, ppPartyDate: todaysDate, pgEmail: pgEmail };
     var fields = {pgSongChoice: 1, _id: 0};
     var callback = returnSongChoices;
-    helpers.readFromDatabase(db, collectionName, matcher, fields, callback);
+    helpersDatabase.readFromDatabase(db, collectionName, matcher, fields, callback);
 
   };
 
   var returnSongChoices = function(err, doc) {
-    helpers.errorHandling(err);
+    helpersDatabase.errorHandling(err);
     pgSongChoice = doc[0].pgSongChoice;
-    res.render('mobileApp/returnSongChoice', {
-      credentials: {spotifyAccessToken: ppSpotifyAccessToken,
-                    spotifyRefreshToken: ppSpotifyRefreshToken},
-      tracks: { spotifyID: ppSpotifyID,
-                playlistID: ppPlaylistID,
-                tracks: [pgSongChoice]
-              }
-    });
+    var credentials = {spotifyAccessToken: ppSpotifyAccessToken,
+                      spotifyRefreshToken: ppSpotifyRefreshToken};
+    var tracks = {  spotifyID: ppSpotifyID,
+                    playlistID: ppPlaylistID,
+                    tracks: [pgSongChoice]};
+    helpersSpotify.addSongsToPlaylist(credentials, tracks);
+    res.render('mobileApp/returnSongChoice', {credentials: credentials
+                                            , tracks: tracks});
   };
 
   // Start point db retrieval based on url params
@@ -118,5 +119,5 @@ exports.addSongs = function(req, res) {
   var matcher = { beaconMajor: beaconMajor, beaconMinor: beaconMinor };
   var fields = { spotifyID: 1, _id: 0};
   var callback = retrieveAccessTokens;
-  helpers.readFromDatabase(db, collectionName, matcher, fields, callback);
+  helpersDatabase.readFromDatabase(db, collectionName, matcher, fields, callback);
 };

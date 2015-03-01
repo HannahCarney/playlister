@@ -1,4 +1,4 @@
-var helpers = require('./helpers');
+var helpersDatabase = require('./helpersDatabase');
 
 
 // functions called by the controllers
@@ -10,9 +10,7 @@ exports.saveSongChoices = function(req, res) {
                           "pgEmail" : req.body.email,
                           "pgSongChoice" : req.body.selectedSong
                           };
-  helpers.saveToDatabase(db,
-                        collectionName,
-                        collectionObject);
+  helpersDatabase.saveToDatabase(db, collectionName, collectionObject);
   renderThankYouPage(req, res);
 };
 

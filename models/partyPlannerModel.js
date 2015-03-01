@@ -1,6 +1,6 @@
 var querystring = require('querystring');
 var request = require('request');
-var helpers = require('./helpers');
+var helpersDatabase = require('./helpersDatabase');
 var SpotifyWebApi = require('spotify-web-api-node');
 var clientId = process.env.SPOTIFY_CLIENT_ID;
 var clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
@@ -76,7 +76,7 @@ exports.saveBeacon = function(req, res) {
   var collectionObject = {"spotifyID" : spotifyID,
                           "beaconMajor" : req.body.beaconMajor,
                           "beaconMinor" : req.body.beaconMinor};
-  helpers.saveToDatabase(db, collectionName, collectionObject);
+  helpersDatabase.saveToDatabase(db, collectionName, collectionObject);
   res.redirect('/partyplanner/eventdetails/' + spotifyID);
 };
 
@@ -107,7 +107,7 @@ exports.saveEventDetails = function(req, res) {
                                 "playlistID" : data.id,
                                 "partyName" : partyName,
                                 "partyDate" : partyDate};
-        helpers.saveToDatabase(db,
+        helpersDatabase.saveToDatabase(db,
                               collectionName,
                               collectionObject);
       }, function(err) {
@@ -152,5 +152,5 @@ var saveTokensToDatabase = function(req, spotifyID, spotifyAccessToken, spotifyR
   collectionObject = {"spotifyID" : spotifyID,
                       "spotifyAccessToken"  : spotifyAccessToken,
                       "spotifyRefreshToken" : spotifyRefreshToken};
-  helpers.saveToDatabase(db, collectionName, collectionObject);
+  helpersDatabase.saveToDatabase(db, collectionName, collectionObject);
 };
