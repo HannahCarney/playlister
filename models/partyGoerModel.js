@@ -1,22 +1,19 @@
+var helpers = require('./helpers');
+
 
 // functions called by the controllers
 exports.saveSongChoices = function(req, res) {
   var db = req.db;
-  var collection = db.get('partyGoerSongChoice');
-  collection.insert({
-    "ppPartyName" : req.body.ppPartyName,
-    "ppPartyDate" : req.body.ppPartyDate,
-    "pgEmail" : req.body.email,
-    "pgSongChoice" : req.body.selectedSong
-  }, function(err, doc) {
-    if (err) {
-      console.log("FAILED: Party Goer Song Choice write to db");
-    }
-    else {
-      console.log("SUCCESS: Party Goer Song Choice write to db");
-      renderThankYouPage(req, res);
-    }
-  });
+  var collectionName = 'partyGoerSongChoice';
+  var collectionObject = {"ppPartyName" : req.body.ppPartyName,
+                          "ppPartyDate" : req.body.ppPartyDate,
+                          "pgEmail" : req.body.email,
+                          "pgSongChoice" : req.body.selectedSong
+                          };
+  helpers.saveToDatabase(db,
+                        collectionName,
+                        collectionObject);
+  renderThankYouPage(req, res);
 };
 
 
