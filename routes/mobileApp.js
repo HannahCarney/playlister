@@ -4,7 +4,7 @@ var mobileAppController = require('../controllers/mobileAppController');
 
 router.get('/getbeacon', mobileAppController.getBeacon);
 
-// router.get('/addsongs/', mobileAppController.addSongs);
+router.get('/addsongs', mobileAppController.addSongs);
 //
 // router.get('/removesongs/', mobileAppController.removeSongs);
 
