@@ -11,3 +11,15 @@ exports.saveToDatabase = function(db, collectionName, collectionObject) {
     }
   });
 };
+
+exports.readFromDatabase = function(db, collectionName, matcher, fields, callback) {
+  var collection = db.get(collectionName);
+  var options = {fields : fields, limit : 1, sort : {$natural : -1}}
+  collection.find(matcher, options, callback);
+};
+
+exports.errorHandling = function(err) {
+  if (err) {
+    console.log(err);
+  }
+};

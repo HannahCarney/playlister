@@ -1,18 +1,16 @@
-var helpers = require('./helpers');
+var helpersDatabase = require('./helpersDatabase');
 
 
 // functions called by the controllers
 exports.saveSongChoices = function(req, res) {
   var db = req.db;
-  var collectionName = 'partyGoerSongChoice';
+  var collectionName = 'pgSongChoice';
   var collectionObject = {"ppPartyName" : req.body.ppPartyName,
                           "ppPartyDate" : req.body.ppPartyDate,
                           "pgEmail" : req.body.email,
                           "pgSongChoice" : req.body.selectedSong
                           };
-  helpers.saveToDatabase(db,
-                        collectionName,
-                        collectionObject);
+  helpersDatabase.saveToDatabase(db, collectionName, collectionObject);
   renderThankYouPage(req, res);
 };
 
