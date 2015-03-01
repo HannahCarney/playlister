@@ -7,13 +7,13 @@ var host = 'http://localhost:3000/';
   });
 
   it('should display a form', function() {
-    casper.thenOpen(host + 'pp/event', function() {
+    casper.thenOpen(host + 'partyplanner/eventdetails/matteomanzo', function() {
       expect('#party-event-form').to.be.inDOM;
     });
   });
 
    it('should have input for party name, party playlist and date', function() {
-    casper.thenOpen(host + 'pp/event', function() {
+    casper.thenOpen(host + 'partyplanner/eventdetails/matteomanzo', function() {
       expect('#party-event-form').to.include.text("Party name:");
       expect('#party-event-form').to.include.text("Party playlist name:");
       expect('#party-event-form').to.include.text("Date:");

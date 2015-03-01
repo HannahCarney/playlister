@@ -11,7 +11,7 @@ var expressLayouts = require('express-ejs-layouts');
 var server = require('http').createServer(app);
 var SpotifyWebApi = require('spotify-web-api-node');
 var mongoose = require('mongoose');
-mongoose.connect(process.env.MONGODB_DEVELOPMENT_URI);
+// mongoose.connect(process.env.MONGODB_DEVELOPMENT_URI);
 
 // Database
 var mongo = require('mongodb');
