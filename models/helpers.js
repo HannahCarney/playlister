@@ -18,9 +18,8 @@ exports.readFromDatabase = function(db, collectionName, matcher, fields, callbac
   collection.find(matcher, options, callback);
 };
 
-// collection.find({ pgEmail: pgEmail, ppPartyDate: todaysDate },
-//                 { fields : { ppPartyName: 1, _id: 0},
-//                   limit : 1,
-//                   sort : {$natural : -1}
-//                 }
-//   , retrieveSpotifyID);
+exports.errorHandling = function(err) {
+  if (err) {
+    console.log(err);
+  }
+};
