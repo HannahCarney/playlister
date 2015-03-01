@@ -17,9 +17,7 @@ var monk = require('monk')
 //router
 var partyGoer = require('./routes/partyGoer');
 var partyPlanner = require('./routes/partyPlanner');
-
-// Glocal Variables
-var spotifyID;
+var mobileApp = require('./routes/mobileApp');
 
 // Server Set-up
 app.set('view engine', 'ejs');
@@ -37,6 +35,7 @@ app.use(function(req,res,next){
 
 app.use('/partygoer', partyGoer);
 app.use('/partyplanner', partyPlanner);
+app.use('/mobileapp', mobileApp);
 
 app.set('port', (process.env.PORT || 3000));
 

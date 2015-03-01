@@ -4,7 +4,7 @@ var helpers = require('./helpers');
 // functions called by the controllers
 exports.saveSongChoices = function(req, res) {
   var db = req.db;
-  var collectionName = 'partyGoerSongChoice';
+  var collectionName = 'pgSongChoice';
   var collectionObject = {"ppPartyName" : req.body.ppPartyName,
                           "ppPartyDate" : req.body.ppPartyDate,
                           "pgEmail" : req.body.email,
