@@ -30,9 +30,9 @@ exports.completed = function(req, res) {
   var partyName = req.params.partyName;
   var partyDate = req.params.partyDate;
   var partyPlaylistName = req.params.partyPlaylistName;
-  var getSongsLink = "http://localhost:3000/partygoer/getsongs/"
-      + partyName + '/'
-      + partyDate;
-  res.render('partyPlanner/completed', { partyName: partyName, partyDate: partyDate
-      , partyPlaylistName: partyPlaylistName, getSongsLink: getSongsLink } );
+  var getSongsLink = "http://localhost:3000/partygoer/getsongs/" +
+      partyName + '/' + partyDate;
+  res.render('partyPlanner/completed', { partyName: partyName,
+      partyDate: partyDate, partyPlaylistName: partyPlaylistName,
+      getSongsLink: getSongsLink } );
 };

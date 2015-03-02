@@ -57,7 +57,7 @@ exports.authorizeSpotifyCallback = function(req, res) {
 
         // use access token to get party planner credentials from Spotify API
         request.get(options, function(error, response, body) {
-          spotifyID = body.id;
+          var spotifyID = body.id;
           saveTokensToDatabase(req, spotifyID, spotifyAccessToken, spotifyRefreshToken);
           res.redirect('/partyplanner/beacon/' + spotifyID);
           });
@@ -114,9 +114,9 @@ exports.saveEventDetails = function(req, res) {
         console.log('Something went wrong! ', err);
       });
 
-    res.redirect('/partyplanner/completed/' + partyName + '/'
-                                            + partyDate + '/'
-                                            + playlistName);
+    res.redirect('/partyplanner/completed/' + partyName + '/' +
+                                              partyDate + '/' +
+                                              playlistName);
   };
 
   var collection = req.db.get('ppSpotifyCredentials');
@@ -124,8 +124,7 @@ exports.saveEventDetails = function(req, res) {
       fields : { spotifyAccessToken: 1, spotifyRefreshToken : 1, _id: 0},
       limit : 1,
       sort : {$natural : -1}
-    }
-    , callback);
+    }, callback);
 };
 
 
@@ -149,8 +148,8 @@ var generateRandomString = function(length) {
 var saveTokensToDatabase = function(req, spotifyID, spotifyAccessToken, spotifyRefreshToken) {
   var db = req.db;
   var collectionName = 'ppSpotifyCredentials';
-  collectionObject = {"spotifyID" : spotifyID,
-                      "spotifyAccessToken"  : spotifyAccessToken,
-                      "spotifyRefreshToken" : spotifyRefreshToken};
+  var collectionObject = {"spotifyID" : spotifyID,
+                          "spotifyAccessToken"  : spotifyAccessToken,
+                          "spotifyRefreshToken" : spotifyRefreshToken};
   helpersDatabase.saveToDatabase(db, collectionName, collectionObject);
 };

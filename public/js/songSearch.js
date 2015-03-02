@@ -67,7 +67,7 @@ function storeSelectedData() {
     $('#selected-song').val(selectedSongId);
     $('#pp-party-name-hidden').val($('#pp-party-name').text());
     $('#pp-party-date-hidden').val($('#pp-party-date').text());
-};
+}
 
 document.getElementById('song-choices').addEventListener('submit', function (e) {
     e.preventDefault();

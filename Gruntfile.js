@@ -9,7 +9,10 @@ module.exports = function(grunt){
       all: ['spec/']
     },
     jshint: {
-      src: ['js/*.js', 'server.js']
+      src: ['public/js/*.js', 'server.js', 'models/*.js', 'routes/*.js', 'controllers/*.js'],
+      options: {
+        jshintrc: '.jshintrc'
+      }
     },
     mocha_casperjs: {
       options: {
