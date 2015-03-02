@@ -29,7 +29,7 @@ exports.removeSongsFromPlaylist = function(credentials, pgTracks) {
     .then(function(data) {
       spotifyApi.setAccessToken(data['access_token']);
       return spotifyApi.removeTracksFromPlaylist(pgTracks.spotifyID, pgTracks.playlistID
-                                      , [ tracks : tracksVar])
+                                      , [tracksVar])
     }).then(function(data) {
       console.log('Removed tracks from the playlist!');
     }).catch(function(err) {
