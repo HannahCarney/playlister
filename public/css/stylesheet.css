@@ -1,0 +1,23 @@
+.center {
+  margin-top: 5%;
+  text-align: center;
+}
+
+#logo {
+  width: 20%;
+}
+
+#logo-name {
+  margin-top: 7%;
+  color: white;
+}
+
+section {
+  overflow: auto;
+}
+
+#nav-logo {
+  margin-top: .3em;
+  width: 4em;
+  margin-left: 1.6em;
+}
