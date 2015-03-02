@@ -4,6 +4,6 @@ exports.getBeacon = function(req, res) {
   mobileAppModel.getBeacon(req, res);
 };
 
-exports.addSongs = function(req, res) {
-  mobileAppModel.addSongs(req, res);
+exports.songs = function(req, res) {
+  mobileAppModel.songs(req, res);
 };

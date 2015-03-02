@@ -50,10 +50,11 @@ exports.getBeacon = function(req, res) {
   helpersDatabase.readFromDatabase(db, collectionName, matcher, fields, callback);
 };
 
-exports.addSongs = function(req, res) {
+exports.songs = function(req, res) {
   var beaconMajor = req.param('beaconMajor');
   var beaconMinor = req.param('beaconMinor');
   var pgEmail = req.param('email');
+  var action = req.param('action');
   var todaysDate = (new Date()).toISOString().split('T')[0];
   //Set up link to db
   var db = req.db;
@@ -109,7 +110,15 @@ exports.addSongs = function(req, res) {
     var tracks = {  spotifyID: ppSpotifyID,
                     playlistID: ppPlaylistID,
                     tracks: [pgSongChoice]};
-    helpersSpotify.addSongsToPlaylist(credentials, tracks);
+    if (action === 'add') {
+      helpersSpotify.addSongsToPlaylist(credentials, tracks);
+    }
+    else if (action === 'remove') {
+      helpersSpotify.removeSongsFromPlaylist(credentials, tracks);
+    }
+    else {
+      console.log('Songs: unknown action');
+    }
     res.render('mobileApp/returnSongChoice', {credentials: credentials
                                             , tracks: tracks});
   };
