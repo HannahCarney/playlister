@@ -70,8 +70,8 @@ exports.authorizeSpotifyCallback = function(req, res) {
 
 exports.saveBeacon = function(req, res) {
   var spotifyID = req.params.spotifyID;
-  var formMajor = req.body.beaconMajor.value;
-  var formMinor = req.body.beaconMinor.value;
+  var formMajor = req.body.beaconMajor;
+  var formMinor = req.body.beaconMinor;
     if (formMajor == null || formMajor == "" || formMinor == null || formMinor == "") {
       res.redirect('/partyplanner/beacon/' + spotifyID + '?error=1');
     } else {

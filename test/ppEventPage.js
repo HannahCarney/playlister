@@ -1,7 +1,7 @@
 var webdriverio = require('webdriverio');
 var expect = require('chai').expect;
 
-describe('Beacon details page', function() {
+describe('Event info page', function() {
 
   var client = {};
 
@@ -11,47 +11,43 @@ describe('Beacon details page', function() {
   });
 
   beforeEach(function() {
-    client.url('http://localhost:3000/partyplanner/beacon/username');
+    client.url('http://localhost:3000/partyplanner/eventdetails/username');
   });
  
   after(function(done) {
     client.end(done);
   });
 
-  context('When user did not input the beacons number yet', function() {
+  context('When the user visits the page', function() {
 
     it('Should have a title', function(done) {
       client
-        .getText('#beacon-title', function(err, text) {
-          expect(err).to.not.be.true;
-          expect(text).to.eql('Please register your party beacon')
+        .getText('#event-info', function(err, text) {
+          expect(text).to.eql('Event Info')
         })
         .call(done);
     });
 
-    it('Should display a beacon details form', function(done) {
+    it('Should have a party info form', function(done) {
       client
-        .getTagName('#beacon-details-form', function(err, tagName) {
-          expect(err).to.not.be.true;
+        .getTagName('#party-event-form', function(err, tagName) {
           expect(tagName).to.eql('form')
         })
         .call(done);
     });
-
   });
 
-  context('When user clicks on save with blank fields', function() {
+  // context('When user clicks on save with blank fields', function() {
 
-    it('Should get an error message', function(done) {
-      client
-        .click('#save')
-        .waitForText('#error', 5000)
-        .getText('#error', function(err, text) {
-          expect(text).to.eql('You must add beacon numbers')
-        })
-        .call(done);
-    });
-
-  });
+  //   it('Should get an error message', function(done) {
+  //     client
+  //       .click('#save')
+  //       .waitForText('#error', 5000)
+  //       .getText('#error', function(err, text) {
+  //         expect(text).to.eql('You must add party infos')
+  //       })
+  //       .call(done);
+  //   });
+  // });
 
 });

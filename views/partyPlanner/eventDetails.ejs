@@ -1,5 +1,5 @@
 <section class="center jumbotron">
-  <h1>Event Info</h1>
+  <h1 id='event-info'>Event Info</h1>
   <h2>A better way to play music</h2>
   <form action="/partyplanner/eventdetails/<%- spotifyID %>" method="post" id="party-event-form">
     <label for="partyName">Party name:</label>
@@ -8,6 +8,6 @@
     <input name="playlistName" id="playlistName">
      <label for="partyDate">Party Date:</label>
     <input type="date" name="partyDate" id="partyDate">
-    <input type="submit" value="Save">
+    <input type="submit" value="Save" id='#save'>
   </form>
 </section>

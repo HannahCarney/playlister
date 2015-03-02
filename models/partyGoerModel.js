@@ -15,7 +15,7 @@ exports.verifySongChoices = function(req,res){
          saveSongChoices(req,res);
       }
   });
-}
+};
 
 var saveSongChoices = function(req, res) {
   var db = req.db;
