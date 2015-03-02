@@ -58,7 +58,7 @@ exports.authorizeSpotifyCallback = function(req, res) {
         request.get(options, function(error, response, body) {
           var spotifyID = body.id;
           saveTokensToDatabase(req, spotifyID, spotifyAccessToken, spotifyRefreshToken);
-          res.redirect('/partyplanner/beacon/' + spotifyID);
+          res.redirect('/partyplanner/beacon/' + spotifyID );
           });
       }
       else {

@@ -1,5 +1,9 @@
 <h1>Please register your party beacon</h1>
 
+<% if (errorID == 1) { %>
+  <p>You need to enter a beacon</p>
+<% } %>
+
   <form action="/partyplanner/beacon/<%-spotifyID %>" method="post" id="beacon-details-form">
     <input type="hidden" name="spotifyID" id="spotifyID">
     <label for="beaconMajor">Beacon (major)</label>

@@ -26,7 +26,7 @@ describe("connection and initialization of DB",function(){
 });
 
 describe('should add data',function(){
-  
+
   var db,ppSpotifyCredentials = {};
 
   beforeEach(function(done){
@@ -48,7 +48,7 @@ describe('should add data',function(){
                         spotifyRefreshToken:'8888'};
 
     helpersDB.saveToDatabase(db,collectionName,collectionObject);
-    var collection = db.get(collectionName);                   
+    var collection = db.get(collectionName);
     var element = collection.find();
     elemet.should.have.property('_id','spotifyID',
                                 'spotifyAccessToken','spotifyRefreshToken');
