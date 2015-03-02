@@ -31,13 +31,12 @@ app.use(function(req,res,next){
     req.db = db;
     next();
 });
-
+app.use(express.static(__dirname + '/public'))
+    .use(cookieParser());
 app.use('/partygoer', partyGoer);
 app.use('/partyplanner', partyPlanner);
 app.use('/mobileapp', mobileApp);
 app.use('/', index);
-app.use(express.static(__dirname + '/public'))
-    .use(cookieParser());
 // Handle 404
 app.use(function(req, res) {
     res.status(400);
