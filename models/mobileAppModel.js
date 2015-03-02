@@ -109,7 +109,7 @@ exports.songs = function(req, res) {
                       spotifyRefreshToken: ppSpotifyRefreshToken};
     var tracks = {  spotifyID: ppSpotifyID,
                     playlistID: ppPlaylistID,
-                    tracks: [pgSongChoice]};
+                    tracks: pgSongChoice};
     if (action === 'add') {
       helpersSpotify.addSongsToPlaylist(credentials, tracks);
     }

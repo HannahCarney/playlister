@@ -10,7 +10,7 @@ exports.addSongsToPlaylist = function(credentials, tracks) {
     .then(function(data) {
       spotifyApi.setAccessToken(data['access_token']);
       return spotifyApi.addTracksToPlaylist(tracks.spotifyID, tracks.playlistID
-                                      , tracks.tracks)
+                                      , [tracks.tracks])
     }).then(function(data) {
       console.log('Added tracks to the playlist!');
     }).catch(function(err) {
@@ -26,7 +26,7 @@ exports.removeSongsFromPlaylist = function(credentials, tracks) {
     .then(function(data) {
       spotifyApi.setAccessToken(data['access_token']);
       return spotifyApi.removeTracksFromPlaylist(tracks.spotifyID, tracks.playlistID
-                                      , tracks.tracks)
+                                      , {tracks : [uri : tracks.tracks] })
     }).then(function(data) {
       console.log('Removed tracks from the playlist!');
     }).catch(function(err) {
