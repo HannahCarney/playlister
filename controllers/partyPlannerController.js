@@ -9,9 +9,9 @@ exports.authorizeCallback = function(req, res) {
 };
 
 exports.beacon = function(req, res) {
+  var errorID = req.query.error;
   var spotifyID = req.params.spotifyID;
-  var error = req.query.error;
-  res.render('partyPlanner/beacon', {spotifyID: spotifyID, errorID: error});
+  res.render('partyPlanner/beacon', {spotifyID: spotifyID, errorID: errorID});
 };
 
 exports.saveBeacon = function(req, res) {

@@ -3,6 +3,7 @@
 <% if (errorID == 1) { %>
   <p id="error">You must add beacon numbers</p>
 <% } %>
+
   <form action="/partyplanner/beacon/<%-spotifyID %>" method="post" id="beacon-details-form" name="beacon-details-form">
     <input type="hidden" name="spotifyID" id="spotifyID">
     <label for="beaconMajor">Beacon (major)</label>
