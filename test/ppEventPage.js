@@ -37,7 +37,7 @@ describe('Beacon details page', function() {
         })
         .call(done);
     });
-    
+
   });
 
   context('When user clicks on save with blank fields', function() {
@@ -45,7 +45,7 @@ describe('Beacon details page', function() {
     it('Should get an error message', function(done) {
       client
         .click('#save')
-        // .waitForText('#error', 2000)
+        .waitForText('#error', 5000)
         .getText('#error', function(err, text) {
           expect(text).to.eql('You must add beacon numbers')
         })

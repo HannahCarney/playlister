@@ -10,7 +10,8 @@ exports.authorizeCallback = function(req, res) {
 
 exports.beacon = function(req, res) {
   var spotifyID = req.params.spotifyID;
-  res.render('partyPlanner/beacon', {spotifyID: spotifyID});
+  var error = req.query.error;
+  res.render('partyPlanner/beacon', {spotifyID: spotifyID, errorID: error});
 };
 
 exports.saveBeacon = function(req, res) {
