@@ -63,7 +63,7 @@ exports.songs = function(req, res) {
   var ppSpotifyID;
   var ppSpotifyAccessToken;
   var ppSpotifyRefreshToken;
-  var ppSpotifyPlayListId;
+  var ppSpotifyPlaylistID;
   var ppPartyName;
   var pgSongChoice;
 

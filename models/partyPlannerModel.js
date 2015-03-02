@@ -5,7 +5,6 @@ var SpotifyWebApi = require('spotify-web-api-node');
 var clientId = process.env.SPOTIFY_CLIENT_ID;
 var clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
 var redirect_uri_authorize = process.env.SPOTIFY_AUTHORIZE_CALLBACK;
-var redirect_uri_create_playlist = process.env.SPOTIFY_CREATE_PLAYLIST_CALLBACK;
 var stateKey = 'spotify_auth_state';
 
 //functions called by controllers
@@ -87,8 +86,7 @@ exports.saveEventDetails = function(req, res) {
   var spotifyID = req.params.spotifyID;
   var spotifyApi = new SpotifyWebApi({
     clientId : clientId,
-    clientSecret : clientSecret,
-    redirectUri : process.env.SECOND_CALLBACK
+    clientSecret : clientSecret
   });
 
   var callback = function(err, doc) {

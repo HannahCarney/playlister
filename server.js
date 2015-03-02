@@ -9,7 +9,7 @@ var bodyParser = require('body-parser');
 var expressLayouts = require('express-ejs-layouts');
 
 // Database
-var mongo = require('mongodb'); //is this required, does monk do it anyway?
+// var mongo = require('mongodb'); //is this required, does monk do it anyway?
 var mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost:27017/playlister';
 var monk = require('monk');
 var db = monk(mongoUri);
