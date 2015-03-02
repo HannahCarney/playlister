@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
    
     <link rel="stylesheet" href="css/stylesheet.css">
@@ -10,12 +10,12 @@
     <script type="text/javascript" src="http://twitter.github.io/bootstrap/assets/js/bootstrap-collapse.js"></script>
 
   </head>
-  <header id="myNavbar" class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+  <header id="myNavbar" class="navbar navbar-default navbar-inverse navbar-fixed-top" style="background:rgba(0, 0, 0, 0.8)" role="navigation">
     <section class="container">
       <section class="navbar-header">
-         <div class="name">
+            <div class="name">
          <% if (typeof spotifyID !== "undefined" ) { %>
-                <h3>yo</h3>
+                <%- spotifyID %>
         <% } %>
           </div>
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">

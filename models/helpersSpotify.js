@@ -8,9 +8,9 @@ exports.addSongsToPlaylist = function(credentials, pgTracks) {
   spotifyApi.setRefreshToken(credentials.spotifyRefreshToken);
   spotifyApi.refreshAccessToken()
     .then(function(data) {
-      spotifyApi.setAccessToken(data['access_token']);
-      return spotifyApi.addTracksToPlaylist(pgTracks.spotifyID, pgTracks.playlistID
-                                      , [pgTracks.tracks])
+      spotifyApi.setAccessToken(data.access_token);
+      return spotifyApi.addTracksToPlaylist(pgTracks.spotifyID,
+                        pgTracks.playlistID, [pgTracks.tracks]);
     }).then(function(data) {
       console.log('Added tracks to the playlist!');
     }).catch(function(err) {
@@ -21,15 +21,13 @@ exports.addSongsToPlaylist = function(credentials, pgTracks) {
 exports.removeSongsFromPlaylist = function(credentials, pgTracks) {
   var spotifyApi = new SpotifyWebApi( {clientId : clientId,
                                       clientSecret : clientSecret});
-  console.log(pgTracks.tracks);
-  console.log(typeof pgTracks.tracks);
   var tracksVar = { uri : pgTracks.tracks };
   spotifyApi.setRefreshToken(credentials.spotifyRefreshToken);
   spotifyApi.refreshAccessToken()
     .then(function(data) {
-      spotifyApi.setAccessToken(data['access_token']);
-      return spotifyApi.removeTracksFromPlaylist(pgTracks.spotifyID, pgTracks.playlistID
-                                      , [tracksVar])
+      spotifyApi.setAccessToken(data.access_token);
+      return spotifyApi.removeTracksFromPlaylist(pgTracks.spotifyID,
+                                    pgTracks.playlistID, [tracksVar]);
     }).then(function(data) {
       console.log('Removed tracks from the playlist!');
     }).catch(function(err) {

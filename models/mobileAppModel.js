@@ -75,8 +75,7 @@ exports.songs = function(req, res) {
                     { fields : {spotifyAccessToken: 1, spotifyRefreshToken: 1, _id: 0},
                       limit : 1,
                       sort : {$natural : -1}
-                    }
-      , retrieveEventDetails);
+                    }, retrieveEventDetails);
   };
 
   var retrieveEventDetails = function(err, doc) {
@@ -92,7 +91,7 @@ exports.songs = function(req, res) {
 
   var retrieveSongChoices = function(err, doc) {
     helpersDatabase.errorHandling(err);
-    ppPlaylistID = doc[0].playlistID;
+    ppSpotifyPlaylistID = doc[0].playlistID;
     ppPartyName = doc[0].partyName;
     var collectionName = 'pgSongChoice';
     var matcher = { ppPartyName: ppPartyName, ppPartyDate: todaysDate, pgEmail: pgEmail };
@@ -108,7 +107,7 @@ exports.songs = function(req, res) {
     var credentials = {spotifyAccessToken: ppSpotifyAccessToken,
                       spotifyRefreshToken: ppSpotifyRefreshToken};
     var tracks = {  spotifyID: ppSpotifyID,
-                    playlistID: ppPlaylistID,
+                    playlistID: ppSpotifyPlaylistID,
                     tracks: pgSongChoice};
     if (action === 'add') {
       helpersSpotify.addSongsToPlaylist(credentials, tracks);
@@ -119,8 +118,8 @@ exports.songs = function(req, res) {
     else {
       console.log('Songs: unknown action');
     }
-    res.render('mobileApp/returnSongChoice', {credentials: credentials
-                                            , tracks: tracks});
+    res.render('mobileApp/returnSongChoice', {credentials: credentials,
+                                              tracks: tracks});
   };
 
   // Start point db retrieval based on url params
