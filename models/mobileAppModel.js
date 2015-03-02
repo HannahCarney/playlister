@@ -38,6 +38,7 @@ exports.getBeacon = function(req, res) {
     helpersDatabase.errorHandling(err);
     beaconMajor = doc[0].beaconMajor;
     beaconMinor = doc[0].beaconMinor;
+    //Send the beacon data back to the mobile app
     res.jsonp({beaconMajor: beaconMajor, beaconMinor: beaconMinor});
   };
   // End of callbacks
@@ -118,8 +119,14 @@ exports.songs = function(req, res) {
     else {
       console.log('Songs: unknown action');
     }
-    res.render('mobileApp/returnSongChoice', {credentials: credentials,
-                                              tracks: tracks});
+    res.jsonp({confirmation: 'Your tracks have been ' +
+      if (action === add) {
+        return 'added';
+      }
+      else {
+        return 'removed';
+      }
+      + ' from the party playlist'});
   };
 
   // Start point db retrieval based on url params
