@@ -23,13 +23,13 @@ exports.removeSongsFromPlaylist = function(credentials, pgTracks) {
                                       clientSecret : clientSecret});
   console.log(pgTracks.tracks);
   console.log(typeof pgTracks.tracks);
-  // var tracksVar = [ uri : pgTracks.tracks];
+  var tracksVar = { uri : pgTracks.tracks };
   spotifyApi.setRefreshToken(credentials.spotifyRefreshToken);
   spotifyApi.refreshAccessToken()
     .then(function(data) {
       spotifyApi.setAccessToken(data['access_token']);
       return spotifyApi.removeTracksFromPlaylist(pgTracks.spotifyID, pgTracks.playlistID
-                                      , { tracks : tracksVar})
+                                      , [ tracks : tracksVar])
     }).then(function(data) {
       console.log('Removed tracks from the playlist!');
     }).catch(function(err) {
