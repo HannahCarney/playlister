@@ -14,7 +14,7 @@ var mongoose = require('mongoose');
 // mongoose.connect(process.env.MONGODB_DEVELOPMENT_URI);
 
 // Database
-var mongo = require('mongodb');
+// var mongo = require('mongodb'); //is this required, does monk do it anyway?
 var mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost:27017/playlister';
 var monk = require('monk');
 var db = monk(mongoUri);
