@@ -2,9 +2,10 @@ var helpersDatabase = require('./helpersDatabase');
 var helpersSpotify = require('./helpersSpotify');
 
 exports.getBeacon = function(req, res) {
+  console.log("Beacon asked for " + req.param('email'));
   // Variables currently known
   var db = req.db;
-  var pgEmail = req.param('email');
+  var pgEmail = req.param('email'); // read off of red's request
   var todaysDate = (new Date()).toISOString().split('T')[0];
   // Variables that will be needed
   var beaconMajor;
@@ -37,8 +38,7 @@ exports.getBeacon = function(req, res) {
     helpersDatabase.errorHandling(err);
     beaconMajor = doc[0].beaconMajor;
     beaconMinor = doc[0].beaconMinor;
-    res.render('mobileApp/returnBeacons', {beaconMajor: beaconMajor,
-                                            beaconMinor: beaconMinor});
+    res.jsonp({beaconMajor: beaconMajor, beaconMinor: beaconMinor});
   };
   // End of callbacks
 
