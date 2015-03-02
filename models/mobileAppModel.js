@@ -2,9 +2,10 @@ var helpersDatabase = require('./helpersDatabase');
 var helpersSpotify = require('./helpersSpotify');
 
 exports.getBeacon = function(req, res) {
+  console.log("Beacon asked for " + req.param('email'));
   // Variables currently known
   var db = req.db;
-  var pgEmail = req.param('email');
+  var pgEmail = req.param('email'); // read off of red's request
   var todaysDate = (new Date()).toISOString().split('T')[0];
   // Variables that will be needed
   var beaconMajor;
@@ -37,8 +38,7 @@ exports.getBeacon = function(req, res) {
     helpersDatabase.errorHandling(err);
     beaconMajor = doc[0].beaconMajor;
     beaconMinor = doc[0].beaconMinor;
-    res.render('mobileApp/returnBeacons', {beaconMajor: beaconMajor,
-                                            beaconMinor: beaconMinor});
+    res.jsonp({beaconMajor: beaconMajor, beaconMinor: beaconMinor});
   };
   // End of callbacks
 
@@ -50,10 +50,11 @@ exports.getBeacon = function(req, res) {
   helpersDatabase.readFromDatabase(db, collectionName, matcher, fields, callback);
 };
 
-exports.addSongs = function(req, res) {
+exports.songs = function(req, res) {
   var beaconMajor = req.param('beaconMajor');
   var beaconMinor = req.param('beaconMinor');
   var pgEmail = req.param('email');
+  var action = req.param('action');
   var todaysDate = (new Date()).toISOString().split('T')[0];
   //Set up link to db
   var db = req.db;
@@ -108,8 +109,16 @@ exports.addSongs = function(req, res) {
                       spotifyRefreshToken: ppSpotifyRefreshToken};
     var tracks = {  spotifyID: ppSpotifyID,
                     playlistID: ppPlaylistID,
-                    tracks: [pgSongChoice]};
-    helpersSpotify.addSongsToPlaylist(credentials, tracks);
+                    tracks: pgSongChoice};
+    if (action === 'add') {
+      helpersSpotify.addSongsToPlaylist(credentials, tracks);
+    }
+    else if (action === 'remove') {
+      helpersSpotify.removeSongsFromPlaylist(credentials, tracks);
+    }
+    else {
+      console.log('Songs: unknown action');
+    }
     res.render('mobileApp/returnSongChoice', {credentials: credentials
                                             , tracks: tracks});
   };
