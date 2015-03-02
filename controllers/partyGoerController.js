@@ -8,5 +8,6 @@ exports.getSongs = function(req, res){
 };
 
 exports.postSongs = function(req, res){
-  partyGoerModel.saveSongChoices(req, res);
+  // partyGoerModel.saveSongChoices(req, res);
+  partyGoerModel.verifySongChoices(req, res);
 };

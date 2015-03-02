@@ -4,7 +4,7 @@ var helpersDatabase = require('./helpersDatabase');
 
  // functions called by the controllers
 
-exports.verifySongChoice = function(req,res){
+exports.verifySongChoices = function(req,res){
   var db = req.db;
   var collectionName = 'pgSongChoice';
   var matcher = {ppPartyName: req.body.ppPartyName, ppPartyDate: req.body.ppPartyDate, 
@@ -12,16 +12,17 @@ exports.verifySongChoice = function(req,res){
 
   helpersDatabase.readFromDatabase(db,collectionName,matcher,{_id: 1},function(err,doc){
       helpersDatabase.errorHandling(err);
-      if (doc.count() > 0) {
+      console.log(doc);
+      if (doc.length > 0) {
         console.log("Already on the list!");
-        res.redirect('getsongs/'+ppPartyName+'/'+ppPartyDate,{error: "This song has been already selected for the party."});
+        res.redirect('/partygoer/getsongs/'+req.body.ppPartyName+'/'+req.body.ppPartyDate+"?error=1");
       }else{
          saveSongChoices(req,res);
       }
   });
 }
 
-exports.saveSongChoices = function(req, res) {
+var saveSongChoices = function(req, res) {
   var db = req.db;
   var collectionName = 'pgSongChoice';
   var collectionObject = {"ppPartyName" : req.body.ppPartyName,
