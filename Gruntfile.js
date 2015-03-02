@@ -11,6 +11,7 @@ module.exports = function(grunt){
     jshint: {
       src: ['js/*.js', 'server.js']
     },
+
     mocha_casperjs: {
       options: {
       },
@@ -18,6 +19,26 @@ module.exports = function(grunt){
         src: ['test/*']
       }
     },
+
+    mochacli: {
+      options: {
+        require: ['chai'],
+        reporter: 'spec',
+        timeout: 60000,
+        bail: true
+      },
+      all: ['specs/*.js', 'tests/*.js']
+    },
+
+    run: {
+      selenium_server: {
+        options: {
+          wait: false
+        },
+        exec: 'selenium-standalone start &>/dev/null'
+      }
+    },
+
     express: {
       test: {
         options: {
@@ -27,10 +48,12 @@ module.exports = function(grunt){
     }
   });
 
+  grunt.loadNpmTasks('grunt-run');
+  grunt.loadNpmTasks('grunt-mocha-cli');
   grunt.loadNpmTasks('grunt-jasmine-node');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-mocha-casperjs');
   grunt.loadNpmTasks('grunt-express-server');
-  grunt.registerTask('default', ['jshint','jasmine_node', 'express:test', 'mocha_casperjs', 'express:test:stop']);
+  grunt.registerTask('default', ['jshint', 'express:test', 'run:selenium_server', 'mochacli', 'stop:selenium_server']);
 
 };

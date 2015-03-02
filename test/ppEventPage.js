@@ -1,23 +1,57 @@
-describe('party planner event page', function() {
+var webdriverio = require('webdriverio');
+var expect = require('chai').expect;
 
-var host = 'http://localhost:3000/';
+describe('Beacon details page', function() {
 
-  before(function(){
-    casper.start(host);
+  var client = {};
+
+  before(function(done) {
+    client = webdriverio.remote({ desiredCapabilities: {browserName: 'chrome'}   });
+    client.init(done);
   });
 
-  it('should display a form', function() {
-    casper.thenOpen(host + 'partyplanner/eventdetails/matteomanzo', function() {
-      expect('#party-event-form').to.be.inDOM;
-    });
+  beforeEach(function() {
+    client.url('http://localhost:3000/partyplanner/beacon/username');
+  });
+ 
+  after(function(done) {
+    client.end(done);
   });
 
-   it('should have input for party name, party playlist and date', function() {
-    casper.thenOpen(host + 'partyplanner/eventdetails/matteomanzo', function() {
-      expect('#party-event-form').to.include.text("Party name:");
-      expect('#party-event-form').to.include.text("Party playlist name:");
-      expect('#party-event-form').to.include.text("Date:");
+  context('When user did not input the beacons number yet', function() {
+
+    it('Should have a title', function(done) {
+      client
+        .getText('#beacon-title', function(err, text) {
+          expect(err).to.not.be.true;
+          expect(text).to.eql('Please register your party beacon')
+        })
+        .call(done);
     });
+
+    it('Should display a beacon details form', function(done) {
+      client
+        .getTagName('#beacon-details-form', function(err, tagName) {
+          expect(err).to.not.be.true;
+          expect(tagName).to.eql('form')
+        })
+        .call(done);
+    });
+    
+  });
+
+  context('When user clicks on save with blank fields', function() {
+
+    it('Should get an error message', function(done) {
+      client
+        .click('#save')
+        // .waitForText('#error', 2000)
+        .getText('#error', function(err, text) {
+          expect(text).to.eql('You must add beacon numbers')
+        })
+        .call(done);
+    });
+
   });
 
 });
