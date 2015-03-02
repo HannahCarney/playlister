@@ -18,19 +18,19 @@ exports.addSongsToPlaylist = function(credentials, pgTracks) {
     });
 };
 
-// exports.removeSongsFromPlaylist = function(credentials, pgTracks) {
-//   var spotifyApi = new SpotifyWebApi( {clientId : clientId,
-//                                       clientSecret : clientSecret});
-//
-//   spotifyApi.setRefreshToken(credentials.spotifyRefreshToken);
-//   spotifyApi.refreshAccessToken()
-//     .then(function(data) {
-//       spotifyApi.setAccessToken(data['access_token']);
-//       return spotifyApi.removeTracksFromPlaylist(pgTracks.spotifyID, pgTracks.playlistID
-//                                       , {tracks : [uri : pgTracks.tracks] })
-//     }).then(function(data) {
-//       console.log('Removed tracks from the playlist!');
-//     }).catch(function(err) {
-//       console.log('Something went wrong!', err);
-//     });
-// };
+exports.removeSongsFromPlaylist = function(credentials, pgTracks) {
+  var spotifyApi = new SpotifyWebApi( {clientId : clientId,
+                                      clientSecret : clientSecret});
+  var tracks = { tracks : [ uri : pgTracks.tracks]};
+  spotifyApi.setRefreshToken(credentials.spotifyRefreshToken);
+  spotifyApi.refreshAccessToken()
+    .then(function(data) {
+      spotifyApi.setAccessToken(data['access_token']);
+      return spotifyApi.removeTracksFromPlaylist(pgTracks.spotifyID, pgTracks.playlistID
+                                      , tracks)
+    }).then(function(data) {
+      console.log('Removed tracks from the playlist!');
+    }).catch(function(err) {
+      console.log('Something went wrong!', err);
+    });
+};
