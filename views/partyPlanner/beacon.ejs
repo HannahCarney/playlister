@@ -9,7 +9,7 @@
     <h1 id='beacon-title'>Please register your party beacon</h1>
 
      <% if (errorID == 1) { %>
-       <p id="error">You must add beacon numbers</p>
+       <p class='error-message'>You must add beacon's numbers.</p>
      <% } %>
 
       <form action="/partyplanner/beacon/<%-spotifyID %>" method="post" class="form-horizontal" id="beacon-details-form" name="beacon-details-form">

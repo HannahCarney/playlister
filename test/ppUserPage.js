@@ -45,9 +45,9 @@ describe('Beacon details page', function() {
     it('Should get an error message', function(done) {
       client
         .click('#savebeacon')
-        .waitForText('#error', 5000)
-        .getText('#error', function(err, text) {
-          expect(text).to.eql('You must add beacon numbers')
+        .waitForText('.error-message', 5000)
+        .getText('.error-message', function(err, text) {
+          expect(text).to.eql("You must add beacon's numbers.")
         })
         .call(done);
     });
