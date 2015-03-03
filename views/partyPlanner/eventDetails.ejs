@@ -1,22 +1,44 @@
 <head>
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
   <link rel="stylesheet" href="/css/stylesheet.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </head>
-<section class="center jumbotron">
-  <h1>Party Information</h1>
+<body>
+<section class="container">
+  <section class="center jumbotron" style="background:rgba(0, 0, 0, .8);">
+    <h2 id="event-info">Party Information</h2>
 
-  <h2>A better way to play music</h2>
+     <h4>Please tell us the name and date of your event, what you'd like your Spotify
+      playlist to be called.</h4>
 
-</section>
-
-  <p>Please tell us the name of your event, what you'd like your Spotify
-      playlist to be called and when it's happening</p>
-
-  <form action="/partyplanner/eventdetails/<%- spotifyID %>" method="post" id="party-event-form">
-    <label for="partyName">Party name:</label>
-    <input name="partyName" id="partyName" required>
-    <label for="playlistName">Party playlist name:</label>
-    <input name="playlistName" id="playlistName" required>
-     <label for="partyDate">Party Date:</label>
-    <input type="date" name="partyDate" id="partyDate" required>
-    <input type="submit" value="Save party information" id='saveparty'>
-  </form>
+    <form action="/partyplanner/eventdetails/<%- spotifyID %>" method="post" id="party-event-form" class="form-horizontal form-inline">
+      <fieldset>
+        <section class="control-group">
+          <label for="partyName" class="control-label">Party name:</label>
+          <section class="controls">
+            <input name="partyName" id="partyName" style="color:black;" required>
+          </section>
+        </section>
+        <section class="control-group">
+          <label for="playlistName" class="control-label">Party playlist name:</label>
+          <section class="controls">
+            <input name="playlistName" id="playlistName" style="color:black;" required>
+          </section>
+        </section>
+        <section class="control-group">
+          <label for="partyDate" class="control-label">Party Date:</label>
+          <section class="controls">
+            <input type="date" name="partyDate" id="partyDate" style="color:black;" required>
+          </section>
+        </section>
+        <section class="form-actions">
+            <input type="submit" value="Save party" id='saveparty' class="btn btn-lg btn-inverse">
+        </section>
+      </fieldset>
+    </form>
+  </section>
+</body>

@@ -1,8 +1,9 @@
 <!doctype html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">  
     <link rel="stylesheet" href="css/stylesheet.css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>   
     <script type="text/javascript" src="http://twitter.github.io/bootstrap/assets/js/bootstrap-transition.js"></script>
@@ -14,7 +15,8 @@
       <section class="navbar-header">
             <div class="name">
          <% if (typeof spotifyID !== "undefined" ) { %>
-                <%- spotifyID %>
+                 <span class="glyphicon glyphicon-user"> <%- spotifyID %></span>
+                
         <% } %>
           </div>
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -23,19 +25,25 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <img src="/images/ps_logo.svg" id='nav-logo' class="visible-xs-block">
+        <img src="/background/logo.png" id='nav-logo'>
       </section>
       <section class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-left">
           <li><h3 id="logo-name" class="hidden-xs">TurnUp TuneIn</h3></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href='/' class="hidden-xs">Home</a></li>
-          <li><a href='/' class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse" >Home</a></li>
-          <li><a href='/contact' class="hidden-xs">Contact</a></li>
-          <li><a href='/contact' class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse" >Contact</a></li>
-          <li><a href='/about' class="hidden-xs">About</a></li>
-          <li><a href='/about' class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse" >About</a></li>
+          <li><a href='/' class="hidden-xs">
+            <span class="glyphicon glyphicon-home"> Home</span></a></li>
+          <li><a href='/' class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="glyphicon glyphicon-home"> Home</span></a></li>
+          <li><a href='/contact' class="hidden-xs">
+            <span class="glyphicon glyphicon-inbox"> Contact</span></a></li>
+          <li><a href='/contact' class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="glyphicon glyphicon-inbox" aria-hidden="true"> Contact</span></a></li>
+          <li><a href='/about' class="hidden-xs">
+            <span class="glyphicon glyphicon-music"> About</span></a></li>
+          <li><a href='/about' class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="glyphicon glyphicon-music"> About</span></a></li>
         </ul>
       </section>
     </section><!--/.nav-collapse -->
