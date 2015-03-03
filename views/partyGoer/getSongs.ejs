@@ -1,3 +1,7 @@
+<head>
+  <link rel="stylesheet" href="/css/stylesheet.css">
+</head>
+
 <body>
 <link rel="stylesheet" type="text/css" href="/css/getSongs.css">
 
@@ -5,32 +9,32 @@
 <p class="error-message">Great minds think alike, that track has already been chosen for this party, please choose again.</p>
 <% } %>
 
-Please choose your party tracks for <span id="pp-party-name"><%- ppPartyName %></span> on
-<span id="pp-party-date"><%- ppPartyDate %></span>
+<p id='pg-title'>Please choose your party tracks for <span id="pp-party-name"><%- ppPartyName %></span> on
+<span id="pp-party-date"><%- ppPartyDate %></span></p>
 
-<h2>Track Search</h2>
-<p>Search for your party track, click on any track in the results to get a 30 second preview.</p>
+<form action='/partygoer/getsongs' method='POST' id="party-email-form">
+  <label for="email">Email:</label>
+  <input type="email" name="email" id='email'>
+  <input type="hidden" name="selectedSong" id="selected-song">
+  <input type="hidden" name="ppPartyName" id="pp-party-name-hidden">
+  <input type="hidden" name="ppPartyDate" id="pp-party-date-hidden">
+  <input type="submit" value="submit" id='go'>
+</form>
+
+
+<h2>Search for a Track</h2>
+<p id='pg-subtitle'>Type a track name and click on 'Search'. Then, click on any track from the results to get a 30 second preview.</p>
 <form id="song-choices">
     <input type="text" id="query" value="" class="form-control" placeholder="Type a track name"/>
     <input type="submit" name="submit" id="search" class="btn btn-primary" value="Search" />
 </form>
 <div id="results"></div>
-</div>
-
-<form action='/partygoer/getsongs' method='POST' id="party-email-form">
-  <label for="email">Email:</label>
-  <input type="email" name="email">
-  <input type="hidden" name="selectedSong" id="selected-song">
-  <input type="hidden" name="ppPartyName" id="pp-party-name-hidden">
-  <input type="hidden" name="ppPartyDate" id="pp-party-date-hidden">
-  <input type="submit" value="submit">
-</form>
 
 <script src="//cdn.jsdelivr.net/handlebarsjs/3.0.0/handlebars.min.js"></script>
 <script id="results-template" type="text/x-handlebars-template">
 {{#each tracks.items}}
 <div>{{artists.0.name}}: {{name}}</div>
-<div style="background-image:url({{album.images.0.url}})" data-track-id="{{id}}" class="cover"></div>
+<div id="{{id}}1" style="background-image:url({{album.images.0.url}})" data-track-id="{{id}}" class="cover"></div>
 {{/each}}
 </script>
 <script type="text/javascript" src="../../../js/songSearch.js"></script>

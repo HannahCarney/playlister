@@ -1,0 +1,88 @@
+
+
+body {
+  font-family: GothamLight;
+  color: white;
+  background-image: url(/background/hands2.png);
+  background-repeat: no-repeat 0 0;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+}
+
+
+
+.center {
+  margin-top: 5%;
+  text-align: center;
+}
+
+.name {
+    color: #fff;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    text-align: center;
+    margin-top:1em;
+}
+
+#logo {
+  width: 20%;
+}
+
+#logo-name {
+  margin-top: 7%;
+  color: white;
+}
+
+section {
+  overflow: auto;
+}
+
+#nav-logo {
+  margin-top: .3em;
+  width: 4em;
+  margin-left: 1.6em;
+}
+
+.btn-inverse {
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #363636;
+  *background-color: #222222;
+  background-image: -moz-linear-gradient(top, #444444, #222222);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#444444), to(#222222));
+  background-image: -webkit-linear-gradient(top, #444444, #222222);
+  background-image: -o-linear-gradient(top, #444444, #222222);
+  background-image: linear-gradient(to bottom, #444444, #222222);
+  background-repeat: repeat-x;
+  border-color: #222222 #222222 #000000;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff444444', endColorstr='#ff222222', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, .2);
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 1px rgba(0, 0, 0, .075);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 1px rgba(0, 0, 0, .075);
+}
+
+.btn-inverse:hover,
+.btn-inverse:focus,
+.btn-inverse:active,
+.btn-inverse.active,
+.btn-inverse.disabled,
+.btn-inverse[disabled] {
+  color: #ffffff;
+  background-color: #222222;
+  *background-color: #151515;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+             box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+}
+
+.btn-inverse:active,
+.btn-inverse.active {
+  background-color: #080808 \9;
+}
+
+.btn-inverse.active {
+  color: rgba(255, 255, 255, 0.75);
+}

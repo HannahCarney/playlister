@@ -3,14 +3,23 @@
   <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/stylesheet.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-  <div class="center jumbotron">
-    <h1>Welcome to Party Planner</h1>
-    <h2>A better way to play music</h2>
-    <a href="/partyplanner/authorize" class="btn btn-lg btn-primary">Log in with Spotify</a>
-</div>
+  <section class="container">
+    <section class="center jumbotron" style="background:none;margin-bottom:none">
+      <img src="/images/ps_logo.svg" id="logo" class="hidden-xs">
+
+      <h1 id="welcome-title">Welcome to Party Planner</h1>
+      <h2 id="welcome-subtitle">A better way to play music</h2>
+    </section>
+  </section>
+  <section class="container" style="margin:auto;">
+    <section class="center">
+      <a href="/partyplanner/authorize" class="btn btn-lg btn-primary" id='spotify-login'>Log in with Spotify</a>
+    </section>
+  </section>
 </body>
 </html>

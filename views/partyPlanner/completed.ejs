@@ -1,19 +1,26 @@
+<head>
+  <link rel="stylesheet" href="/css/stylesheet.css">
+</head>
 <body>
 
-  <p>Thank you for registering your party information.</p>
+<section class="container">
+  <section class="center jumbotron">
+    <p id='ty'>Thank you for entering your party information.</p>
 
-  <ul>
-    <li>Party Name: <%- partyName %></li>
-    <li>Party Date: <%- partyDate %></li>
-    <li>Party Playlist Name: <%- partyPlaylistName %></li>
-  </ul>
+    <ul>
+      <li id='pn'>Party Name: <%- partyName %></li>
+      <li id='ppn'>Party Playlist Name: <%- partyPlaylistName %></li>
+      <li id='pd'>Party Date: <%- partyDate %></li>
+    </ul>
 
-  <p>Go to your Spotify account to see your newly created (but empty!) playlist.</p>
+    <p>Go to your Spotify account to see your newly created (but empty!) playlist.</p>
 
-  <p>Don't worry it will fill up as soon as your friends turn up to your party.</p>
+    <p>Don't worry it will fill up as soon as your friends turn up to your party.</p>
 
-  <p>Pass on this link to your friends so they can choose tracks for the playlist</p>
+    <p>Pass on this link to your friends so they can choose tracks for the playlist</p>
 
-  <a href="<%- getSongsLink %>"><%- getSongsLink %></a>
+    <a href="<%- getSongsLink %>"><%- getSongsLink %></a>
+  </section>
+</section>
 
 </body>

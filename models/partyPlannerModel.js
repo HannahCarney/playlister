@@ -70,14 +70,21 @@ exports.authorizeSpotifyCallback = function(req, res) {
 
 exports.saveBeacon = function(req, res) {
   var spotifyID = req.params.spotifyID;
-  var db = req.db;
-  var collectionName = 'ppBeacon';
-  var collectionObject = {"spotifyID" : spotifyID,
-                          "beaconMajor" : req.body.beaconMajor,
-                          "beaconMinor" : req.body.beaconMinor};
-  helpersDatabase.saveToDatabase(db, collectionName, collectionObject);
-  res.redirect('/partyplanner/eventdetails/' + spotifyID);
+  var formMajor = req.body.beaconMajor;
+  var formMinor = req.body.beaconMinor;
+    if (formMajor == null || formMajor == "" || formMinor == null || formMinor == "") {
+      res.redirect('/partyplanner/beacon/' + spotifyID + '?error=1');
+    } else {
+      var db = req.db;
+      var collectionName = 'ppBeacon';
+      var collectionObject = {"spotifyID" : spotifyID,
+                              "beaconMajor" : req.body.beaconMajor,
+                              "beaconMinor" : req.body.beaconMinor};
+      helpersDatabase.saveToDatabase(db, collectionName, collectionObject);
+      res.redirect('/partyplanner/eventdetails/' + spotifyID);
+    }
 };
+
 
 exports.saveEventDetails = function(req, res) {
   var partyName = req.body.partyName;
