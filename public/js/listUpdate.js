@@ -1,5 +1,5 @@
 var list=[];
-var maxSongs = 5; //to read from the server initially
+var maxSongs = 2; //to read from the server initially
 
 $("#addSong").click(function(){
   var selectedSong = $('#selected-song').val();
@@ -11,14 +11,15 @@ $("#addSong").click(function(){
   if (list.length === maxSongs) {
     $('#addSong').attr('disabled', 'disabled');
   }
+  loadSongsToForm();
 });
 
 $('ul').on('click','button',function(el){
   song = this.id;
-  console.log(song);
   deleteFromTheList(list,song);
   $(this).parent().remove();
   $('#addSong').removeAttr('disabled');
+  loadSongsToForm();
 });
 
 deleteFromTheList = function(list,song){
@@ -31,4 +32,16 @@ deleteFromTheList = function(list,song){
   if (index > -1){
     list.splice(index,1);
   }
+}
+
+loadSongsToForm = function() {
+  console.log('function called');
+  var songIDList = [];
+  for (var i = 0; i < list.length; i++) {
+    songIDList.push(list[i].spotifyID);
+  }
+  console.log(songIDList);
+  $('#selected-song').val(songIDList);
+  $('#pp-party-name-hidden').val($('#pp-party-name').text());
+  $('#pp-party-date-hidden').val($('#pp-party-date').text());
 }
