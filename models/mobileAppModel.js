@@ -112,21 +112,15 @@ exports.songs = function(req, res) {
                     tracks: pgSongChoice};
     if (action === 'add') {
       helpersSpotify.addSongsToPlaylist(credentials, tracks);
+      res.jsonp({confirmation: 'Your tracks have been added to the party playlist'});
     }
     else if (action === 'remove') {
       helpersSpotify.removeSongsFromPlaylist(credentials, tracks);
+      res.jsonp({confirmation: 'Your tracks have been removed from the party playlist'});
     }
     else {
       console.log('Songs: unknown action');
     }
-    res.jsonp({confirmation: 'Your tracks have been ' +
-      if (action === add) {
-        return 'added';
-      }
-      else {
-        return 'removed';
-      }
-      + ' from the party playlist'});
   };
 
   // Start point db retrieval based on url params
