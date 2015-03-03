@@ -6,11 +6,13 @@ var server = require('http').createServer(app);
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressLayouts = require('express-ejs-layouts');
+
 // Database
-var mongo = require('mongodb'); //is this required, does monk do it anyway?
+// var mongo = require('mongodb'); //is this required, does monk do it anyway?
 var mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost:27017/playlister';
 var monk = require('monk');
 var db = monk(mongoUri);
+
 //router
 var partyGoer = require('./routes/partyGoer');
 var partyPlanner = require('./routes/partyPlanner');
@@ -33,9 +35,11 @@ app.use('/mobileapp', mobileApp);
 app.set('port', (process.env.PORT || 3000));
 // // Routes
 app.get('/', function(req, res){
-res.render('index');
+  res.render('index');
 });
+
 server.listen(app.get('port'), function(){
 console.log('Server running at ' + app.get('port'));
 });
+
 module.exports = server;

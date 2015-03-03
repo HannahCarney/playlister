@@ -6,24 +6,30 @@
 <body>
 <section class="container">
   <section class="center jumbotron" style="background:none;margin-bottom:none;">
-    <h1>Please register your party beacon</h1>
-      <form action="/partyplanner/beacon/<%-spotifyID %>" method="post" class="form-horizontal" id="beacon-details-form">
+    <h1 id='beacon-title'>Please register your party beacon</h1>
+
+     <% if (errorID == 1) { %>
+       <p id="error">You must add beacon numbers</p>
+     <% } %>
+
+      <form action="/partyplanner/beacon/<%-spotifyID %>" method="post" class="form-horizontal" id="beacon-details-form" name="beacon-details-form">
         <input type="hidden" name="spotifyID" id="spotifyID">
         <div class="form-group">
           <label for="beaconMajor" class="col-sm-6 control-label">Beacon Major</label>
           <div class="col-sm-10" style="width:15em">    
-            <input name="beaconMajor" class="form-control" placeholder="major" type="text" style="color:black;">
+            <input name="beaconMajor" id=
+            "major" class="form-control" placeholder="major" type="text" style="color:black;">
           </div>
         </div>
         <div class="form-group">
           <label for="beaconMinor" class="col-sm-6 control-label">Beacon Minor</label>
           <div class="col-sm-10" style="width:15em">  
-            <input name="beaconMinor" class="form-control" placeholder="minor" type="text" style="color:black;">
+            <input name="beaconMinor" id="minor" class="form-control" placeholder="minor" type="text" style="color:black;">
           </div>
          </div>
          <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
-            <input type="submit" value="Save" class="btn btn-lg btn-inverse">
+            <input type="submit" value="Save" id="savebeacon" class="btn btn-lg btn-inverse">
           </div>
         </div>
       </form>

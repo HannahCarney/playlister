@@ -11,7 +11,7 @@ exports.addSongsToPlaylist = function(credentials, pgTracks) {
       spotifyApi.setAccessToken(data.access_token);
       return spotifyApi.addTracksToPlaylist(pgTracks.spotifyID,
                         pgTracks.playlistID, [pgTracks.tracks]);
-    }).then(function(data) {
+    }).then(function() {
       console.log('Added tracks to the playlist!');
     }).catch(function(err) {
       console.log('Something went wrong!', err);
@@ -28,7 +28,7 @@ exports.removeSongsFromPlaylist = function(credentials, pgTracks) {
       spotifyApi.setAccessToken(data.access_token);
       return spotifyApi.removeTracksFromPlaylist(pgTracks.spotifyID,
                                     pgTracks.playlistID, [tracksVar]);
-    }).then(function(data) {
+    }).then(function() {
       console.log('Removed tracks from the playlist!');
     }).catch(function(err) {
       console.log('Something went wrong!', err);

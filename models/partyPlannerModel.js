@@ -5,7 +5,6 @@ var SpotifyWebApi = require('spotify-web-api-node');
 var clientId = process.env.SPOTIFY_CLIENT_ID;
 var clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
 var redirect_uri_authorize = process.env.SPOTIFY_AUTHORIZE_CALLBACK;
-var redirect_uri_create_playlist = process.env.SPOTIFY_CREATE_PLAYLIST_CALLBACK;
 var stateKey = 'spotify_auth_state';
 
 //functions called by controllers
@@ -59,7 +58,7 @@ exports.authorizeSpotifyCallback = function(req, res) {
         request.get(options, function(error, response, body) {
           var spotifyID = body.id;
           saveTokensToDatabase(req, spotifyID, spotifyAccessToken, spotifyRefreshToken);
-          res.redirect('/partyplanner/beacon/' + spotifyID);
+          res.redirect('/partyplanner/beacon/' + spotifyID );
           });
       }
       else {
@@ -71,14 +70,21 @@ exports.authorizeSpotifyCallback = function(req, res) {
 
 exports.saveBeacon = function(req, res) {
   var spotifyID = req.params.spotifyID;
-  var db = req.db;
-  var collectionName = 'ppBeacon';
-  var collectionObject = {"spotifyID" : spotifyID,
-                          "beaconMajor" : req.body.beaconMajor,
-                          "beaconMinor" : req.body.beaconMinor};
-  helpersDatabase.saveToDatabase(db, collectionName, collectionObject);
-  res.redirect('/partyplanner/eventdetails/' + spotifyID);
+  var formMajor = req.body.beaconMajor;
+  var formMinor = req.body.beaconMinor;
+    if (formMajor == null || formMajor == "" || formMinor == null || formMinor == "") {
+      res.redirect('/partyplanner/beacon/' + spotifyID + '?error=1');
+    } else {
+      var db = req.db;
+      var collectionName = 'ppBeacon';
+      var collectionObject = {"spotifyID" : spotifyID,
+                              "beaconMajor" : req.body.beaconMajor,
+                              "beaconMinor" : req.body.beaconMinor};
+      helpersDatabase.saveToDatabase(db, collectionName, collectionObject);
+      res.redirect('/partyplanner/eventdetails/' + spotifyID);
+    }
 };
+
 
 exports.saveEventDetails = function(req, res) {
   var partyName = req.body.partyName;
@@ -87,8 +93,7 @@ exports.saveEventDetails = function(req, res) {
   var spotifyID = req.params.spotifyID;
   var spotifyApi = new SpotifyWebApi({
     clientId : clientId,
-    clientSecret : clientSecret,
-    redirectUri : process.env.SECOND_CALLBACK
+    clientSecret : clientSecret
   });
 
   var callback = function(err, doc) {
