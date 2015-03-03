@@ -5,15 +5,27 @@
 </head>
 <body>
 <section class="container">
-  <section class="center jumbotron">
+  <section class="center jumbotron" style="background:none;margin-bottom:none;">
     <h1>Please register your party beacon</h1>
-      <form action="/partyplanner/beacon/<%-spotifyID %>" method="post" id="beacon-details-form">
+      <form action="/partyplanner/beacon/<%-spotifyID %>" method="post" class="form-horizontal" id="beacon-details-form">
         <input type="hidden" name="spotifyID" id="spotifyID">
-        <label for="beaconMajor">Beacon (major)</label>
-        <input name="beaconMajor" type="text">
-        <label for="beaconMinor">Beacon (minor)</label>
-        <input name="beaconMinor" type="text">
-        <input type="submit" value="Save">
+        <div class="form-group">
+          <label for="beaconMajor" class="col-sm-6 control-label">Beacon Major</label>
+          <div class="col-sm-10" style="width:15em">    
+            <input name="beaconMajor" class="form-control" placeholder="major" type="text" style="color:black;">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="beaconMinor" class="col-sm-6 control-label">Beacon Minor</label>
+          <div class="col-sm-10" style="width:15em">  
+            <input name="beaconMinor" class="form-control" placeholder="minor" type="text" style="color:black;">
+          </div>
+         </div>
+         <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <input type="submit" value="Save" class="btn btn-lg btn-inverse">
+          </div>
+        </div>
       </form>
     </section>
   </section>
