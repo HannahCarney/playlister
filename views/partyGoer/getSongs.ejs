@@ -9,9 +9,8 @@
 </head>
 
 <body>
-<link rel="stylesheet" type="text/css" href="/css/getSongs.css">
 <section class="container">
-  <section class="center jumbotron" style="background:none;margin-bottom:none;">
+  <section class="center jumbotron" style="background:rgba(0, 0, 0, .8);">
 <% if (errorID == 1) { %>
 <p class="error-message">Great minds think alike, that track has already been chosen for this party, please choose again.</p>
 <% } %>
@@ -39,10 +38,10 @@
 
 <script src="//cdn.jsdelivr.net/handlebarsjs/3.0.0/handlebars.min.js"></script>
 <script id="results-template" type="text/x-handlebars-template">
-{{#each tracks.items}}
-<div>{{artists.0.name}}: {{name}}</div>
-<div id="{{id}}1" style="background-image:url({{album.images.0.url}})" data-track-id="{{id}}" class="cover"></div>
-{{/each}}
+  {{#each tracks.items}}
+  <div>{{artists.0.name}}: {{name}}</div>
+  <div id="{{id}}1" style="background-image:url({{album.images.0.url}})" data-track-id="{{id}}" class="cover"></div>
+  {{/each}}
 </script>
 <script type="text/javascript" src="../../../js/songSearch.js"></script>
 </section>
