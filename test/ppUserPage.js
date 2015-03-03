@@ -44,7 +44,7 @@ describe('Beacon details page', function() {
 
     it('Should get an error message', function(done) {
       client
-        .click('#save')
+        .click('#savebeacon')
         .waitForText('#error', 5000)
         .getText('#error', function(err, text) {
           expect(text).to.eql('You must add beacon numbers')
@@ -60,7 +60,7 @@ describe('Beacon details page', function() {
       client
         .setValue('#minor', '123')
         .setValue('#major', '123')
-        .click('#save')
+        .click('#savebeacon')
         .waitForText('#party-event-form', 5000)
         .getText('#event-info', function(err, text) {
           expect(text).to.eql('Event Info')

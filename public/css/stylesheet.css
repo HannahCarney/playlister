@@ -36,12 +36,20 @@ body {
   color: white;
 }
 
+.jumbotron {
+  padding-left:0;
+  padding-right:0;
+  margin-right:10%;
+  margin-left:10%;
+}
+
+
 section {
   overflow: auto;
 }
 
 #nav-logo {
-  margin-top: .3em;
+  margin-top: .6em;
   width: 4em;
   margin-left: 1.6em;
 }

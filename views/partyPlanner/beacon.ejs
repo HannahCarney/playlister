@@ -11,8 +11,8 @@
 </head>
 <body>
 <section class="container">
-  <section class="center jumbotron" style="background:rgba(0, 0, 0, .8);margin-top:18%;">
-    <h1 id='beacon-title'>Please register your party beacon</h1>
+  <section class="center jumbotron" style="background:rgba(0, 0, 0, .8);margin-top:18%;padding-left:0;padding-right:0;margin-right:15%;margin-left:15%;">
+    <h2 id='beacon-title'>Please register your party beacon</h2>
 
      <% if (errorID == 1) { %>
        <p id="error">You must add beacon numbers</p>
@@ -26,19 +26,20 @@
               <div class="controls">   
                   <input name="beaconMajor" placeholder="major" type="text" style="color:black;">
               </div>
-        </div>
-        <div class="control-group">
-            <label for="beaconMinor" class="control-label">Beacon Minor:</label> 
-            <div class="controls">
-                <input name="beaconMinor" id="minor" placeholder="minor" type="text" style="color:black;">
-            </div>
-       </div>
-       <div class="form-actions">
-            <input type="submit" value="Save" id="savebeacon" class="btn btn-lg btn-inverse">
-       </div>
-       </fieldset>
-    </form>
-  </section>
+
+          </div>
+          <div class="control-group">
+              <label for="beaconMinor" class="control-label">Beacon Minor:</label> 
+              <div class="controls">
+                 <input name="beaconMinor" id="minor" placeholder="minor" type="text" style="color:black;">
+              </div>
+         </div>
+         <div class="form-actions">
+              <input type="submit" value="Save" id="savebeacon" class="btn btn-lg btn-inverse">
+         </div>
+         </fieldset>
+      </form>
+    </section>
 </section>
 </body>
 </html>

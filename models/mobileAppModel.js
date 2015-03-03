@@ -38,6 +38,7 @@ exports.getBeacon = function(req, res) {
     helpersDatabase.errorHandling(err);
     beaconMajor = doc[0].beaconMajor;
     beaconMinor = doc[0].beaconMinor;
+    //Send the beacon data back to the mobile app
     res.jsonp({beaconMajor: beaconMajor, beaconMinor: beaconMinor});
   };
   // End of callbacks
@@ -111,15 +112,15 @@ exports.songs = function(req, res) {
                     tracks: pgSongChoice};
     if (action === 'add') {
       helpersSpotify.addSongsToPlaylist(credentials, tracks);
+      res.jsonp({confirmation: 'Your tracks have been added to the party playlist'});
     }
     else if (action === 'remove') {
       helpersSpotify.removeSongsFromPlaylist(credentials, tracks);
+      res.jsonp({confirmation: 'Your tracks have been removed from the party playlist'});
     }
     else {
       console.log('Songs: unknown action');
     }
-    res.render('mobileApp/returnSongChoice', {credentials: credentials,
-                                              tracks: tracks});
   };
 
   // Start point db retrieval based on url params

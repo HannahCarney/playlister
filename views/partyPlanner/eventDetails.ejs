@@ -7,10 +7,16 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </head>
+<body>
 <section class="container">
-  <section class="center jumbotron" style="background:rgba(0, 0, 0, .8);margin-top:18%;">
-    <h1 id="event-info">Event Info</h1>
-    <h2>A better way to play music</h2>
+  <section class="center jumbotron" style="background:rgba(0, 0, 0, .8);margin-top:5em;padding-left:.5;padding-right:.5;">
+    <h2 id="event-info">Party Information</h2>
+
+  <h3>A better way to play music</h2>
+
+     <h4>Please tell us the name of your event, what you'd like your Spotify
+      playlist to be called and when it's happening</h4>
+
     <form action="/partyplanner/eventdetails/<%- spotifyID %>" method="post" id="party-event-form" class="form-horizontal form-inline">
       <fieldset>
         <section class="control-group">
@@ -32,8 +38,12 @@
           </section>
         </section>
         <section class="form-actions">
-            <input type="submit" value="Save" id='saveparty' class="btn btn-lg btn-inverse">
+            <input type="submit" value="Save party" id='saveparty' class="btn btn-lg btn-inverse">
         </section>
       </fieldset>
     </form>
   </section>
+<body>
+
+ 
+

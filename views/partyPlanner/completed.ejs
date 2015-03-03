@@ -8,20 +8,26 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </head>
 <body>
+
 <section class="container">
   <section class="center jumbotron" style="background:rgba(0, 0, 0, .8);margin-top:18%">
-Thank you for entering your party information.
 
-  <ul>
-    <li>Party Name: <%- partyName %></li>
-    <li>Party Date: <%- partyDate %></li>
-    <li>Party Playlist Name: <%- playlistName %></li>
-  </ul>
+    <p id='ty'>Thank you for entering your party information.</p>
 
-  <p>Pass on this link in your invites to allow your friends to choose songs for the playlist</p>
+    <ul>
+      <li id='pn'>Party Name: <%- partyName %></li>
+      <li id='ppn'>Party Playlist Name: <%- partyPlaylistName %></li>
+      <li id='pd'>Party Date: <%- partyDate %></li>
+    </ul>
 
-  <a href="<%- getSongsLink %>"><%- getSongsLink %></a>
+    <p>Go to your Spotify account to see your newly created (but empty!) playlist.</p>
+
+    <p>Don't worry it will fill up as soon as your friends turn up to your party.</p>
+
+    <p>Pass on this link to your friends so they can choose tracks for the playlist</p>
+
+    <a href="<%- getSongsLink %>"><%- getSongsLink %></a>
   </section>
-  </section>
+</section>
 
 </body>
