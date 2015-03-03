@@ -13,10 +13,10 @@
 
   <form action="/partyplanner/eventdetails/<%- spotifyID %>" method="post" id="party-event-form">
     <label for="partyName">Party name:</label>
-    <input name="partyName" id="partyName">
+    <input name="partyName" id="partyName" required>
     <label for="playlistName">Party playlist name:</label>
-    <input name="playlistName" id="playlistName">
+    <input name="playlistName" id="playlistName" required>
      <label for="partyDate">Party Date:</label>
-    <input type="date" name="partyDate" id="partyDate">
+    <input type="date" name="partyDate" id="partyDate" required>
     <input type="submit" value="Save party information" id='saveparty'>
   </form>

@@ -32,7 +32,7 @@ deleteFromTheList = function(list,song){
   if (index > -1){
     list.splice(index,1);
   }
-}
+};
 
 loadSongsToForm = function() {
   console.log('function called');
@@ -44,4 +44,4 @@ loadSongsToForm = function() {
   $('#selected-song').val(songIDList);
   $('#pp-party-name-hidden').val($('#pp-party-name').text());
   $('#pp-party-date-hidden').val($('#pp-party-date').text());
-}
+};
