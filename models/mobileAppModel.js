@@ -70,40 +70,55 @@ exports.songs = function(req, res) {
 
   var retrieveAccessTokens = function(err, doc) {
     helpersDatabase.errorHandling(err);
+    if (doc.length === 0) {
+      res.jsonp({message: 'We could not find a party today for that beacon'});
+    }
+    else {
     ppSpotifyID = doc[0].spotifyID;
     collection = db.get('ppSpotifyCredentials');
     collection.find({ spotifyID: ppSpotifyID },
                     { fields : {spotifyAccessToken: 1, spotifyRefreshToken: 1, _id: 0},
                       limit : 1,
                       sort : {$natural : -1}
-                    }, retrieveEventDetails);
+                    }, retrieveEventDetails);}
   };
 
   var retrieveEventDetails = function(err, doc) {
     helpersDatabase.errorHandling(err);
+    if (doc.length === 0) {
+      res.jsonp({message: 'We could not find authorization details for the party organiser'});
+    }
+    else {
     ppSpotifyAccessToken = doc[0].spotifyAccessToken;
     ppSpotifyRefreshToken = doc[0].spotifyRefreshToken;
     var collectionName = 'ppEvent';
     var matcher = { spotifyID: ppSpotifyID, partyDate: todaysDate };
     var fields = {playlistID: 1, partyName: 1, _id: 0};
     var callback = retrieveSongChoices;
-    helpersDatabase.readFromDatabase(db, collectionName, matcher, fields, callback);
+    helpersDatabase.readFromDatabase(db, collectionName, matcher, fields, callback);}
   };
 
   var retrieveSongChoices = function(err, doc) {
     helpersDatabase.errorHandling(err);
+    if (doc.length === 0) {
+      res.jsonp({message: 'We could not find a playlist for this party'});
+    }
+    else {
     ppSpotifyPlaylistID = doc[0].playlistID;
     ppPartyName = doc[0].partyName;
     var collectionName = 'pgSongChoice';
     var matcher = { ppPartyName: ppPartyName, ppPartyDate: todaysDate, pgEmail: pgEmail };
     var fields = {pgSongChoice: 1, _id: 0};
     var callback = returnSongChoices;
-    helpersDatabase.readFromDatabase(db, collectionName, matcher, fields, callback);
-
+    helpersDatabase.readFromDatabase(db, collectionName, matcher, fields, callback);}
   };
 
   var returnSongChoices = function(err, doc) {
     helpersDatabase.errorHandling(err);
+    if (doc.length === 0) {
+      res.jsonp({message: 'We could not find any tracks for your email address for this party'});
+    }
+    else {
     pgSongChoice = doc[0].pgSongChoice;
     var credentials = {spotifyAccessToken: ppSpotifyAccessToken,
                       spotifyRefreshToken: ppSpotifyRefreshToken};
@@ -112,15 +127,15 @@ exports.songs = function(req, res) {
                     tracks: pgSongChoice};
     if (action === 'add') {
       helpersSpotify.addSongsToPlaylist(credentials, tracks);
-      res.jsonp({confirmation: 'Your tracks have been added to the party playlist'});
+      res.jsonp({message: 'Your tracks have been added to the party playlist'});
     }
     else if (action === 'remove') {
       helpersSpotify.removeSongsFromPlaylist(credentials, tracks);
-      res.jsonp({confirmation: 'Your tracks have been removed from the party playlist'});
+      res.jsonp({message: 'Your tracks have been removed from the party playlist'});
     }
     else {
       console.log('Songs: unknown action');
-    }
+    }}
   };
 
   // Start point db retrieval based on url params

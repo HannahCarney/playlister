@@ -21,5 +21,6 @@ exports.readFromDatabase = function(db, collectionName, matcher, fields, callbac
 exports.errorHandling = function(err) {
   if (err) {
     console.log(err);
+    res
   }
 };
