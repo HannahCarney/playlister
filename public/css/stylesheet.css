@@ -27,10 +27,11 @@ body {
 }
 
 #logo {
-  width: 20%;
+  width: 23%;
 }
 
 #logo-name {
+  font-family: Apercu;
   margin-top: 7%;
   color: white;
 }
