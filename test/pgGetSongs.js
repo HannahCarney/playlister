@@ -72,12 +72,12 @@ describe('Party goer selecting songs page', function() {
 
     it('Should select a song', function(done) {
       client
-        .setValue('#email', 'partygoer@email.com')
         .setValue('#query', 'superstition')
         .click('#search')
         .waitFor('.cover', 5000)
-        .click('#300RfAPZ57B0y6YYj9n6DN')
-        .click('#submit')
+        .click('#300RfAPZ57B0y6YYj9n6DN1')
+        .setValue('#email', 'partygoer@email.com')
+        .click('#submit-song')
         .waitFor('#thank-you')
         .getText('#thank-you', function(err, text) {
           expect(text).to.include('hello partygoer@email.com, your song id is')

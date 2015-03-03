@@ -14,7 +14,7 @@
   <input type="hidden" name="selectedSong" id="selected-song">
   <input type="hidden" name="ppPartyName" id="pp-party-name-hidden">
   <input type="hidden" name="ppPartyDate" id="pp-party-date-hidden">
-  <input type="submit" value="submit" id='submit'>
+  <input type="submit" value="submit" id='submit-song'>
 </form>
 
 
@@ -25,14 +25,13 @@
     <input type="submit" name="submit" id="search" class="btn btn-primary" value="Search" />
 </form>
 <div id="results"></div>
-</div>
 
 
 <script src="//cdn.jsdelivr.net/handlebarsjs/3.0.0/handlebars.min.js"></script>
 <script id="results-template" type="text/x-handlebars-template">
 {{#each tracks.items}}
 <div>{{artists.0.name}}: {{name}}</div>
-<div style="background-image:url({{album.images.0.url}})" data-track-id="{{id}}" class="cover"></div>
+<div id="{{id}}1" style="background-image:url({{album.images.0.url}})" data-track-id="{{id}}" class="cover"></div>
 {{/each}}
 </script>
 <script type="text/javascript" src="../../../js/songSearch.js"></script>
