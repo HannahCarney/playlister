@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
   <link rel="stylesheet" href="/css/stylesheet.css">
@@ -11,31 +11,34 @@
 </head>
 <body>
 <section class="container">
-  <section class="center jumbotron" style="background:rgba(0, 0, 0, 0.8);margin-top:10em;">
+  <section class="center jumbotron" style="background:rgba(0, 0, 0, .8);margin-top:20%;">
     <h1 id='beacon-title'>Please register your party beacon</h1>
 
      <% if (errorID == 1) { %>
        <p id="error">You must add beacon numbers</p>
      <% } %>
 
-      <form action="/partyplanner/beacon/<%-spotifyID %>" method="post" class="form-horizontal" id="beacon-details-form" name="beacon-details-form">
-        <fieldset>
-        <input type="hidden" name="spotifyID" id="spotifyID">
-        <div class="control-group">
-          <label for="beaconMajor" class-"control-label">Beacon Major:</label>
-        <div class="controls">   
-          <input name="beaconMajor" id=
-            "major" class="form-control" placeholder="major" type="text" style="color:black;">
+      <form action="/partyplanner/beacon/<%-spotifyID %>" method="post" class="form-horizontal form-inline" id="beacon-details-form" name="beacon-details-form">
+          <fieldset>
+           <!--    <input type="hidden" name="spotifyID" id="spotifyID"> -->
+          <div class="control-group">
+              <label for="beaconMajor" class="control-label">Beacon Major:</label>
+              <div class="controls">   
+                  <input name="beaconMajor" placeholder="major" type="text" style="color:black;">
+              </div>
         </div>
-        <div class="form-group">
-          <label for="beaconMinor">Beacon Minor:</label> 
-          <input name="beaconMinor" id="minor" class="form-control" placeholder="minor" type="text" style="color:black;">
+        <div class="control-group">
+            <label for="beaconMinor" class="control-label">Beacon Minor:</label> 
+            <div class="controls">
+                <input name="beaconMinor" id="minor" placeholder="minor" type="text" style="color:black;">
+            </div>
        </div>
-         <div class="form-group">
-            <input type="submit" value="Save" id="savebeacon" class="btn btn-lg btn-inverse">
-          </div>
-      </form>
-    </section>
+       <div class="form-actions">
+            <input type="submit" style="margin-top:3%" value="Save" id="savebeacon" class="btn btn-lg btn-inverse">
+       </div>
+       </fieldset>
+    </form>
   </section>
+</section>
 </body>
 </html>
