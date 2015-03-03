@@ -1,11 +1,15 @@
 <!doctype html>
 <html>
 <head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
   <link rel="stylesheet" href="/css/stylesheet.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </head>
 <body>
 <section class="container">
-  <section class="center jumbotron" style="background:none;margin-bottom:none;">
+  <section class="center jumbotron" style="background:rgba(0, 0, 0, 0.8);margin-top:10em;">
     <h1 id='beacon-title'>Please register your party beacon</h1>
 
      <% if (errorID == 1) { %>
@@ -15,23 +19,17 @@
       <form action="/partyplanner/beacon/<%-spotifyID %>" method="post" class="form-horizontal" id="beacon-details-form" name="beacon-details-form">
         <input type="hidden" name="spotifyID" id="spotifyID">
         <div class="form-group">
-          <label for="beaconMajor" class="col-sm-6 control-label">Beacon Major</label>
-          <div class="col-sm-10" style="width:15em">    
-            <input name="beaconMajor" id=
+          <label for="beaconMajor">Beacon Major:</label>   
+          <input name="beaconMajor" id=
             "major" class="form-control" placeholder="major" type="text" style="color:black;">
-          </div>
         </div>
         <div class="form-group">
-          <label for="beaconMinor" class="col-sm-6 control-label">Beacon Minor</label>
-          <div class="col-sm-10" style="width:15em">  
-            <input name="beaconMinor" id="minor" class="form-control" placeholder="minor" type="text" style="color:black;">
-          </div>
-         </div>
+          <label for="beaconMinor">Beacon Minor:</label> 
+          <input name="beaconMinor" id="minor" class="form-control" placeholder="minor" type="text" style="color:black;">
+       </div>
          <div class="form-group">
-          <div class="col-sm-offset-2 col-sm-10">
             <input type="submit" value="Save" id="savebeacon" class="btn btn-lg btn-inverse">
           </div>
-        </div>
       </form>
     </section>
   </section>
