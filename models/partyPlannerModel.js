@@ -91,34 +91,12 @@ exports.saveEventDetails = function(req, res) {
   var partyDate = req.body.partyDate;
   var playlistName = req.body.playlistName;
   var spotifyID = req.params.spotifyID;
-  var spotifyApi = new SpotifyWebApi({
-    clientId : clientId,
-    clientSecret : clientSecret
-  });
 
   var callback = function(err, doc) {
     if (err) {
       console.log(err);
     }
-    spotifyApi.setAccessToken(doc[0].spotifyAccessToken);
-    spotifyApi.setRefreshToken(doc[0].spotifyRefreshToken);
-
-    spotifyApi.createPlaylist(spotifyID, playlistName, { 'public' : true })
-      .then(function(data) {
-        var db = req.db;
-        var collectionName = 'ppEvent';
-        var collectionObject = {"spotifyID" : data.owner.id,
-                                "playlistName" : data.name,
-                                "playlistID" : data.id,
-                                "partyName" : partyName,
-                                "partyDate" : partyDate};
-        helpersDatabase.saveToDatabase(db,
-                              collectionName,
-                              collectionObject);
-      }, function(err) {
-        console.log('Something went wrong! ', err);
-      });
-
+    createPlaylist(req, doc, partyName, partyDate, playlistName, spotifyID);
     res.redirect('/partyplanner/completed/' + partyName + '/' +
                                               partyDate + '/' +
                                               playlistName);
@@ -157,4 +135,32 @@ var saveTokensToDatabase = function(req, spotifyID, spotifyAccessToken, spotifyR
                           "spotifyAccessToken"  : spotifyAccessToken,
                           "spotifyRefreshToken" : spotifyRefreshToken};
   helpersDatabase.saveToDatabase(db, collectionName, collectionObject);
+};
+
+
+var createPlaylist = function(req, doc, partyName, partyDate, playlistName, spotifyID) {
+  var spotifyApi = new SpotifyWebApi({
+    clientId : clientId,
+    clientSecret : clientSecret
+  });
+
+  spotifyApi.setAccessToken(doc[0].spotifyAccessToken);
+  spotifyApi.setRefreshToken(doc[0].spotifyRefreshToken);
+
+  spotifyApi.createPlaylist(spotifyID, playlistName, { 'public' : true })
+    .then(function(data) {
+      var db = req.db;
+      var collectionName = 'ppEvent';
+      var collectionObject = {"spotifyID" : data.owner.id,
+                              "playlistName" : data.name,
+                              "playlistID" : data.id,
+                              "partyName" : partyName,
+                              "partyDate" : partyDate};
+      helpersDatabase.saveToDatabase(db,
+                            collectionName,
+                            collectionObject);
+    }, function(err) {
+      console.log('Something went wrong! ', err);
+    });
+
 };

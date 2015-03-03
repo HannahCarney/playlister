@@ -3,7 +3,7 @@ var maxSongs = 2; //to read from the server initially
 
 $("#addSong").click(function(){
   var selectedSong = $('#selected-song').val();
-  var id = "#"+selectedSong.substring(14);
+  var id = "#"+selectedSong.substring(14)+'1';
   var name = $(id).attr('idName');
   list.push({spotifyID:selectedSong,name:name});
   text = name+'<button id="'+selectedSong+'">x</button>';
