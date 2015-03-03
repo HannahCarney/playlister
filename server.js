@@ -26,8 +26,8 @@ app.use(bodyParser.json());
 app.use(expressLayouts);
 // Make our db accessible to our router
 app.use(function(req,res,next){
-req.db = db;
-next();
+  req.db = db;
+  next();
 });
 app.use(express.static(__dirname + '/public'))
     .use(cookieParser());
@@ -47,11 +47,6 @@ app.use(function(error, req, res, next) {
 });
 
 app.set('port', (process.env.PORT || 3000));
-
-// Routes
-// app.get('/', function(req, res){
-//   res.render('index');
-// });
 
 server.listen(app.get('port'), function(){
 console.log('Server running at ' + app.get('port'));

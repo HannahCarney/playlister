@@ -15,7 +15,15 @@ exports.beacon = function(req, res) {
 };
 
 exports.saveBeacon = function(req, res) {
-  partyPlannerModel.saveBeacon(req, res);
+  var spotifyID = req.params.spotifyID;
+  var beaconMajor = req.body.beaconMajor;
+  var beaconMinor = req.body.beaconMinor;
+  if (beaconMajor == null || beaconMajor == "" || beaconMinor == null || beaconMinor == "") {
+    res.redirect('/partyplanner/beacon/' + spotifyID + '?error=1');
+  } else {
+    partyPlannerModel.saveBeacon(spotifyID, beaconMajor, beaconMinor);
+    res.redirect('/partyplanner/eventdetails/' + spotifyID);
+  }
 };
 
 exports.eventDetails = function(req, res) {

@@ -1,7 +1,10 @@
+//Modules
 var querystring = require('querystring');
 var request = require('request');
-var helpersDatabase = require('./helpersDatabase');
 var SpotifyWebApi = require('spotify-web-api-node');
+//Modules
+var helpersDatabase = require('./helpersDatabase');
+//Spotify
 var clientId = process.env.SPOTIFY_CLIENT_ID;
 var clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
 var redirect_uri_authorize = process.env.SPOTIFY_AUTHORIZE_CALLBACK;
@@ -68,21 +71,12 @@ exports.authorizeSpotifyCallback = function(req, res) {
   }
 };
 
-exports.saveBeacon = function(req, res) {
-  var spotifyID = req.params.spotifyID;
-  var formMajor = req.body.beaconMajor;
-  var formMinor = req.body.beaconMinor;
-    if (formMajor == null || formMajor == "" || formMinor == null || formMinor == "") {
-      res.redirect('/partyplanner/beacon/' + spotifyID + '?error=1');
-    } else {
-      var db = req.db;
-      var collectionName = 'ppBeacon';
-      var collectionObject = {"spotifyID" : spotifyID,
-                              "beaconMajor" : req.body.beaconMajor,
-                              "beaconMinor" : req.body.beaconMinor};
-      helpersDatabase.saveToDatabase(db, collectionName, collectionObject);
-      res.redirect('/partyplanner/eventdetails/' + spotifyID);
-    }
+exports.saveBeacon = function(spotifyID, beaconMajor, beaconMinor) {
+  var collectionName = 'ppBeacon';
+  var collectionObject = {"spotifyID" : spotifyID,
+                          "beaconMajor" : beaconMajor,
+                          "beaconMinor" : beaconMinor};
+  helpersDatabase.saveToDatabase(collectionName, collectionObject);
 };
 
 
