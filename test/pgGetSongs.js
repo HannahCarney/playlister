@@ -89,20 +89,6 @@ describe('Party goer selecting songs page', function() {
         .call(done);
     });
 
-    it('Should get an error if the email field is empty', function(done) {
-      client
-        .setValue('#query', 'superstition')
-        .click('#search')
-        .waitFor('.cover', 5000)
-        .click('#300RfAPZ57B0y6YYj9n6DN1')
-        .click('#go')
-        .waitFor('.error-message', 5000)
-        .getText('.error-message', function(err, text) {
-          expect(text).to.eql('You must add an email.')
-        })
-        .call(done);
-    });
-
     it('Should get an error if that song has already been selected', function(done) {
       client
         .setValue('#query', 'superstition')

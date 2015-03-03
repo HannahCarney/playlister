@@ -44,7 +44,7 @@ describe('Event info page', function() {
   //       .setValue('#partyName', 'House Party')
   //       .setValue('#playlistName', 'Rock the world!')
   //       .findElement(By.id("datepicker")).click(); 
-  //       .setValue('#partyDate', '05/08/2015')
+  //       .setValue('#partyDate', '05-08 2015')
   //       .click('#save')
   //       .waitForText('#ty', 5000)
   //       .getText('#ty', function(err, text) {
