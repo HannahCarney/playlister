@@ -17,6 +17,7 @@ var db = monk(mongoUri);
 var partyGoer = require('./routes/partyGoer');
 var partyPlanner = require('./routes/partyPlanner');
 var mobileApp = require('./routes/mobileApp');
+
 // Server Set-up
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'))
@@ -24,6 +25,7 @@ app.use(express.static(__dirname + '/public'))
 app.use(bodyParser.urlencoded({'extended':'true'}));
 app.use(bodyParser.json());
 app.use(expressLayouts);
+
 // Make our db accessible to our router
 app.use(function(req,res,next){
 req.db = db;
@@ -33,6 +35,7 @@ app.use('/partygoer', partyGoer);
 app.use('/partyplanner', partyPlanner);
 app.use('/mobileapp', mobileApp);
 app.set('port', (process.env.PORT || 3000));
+
 // // Routes
 app.get('/', function(req, res){
   res.render('index');
