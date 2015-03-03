@@ -1,16 +1,23 @@
 <!doctype html>
 <html>
   <head>
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+   
     <link rel="stylesheet" href="css/stylesheet.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>   
+    <script type="text/javascript" src="http://twitter.github.io/bootstrap/assets/js/bootstrap-transition.js"></script>
+    <script type="text/javascript" src="http://twitter.github.io/bootstrap/assets/js/bootstrap-collapse.js"></script>
+
   </head>
-  <header id="myNavbar" class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+  <header id="myNavbar" class="navbar navbar-default navbar-inverse navbar-fixed-top" style="background:rgba(0, 0, 0, 0.8)" role="navigation">
     <section class="container">
       <section class="navbar-header">
+            <div class="name">
+         <% if (typeof spotifyID !== "undefined" ) { %>
+                <%- spotifyID %>
+        <% } %>
+          </div>
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
@@ -20,16 +27,19 @@
         <img src="/images/ps_logo.svg" id='nav-logo' class="visible-xs-block">
       </section>
       <section class="collapse navbar-collapse">
-        <ul class="nav navbar-nav">
+        <ul class="nav navbar-nav navbar-left">
           <li><h3 id="logo-name" class="hidden-xs">TurnUp TuneIn</h3></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li style='color:white;' data-toggle="collapse" data-target=".navbar-collapse"><a href='#'>content</a></li>
-          <li style='color:white;' data-toggle="collapse" data-target=".navbar-collapse"><a href='#'>content2</a></li>
-          <li style='color:white;' data-toggle="collapse" data-target=".navbar-collapse"><a href='#'>content3</a></li>
+          <li><a href='#' class="hidden-xs">content</a></li>
+          <li><a href='#' class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse" >content</a></li>
+          <li><a href='#' class="hidden-xs">content2</a></li>
+          <li><a href='#' class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse" >content2</a></li>
+          <li><a href='#' class="hidden-xs">content3</a></li>
+          <li><a href='#' class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse" >content3</a></li>
         </ul>
-      </section><!--/.nav-collapse -->
-    </section>
+      </section>
+    </section><!--/.nav-collapse -->
   </header>
   <body>
     <%- body %>

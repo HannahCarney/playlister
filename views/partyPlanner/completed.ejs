@@ -1,14 +1,21 @@
+<head>
+  <link rel="stylesheet" href="/css/stylesheet.css">
+</head>
 <body>
-Thank you for entering your party information.
+<section class="container">
+  <section class="center jumbotron">
+<p id='ty'>Thank you for entering your party information.</p>
 
   <ul>
-    <li>Party Name: <%- partyName %></li>
-    <li>Party Date: <%- partyDate %></li>
-    <li>Party Playlist Name: <%- partyPlaylistName %></li>
+    <li id='pn'>Party Name: <%- partyName %></li>
+    <li id='ppn'>Party Playlist Name: <%- partyPlaylistName %></li>
+    <li id='pd'>Party Date: <%- partyDate %></li>
   </ul>
 
   <p>Pass on this link in your invites to allow your friends to choose songs for the playlist</p>
 
   <a href="<%- getSongsLink %>"><%- getSongsLink %></a>
+  </section>
+  </section>
 
 </body>

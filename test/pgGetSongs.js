@@ -77,10 +77,10 @@ describe('Party goer selecting songs page', function() {
         .waitFor('.cover', 5000)
         .click('#300RfAPZ57B0y6YYj9n6DN1')
         .setValue('#email', 'partygoer@email.com')
-        .click('#submit-song')
-        .waitFor('#thank-you')
+        .elementIdClick('#go')
+        .waitFor('#thank-you', 5000)
         .getText('#thank-you', function(err, text) {
-          expect(text).to.include('hello partygoer@email.com, your song id is')
+          expect(text).to.include('hello partygoer@email.com, your song id is 300RfAPZ57B0y6YYj9n6DN')
         })
         .call(done);
     });
