@@ -1,6 +1,8 @@
 <!doctype html>
 <html>
 <head>
+  <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
   <link rel="stylesheet" href="/css/stylesheet.css">
@@ -17,9 +19,11 @@
      <% } %>
 
       <form action="/partyplanner/beacon/<%-spotifyID %>" method="post" class="form-horizontal" id="beacon-details-form" name="beacon-details-form">
+        <fieldset>
         <input type="hidden" name="spotifyID" id="spotifyID">
-        <div class="form-group">
-          <label for="beaconMajor">Beacon Major:</label>   
+        <div class="control-group">
+          <label for="beaconMajor" class-"control-label">Beacon Major:</label>
+        <div class="controls">   
           <input name="beaconMajor" id=
             "major" class="form-control" placeholder="major" type="text" style="color:black;">
         </div>
