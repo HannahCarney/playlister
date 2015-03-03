@@ -30,7 +30,7 @@ exports.saveEventDetails = function(req, res) {
 exports.completed = function(req, res) {
   var partyName = req.params.partyName;
   var partyDate = req.params.partyDate;
-  var partyPlaylistName = req.params.partyPlaylistName;
+  var partyPlaylistName = req.params.playlistName;
   var getSongsLink = "http://localhost:3000/partygoer/getsongs/" +
       partyName + '/' + partyDate;
   res.render('partyPlanner/completed', { partyName: partyName,

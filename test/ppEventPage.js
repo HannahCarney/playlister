@@ -13,7 +13,7 @@ describe('Event info page', function() {
   beforeEach(function() {
     client.url('http://localhost:3000/partyplanner/eventdetails/username');
   });
- 
+
   after(function(done) {
     client.end(done);
   });
@@ -43,8 +43,8 @@ describe('Event info page', function() {
   //     client
   //       .setValue('#partyName', 'House Party')
   //       .setValue('#playlistName', 'Rock the world!')
-  //       .findElement(By.id("datepicker")).click(); 
-  //       .setValue('#partyDate', '05-08 2015')
+  //       .findElement(By.id("datepicker")).click();
+  //       .setValue('#partyDate', '05/08/2015')
   //       .click('#save')
   //       .waitForText('#ty', 5000)
   //       .getText('#ty', function(err, text) {
