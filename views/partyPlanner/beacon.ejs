@@ -15,8 +15,9 @@
     <h2 id='beacon-title'>Please register your party beacon</h2>
 
      <% if (errorID == 1) { %>
-       <p id="error">You must add beacon numbers</p>
+       <p class='error-message'>You must add beacon's numbers.</p>
      <% } %>
+
 
       <form action="/partyplanner/beacon/<%-spotifyID %>" method="post" class="form-horizontal form-inline" id="beacon-details-form" name="beacon-details-form">
           <fieldset>
@@ -26,7 +27,6 @@
               <div class="controls">   
                   <input name="beaconMajor" placeholder="major" type="text" style="color:black;">
               </div>
-
           </div>
           <div class="control-group">
               <label for="beaconMinor" class="control-label">Beacon Minor:</label> 

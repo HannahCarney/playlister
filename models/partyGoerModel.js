@@ -23,7 +23,7 @@ var saveSongChoices = function(req, res) {
   var collectionObject = {"ppPartyName" : req.body.ppPartyName,
                           "ppPartyDate" : req.body.ppPartyDate,
                           "pgEmail" : req.body.email,
-                          "pgSongChoice" : req.body.selectedSong
+                          "pgSongChoice" : req.body.selectedSong.split(",")
                           };
   helpersDatabase.saveToDatabase(db, collectionName, collectionObject);
   renderThankYouPage(req, res);

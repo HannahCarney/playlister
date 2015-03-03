@@ -57,6 +57,6 @@ module.exports = function(grunt){
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-mocha-casperjs');
   grunt.loadNpmTasks('grunt-express-server');
-  grunt.registerTask('default', ['jshint', 'express:test', 'run:selenium_server', 'mochacli', 'stop:selenium_server']);
-
+  grunt.registerTask('default', ['express:test', 'run:selenium_server', 'mochacli', 'stop:selenium_server']);
+  grunt.registerTask('hint', 'jshint')
 };
