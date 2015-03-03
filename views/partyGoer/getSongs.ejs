@@ -34,9 +34,11 @@
 <script id="results-template" type="text/x-handlebars-template">
 {{#each tracks.items}}
 <div>{{artists.0.name}}: {{name}}</div>
-<div id="{{id}}1" style="background-image:url({{album.images.0.url}})" data-track-id="{{id}}" class="cover"></div>
+<div idName="{{artists.0.name}}: {{name}}" style="background-image:url({{album.images.0.url}})" data-track-id="{{id}}" class="cover" id="{{id}}" ></div>
 {{/each}}
 </script>
+<button id="addSong">Add song to your choices</button>
+<ul class="songList"></ul>
 <script type="text/javascript" src="../../../js/songSearch.js"></script>
-
+<script type="text/javascript" src="../../../js/listUpdate.js"></script>
 </body>
