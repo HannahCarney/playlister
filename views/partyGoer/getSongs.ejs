@@ -28,9 +28,11 @@ Please enter your song choices for <span id="pp-party-name"><%- ppPartyName %></
 <script id="results-template" type="text/x-handlebars-template">
 {{#each tracks.items}}
 <div>{{artists.0.name}}: {{name}}</div>
-<div style="background-image:url({{album.images.0.url}})" data-track-id="{{id}}" class="cover"></div>
+<div idName="{{name}}" style="background-image:url({{album.images.0.url}})" data-track-id="{{id}}" class="cover" id="{{id}}" ></div>
 {{/each}}
 </script>
+<button id="addSong">Add song</button>
+<ul class="songList"></ul>
 <script type="text/javascript" src="../../../js/songSearch.js"></script>
-
+<script type="text/javascript" src="../../../js/listUpdate.js"></script>
 </body>
