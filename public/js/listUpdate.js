@@ -27,7 +27,6 @@ $('ul').on('click','button',function(el){
   deleteFromTheList(list,song);
   $(this).parent().remove();
   $('#addSong').removeAttr('disabled');
-  loadSongsToForm();
 });
 
 deleteFromTheList = function(list,song){
@@ -42,16 +41,39 @@ deleteFromTheList = function(list,song){
   }
 };
 
-loadSongsToForm = function() {
-  console.log('function called');
-  var songIDList = [];
-  for (var i = 0; i < list.length; i++) {
-    songIDList.push(list[i].spotifyID);
-  }
-  console.log(songIDList);
-  $('#selected-song').val(songIDList);
-  $('#pp-party-name-hidden').val($('#pp-party-name').text());
-  $('#pp-party-date-hidden').val($('#pp-party-date').text());
+loadSongsToForm = function(song) {
+  var ppPartyName = $('#pp-party-name').text();
+  var ppPartyDate = $('#pp-party-date').text();
+  var singleSongChoice = song;
+  serverVerifySong(location.host,"/verifySong",{ppPartyName: ppPartyName, ppPartyDate: ppPartyDate, singleSongChoice: singleSongChoice},function(json){
+    if (json.songChoiceAllowed == false) {
+      var error = "Song has already been picked";
+    $('#errormessage').text(error);
+    }
+    else {
+      console.log('function called');
+      var songIDList = [];
+      for (var i = 0; i < list.length; i++) {
+        songIDList.push(list[i].spotifyID);
+      }
+      console.log(songIDList);
+      $('#selected-song').val(songIDList);
+      $('#pp-party-name-hidden').val($('#pp-party-name').text());
+      $('#pp-party-date-hidden').val($('#pp-party-date').text());
+    }
+  });
+};
+
+serverVerifySong = function(path,ext,object,callback){
+    $.ajax({
+             type: "GET", 
+             dataType: 'json', 
+             url: path+ext, //ext = '/qry'
+             data: object,
+             success: function(json){
+                 callback(json);
+             }
+         });
 };
 
 validate = function(selectedSong) {
@@ -64,5 +86,5 @@ validate = function(selectedSong) {
     if (list.length === maxSongs) {
       $('#addSong').attr('disabled', 'disabled');
     }
-    loadSongsToForm();
+    loadSongsToForm(selectedSong);
 };
