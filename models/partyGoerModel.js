@@ -11,7 +11,7 @@ exports.verifySongChoices = function(req,res){
       helpersDatabase.errorHandling(err);
       if (doc.length > 0) {
         res.redirect('/partygoer/getsongs/'+req.body.ppPartyName+'/'+req.body.ppPartyDate+"?error=1");
-      }else{
+      } else {
          saveSongChoices(req,res);
       }
   });

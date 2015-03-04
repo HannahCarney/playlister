@@ -17,3 +17,7 @@
 .cover.playing {
     border: 5px solid #e45343;
 }
+
+#selected-song {
+  display: hidden;
+}
