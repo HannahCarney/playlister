@@ -71,6 +71,8 @@ serverVerifySong = function(path,ext,object,callback){
              dataType: 'json', 
              url: path+ext, //ext = '/qry'
              data: object,
+             crossDomain: true,
+             async: true,
              success: function(json){
                  callback(json);
              }
