@@ -23,7 +23,7 @@ describe('Event info page', function() {
     it('Should have a title', function(done) {
       client
         .getText('#event-info', function(err, text) {
-          expect(text).to.eql('Event Info')
+          expect(text).to.eql('Party Information')
         })
         .call(done);
     });
@@ -63,17 +63,16 @@ describe('Event info page', function() {
   //   });
   // });
 
-  // context('When user clicks on save with blank fields', function() {
+  context('When user clicks on save with blank fields', function() {
 
-  //   it('Should get an error message', function(done) {
-  //     client
-  //       .click('#save')
-  //       .waitForText('#error', 5000)
-  //       .getText('#error', function(err, text) {
-  //         expect(text).to.eql('You must add party infos')
-  //       })
-  //       .call(done);
-  //   });
-  // });
+    it('Should not be allowed to go through', function(done) {
+      client
+        .click('#saveparty')
+        .getText('#event-info', function(err, text) {
+          expect(text).to.eql('Party Information')
+        })
+        .call(done);
+    });
+  });
 
 });

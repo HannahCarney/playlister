@@ -1,7 +1,10 @@
+//Modules
 var querystring = require('querystring');
 var request = require('request');
-var helpersDatabase = require('./helpersDatabase');
 var SpotifyWebApi = require('spotify-web-api-node');
+//Modules
+var helpersDatabase = require('./helpersDatabase');
+//Spotify
 var clientId = process.env.SPOTIFY_CLIENT_ID;
 var clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
 var redirect_uri_authorize = process.env.SPOTIFY_AUTHORIZE_CALLBACK;
@@ -57,7 +60,7 @@ exports.authorizeSpotifyCallback = function(req, res) {
         // use access token to get party planner credentials from Spotify API
         request.get(options, function(error, response, body) {
           var spotifyID = body.id;
-          saveTokensToDatabase(req, spotifyID, spotifyAccessToken, spotifyRefreshToken);
+          saveTokensToDatabase(spotifyID, spotifyAccessToken, spotifyRefreshToken);
           res.redirect('/partyplanner/beacon/' + spotifyID );
           });
       }
@@ -68,46 +71,22 @@ exports.authorizeSpotifyCallback = function(req, res) {
   }
 };
 
-exports.saveBeacon = function(req, res) {
-  var spotifyID = req.params.spotifyID;
-  var formMajor = req.body.beaconMajor;
-  var formMinor = req.body.beaconMinor;
-    if (formMajor == null || formMajor == "" || formMinor == null || formMinor == "") {
-      res.redirect('/partyplanner/beacon/' + spotifyID + '?error=1');
-    } else {
-      var db = req.db;
-      var collectionName = 'ppBeacon';
-      var collectionObject = {"spotifyID" : spotifyID,
-                              "beaconMajor" : req.body.beaconMajor,
-                              "beaconMinor" : req.body.beaconMinor};
-      helpersDatabase.saveToDatabase(db, collectionName, collectionObject);
-      res.redirect('/partyplanner/eventdetails/' + spotifyID);
-    }
+exports.saveBeacon = function(spotifyID, beaconMajor, beaconMinor) {
+  var collectionName = 'ppBeacon';
+  var collectionObject = {"spotifyID" : spotifyID,
+                          "beaconMajor" : beaconMajor,
+                          "beaconMinor" : beaconMinor};
+  helpersDatabase.saveToDatabase(collectionName, collectionObject);
 };
 
-
-exports.saveEventDetails = function(req, res) {
-  var partyName = req.body.partyName;
-  var partyDate = req.body.partyDate;
-  var playlistName = req.body.playlistName;
-  var spotifyID = req.params.spotifyID;
-
-  var callback = function(err, doc) {
-    if (err) {
-      console.log(err);
-    }
-    createPlaylist(req, doc, partyName, partyDate, playlistName, spotifyID);
-    res.redirect('/partyplanner/completed/' + partyName + '/' +
-                                              partyDate + '/' +
-                                              playlistName);
-  };
-
-  var collection = req.db.get('ppSpotifyCredentials');
-  collection.find( { spotifyID: spotifyID },{
-      fields : { spotifyAccessToken: 1, spotifyRefreshToken : 1, _id: 0},
-      limit : 1,
-      sort : {$natural : -1}
-    }, callback);
+exports.saveEventDetails = function(partyName, partyDate, playlistName, spotifyID) {
+  //First find party planners Spotify Credentials
+  var partyName = partyName;
+  var partyDate = partyDate;
+  var playlistName = playlistName;
+  var spotifyID = spotifyID;
+  moduleSaveEventDetails = require('./moduleSaveEventDetails');
+  moduleSaveEventDetails.retrieveSpotifyCredentials(partyName, partyDate, playlistName, spotifyID);
 };
 
 
@@ -128,40 +107,10 @@ var generateRandomString = function(length) {
   return text;
 };
 
-var saveTokensToDatabase = function(req, spotifyID, spotifyAccessToken, spotifyRefreshToken) {
-  var db = req.db;
-  console.log(db);
+var saveTokensToDatabase = function(spotifyID, spotifyAccessToken, spotifyRefreshToken) {
   var collectionName = 'ppSpotifyCredentials';
   var collectionObject = {"spotifyID" : spotifyID,
                           "spotifyAccessToken"  : spotifyAccessToken,
                           "spotifyRefreshToken" : spotifyRefreshToken};
-  helpersDatabase.saveToDatabase(db, collectionName, collectionObject);
-};
-
-
-var createPlaylist = function(req, doc, partyName, partyDate, playlistName, spotifyID) {
-  var spotifyApi = new SpotifyWebApi({
-    clientId : clientId,
-    clientSecret : clientSecret
-  });
-
-  spotifyApi.setAccessToken(doc[0].spotifyAccessToken);
-  spotifyApi.setRefreshToken(doc[0].spotifyRefreshToken);
-
-  spotifyApi.createPlaylist(spotifyID, playlistName, { 'public' : true })
-    .then(function(data) {
-      var db = req.db;
-      var collectionName = 'ppEvent';
-      var collectionObject = {"spotifyID" : data.owner.id,
-                              "playlistName" : data.name,
-                              "playlistID" : data.id,
-                              "partyName" : partyName,
-                              "partyDate" : partyDate};
-      helpersDatabase.saveToDatabase(db,
-                            collectionName,
-                            collectionObject);
-    }, function(err) {
-      console.log('Something went wrong! ', err);
-    });
-
+  helpersDatabase.saveToDatabase(collectionName, collectionObject);
 };

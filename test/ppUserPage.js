@@ -63,7 +63,7 @@ describe('Beacon details page', function() {
         .click('#savebeacon')
         .waitForText('#party-event-form', 5000)
         .getText('#event-info', function(err, text) {
-          expect(text).to.eql('Event Info')
+          expect(text).to.eql('Party Information')
         })
         .call(done);
     });

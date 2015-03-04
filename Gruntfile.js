@@ -2,12 +2,14 @@ module.exports = function(grunt){
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    
     jasmine_node: {
       options: {
         forceExit: true,
       },
       all: ['spec/']
     },
+
     jshint: {
       src: ['public/js/*.js', 'server.js', 'models/*.js', 'routes/*.js', 'controllers/*.js'],
       options: {
