@@ -1,5 +1,9 @@
 var webdriverio = require('webdriverio');
 var expect = require('chai').expect;
+var mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost:27017/playlister';
+var monk = require('monk');
+var db = monk(mongoUri);
+var table = db.get('pgSongChoice');
 
 describe('Party goer selecting songs page', function() {
 
@@ -24,7 +28,7 @@ describe('Party goer selecting songs page', function() {
       client
         .getText('#pg-title', function(err, text) {
           expect(err).to.not.be.true;
-          expect(text).to.eql('Please enter your song choices for partyName on partyDate')
+          expect(text).to.eql('Please choose your party tracks for partyName on partyDate')
         })
         .call(done);
     });
@@ -70,20 +74,47 @@ describe('Party goer selecting songs page', function() {
         .call(done);
     });
 
-    it('Should select a song', function(done) {
+    it('Should be able to select a song', function(done) {
+      client
+        .setValue('#query', 'give it all')
+        .click('#search')
+        .waitFor('.cover', 5000)
+        .click('#4d4AIYFkR8MSWtKBmphyir1')
+        .click('#addSong')
+        .setValue('#email', 'rock@email.com')
+        .click('#go')
+        .waitFor('#thank-you', 5000)
+        .getText('#thank-you', function(err, text) {
+          expect(text).to.include("Thanks, we've saved your party track choices for")
+        })
+        .call(done);
+    });
+
+    it('Should get an error if that song has already been selected', function(done) {
       client
         .setValue('#query', 'superstition')
         .click('#search')
         .waitFor('.cover', 5000)
         .click('#300RfAPZ57B0y6YYj9n6DN1')
+        .click('#addSong')
         .setValue('#email', 'partygoer@email.com')
-        .elementIdClick('#go')
-        .waitFor('#thank-you', 5000)
-        .getText('#thank-you', function(err, text) {
-          expect(text).to.include('hello partygoer@email.com, your song id is 300RfAPZ57B0y6YYj9n6DN')
+        .click('#go')
+        .refresh()
+        .waitForExist('#search', 5000)
+        .setValue('#query', 'superstition')
+        .click('#search')
+        .waitFor('.cover', 5000)
+        .click('#300RfAPZ57B0y6YYj9n6DN1')
+        .click('#addSong')
+        .setValue('#email', 'anothergoer@email.com')
+        .click('#go')
+        .waitFor('.error-message', 5000)
+        .getText('.error-message', function(err, text) {
+          expect(text).to.eql('Great minds think alike, that track has already been chosen for this party, please choose again.')
         })
         .call(done);
     });
   });
+        table.drop();
 
 });

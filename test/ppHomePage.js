@@ -24,7 +24,7 @@ describe('Homepage', function() {
       client
         .getText('#welcome-title', function(err, text) {
           expect(err).to.not.be.true;
-          expect(text).to.eql('Welcome to Party Planner')
+          expect(text).to.eql('Welcome to Tuti')
         })
         .call(done);
     });
@@ -33,7 +33,7 @@ describe('Homepage', function() {
       client
         .getText('#welcome-subtitle', function(err, text) {
           expect(err).to.not.be.true;
-          expect(text).to.eql('A better way to play music')
+          expect(text).to.eql('A better way to plan parties')
         })
         .call(done);
     });

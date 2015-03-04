@@ -2,12 +2,14 @@ module.exports = function(grunt){
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    
     jasmine_node: {
       options: {
         forceExit: true,
       },
       all: ['spec/']
     },
+
     jshint: {
       src: ['public/js/*.js', 'server.js', 'models/*.js', 'routes/*.js', 'controllers/*.js'],
       options: {
@@ -57,6 +59,6 @@ module.exports = function(grunt){
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-mocha-casperjs');
   grunt.loadNpmTasks('grunt-express-server');
-  grunt.registerTask('default', ['jshint', 'express:test', 'run:selenium_server', 'mochacli', 'stop:selenium_server']);
-
+  grunt.registerTask('default', ['express:test', 'run:selenium_server', 'mochacli', 'stop:selenium_server']);
+  grunt.registerTask('hint', 'jshint')
 };
