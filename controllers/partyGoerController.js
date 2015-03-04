@@ -10,6 +10,16 @@ exports.getSongs = function(req, res){
 };
 
 exports.postSongs = function(req, res){
-  // partyGoerModel.saveSongChoices(req, res);
-  partyGoerModel.verifySongChoices(req, res);
+  var ppPartyName = req.body.ppPartyName;
+  var ppPartyDate = req.body.ppPartyDate;
+  var pgEmail = req.body.email;
+  var pgSongChoice = req.body.selectedSong.split(",");
+  partyGoerModel.saveSongChoices(ppPartyName, ppPartyDate, pgEmail, pgSongChoice);
+  if (partyGoerModel.verifySongChoices(ppPartyName, ppPartyDate, pgSongChoice) === false) {
+    res.redirect('/partygoer/getsongs/'+ppPartyName+'/'+ppPartyDate+"?error=1");
+  } else {
+    res.render('partyGoer/thankYou', {email: pgEmail,
+                                      ppPartyName : ppPartyName,
+                                      ppPartyDate : ppPartyDate});
+  }
 };

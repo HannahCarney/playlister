@@ -32,7 +32,14 @@ exports.eventDetails = function(req, res) {
 };
 
 exports.saveEventDetails = function(req, res) {
-  partyPlannerModel.saveEventDetails(req, res);
+  var partyName = req.body.partyName;
+  var partyDate = req.body.partyDate;
+  var playlistName = req.body.playlistName;
+  var spotifyID = req.params.spotifyID;
+  partyPlannerModel.saveEventDetails(partyName, partyDate, playlistName, spotifyID);
+  res.redirect('/partyplanner/completed/' + partyName + '/' +
+                                            partyDate + '/' +
+                                            playlistName);
 };
 
 exports.completed = function(req, res) {
