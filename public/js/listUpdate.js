@@ -17,7 +17,7 @@ firstValidation = function(selectedSong){
     $('#errormessage').text(error); 
    }
    else {
-    validate(selectedSong);
+    loadSongsToForm(selectedSong);
    }
 };
  
@@ -60,6 +60,7 @@ loadSongsToForm = function(song) {
       $('#selected-song').val(songIDList);
       $('#pp-party-name-hidden').val($('#pp-party-name').text());
       $('#pp-party-date-hidden').val($('#pp-party-date').text());
+      validate(song);
     }
   });
 };
@@ -86,5 +87,4 @@ validate = function(selectedSong) {
     if (list.length === maxSongs) {
       $('#addSong').attr('disabled', 'disabled');
     }
-    loadSongsToForm(selectedSong);
 };
