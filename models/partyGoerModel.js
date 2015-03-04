@@ -1,19 +1,23 @@
 var helpersDatabase = require('./helpersDatabase');
 
 // functions called by the controllers
-exports.verifySongChoices = function(ppPartyName, ppPartyDate, pgSongChoice){
+exports.verifySongChoices = function(ppPartyName, ppPartyDate, singleSongChoice){
   var collectionName = 'pgSongChoice';
-  var matcher = {ppPartyName: ppPartyName, ppPartyDate: ppPartyDate,
-                pgSongChoice: selectedSong};
-  var fields = {_id: 1}
+  var matcher = {ppPartyName: ppPartyName, ppPartyDate: ppPartyDate};
+  var fields = {pgSongChoice: 1};
+  var result;
   helpersDatabase.readFromDatabase(collectionName,matcher,fields,function(err,doc){
       helpersDatabase.errorHandling(err);
-      if (doc.length > 0) {
-        return false;
-      }else{
-        return true;
-      }
+      var docArray = [];
+      for (var i = 0; i < doc.length; i++) {
+        docArray.push(doc[i].pgSongChoice);
+        };
+      var flattenedArray = docArray.reduce(function(a,b) {
+        return a.concat(b);
+      });
+      result = flattenedArray.indexOf(singleSongChoice) > -1;
   });
+  return result;
 };
 
 exports.saveSongChoices = function(ppPartyName, ppPartyDate, pgEmail, pgSongChoice) {

@@ -21,6 +21,12 @@ exports.readFromDatabase = function(collectionName, matcher, fields, callback) {
   collection.find(matcher, options, callback);
 };
 
+exports.readFromDatabaseNoLimits = function(collectionName, matcher, fields, callback) {
+  var collection = db.get(collectionName);
+  var options = {fields : fields, sort : {$natural : -1}};
+  collection.find(matcher, options, callback);
+};
+
 exports.errorHandling = function(err) {
   if (err) {
     console.log(err);
