@@ -1,55 +1,6 @@
 var helpersDatabase = require('./helpersDatabase');
 var helpersSpotify = require('./helpersSpotify');
 
-exports.getBeacon = function(req, res) {
-  console.log("Beacon asked for " + req.param('email'));
-  // Variables currently known
-  var db = req.db;
-  var pgEmail = req.param('email'); // read off of red's request
-  var todaysDate = (new Date()).toISOString().split('T')[0];
-  // Variables that will be needed
-  var beaconMajor;
-  var beaconMinor;
-  var ppPartyName;
-  var ppSpotifyID;
-
-  // Callback methods to build relationships between DBs
-  var retrieveSpotifyID = function(err, doc) {
-    helpersDatabase.errorHandling(err);
-    ppPartyName = doc[0].ppPartyName;
-    var collectionName = 'ppEvent';
-    var matcher = { partyName: ppPartyName, partyDate: todaysDate };
-    var fields = { spotifyID: 1, _id:0};
-    var callback = retrieveBeacon;
-    helpersDatabase.readFromDatabase(collectionName, matcher, fields, callback);
-  };
-
-  var retrieveBeacon = function(err, doc) {
-    helpersDatabase.errorHandling(err);
-    ppSpotifyID = doc[0].spotifyID;
-    var collectionName = 'ppBeacon';
-    var matcher = { spotifyID: ppSpotifyID };
-    var fields = {beaconMajor: 1, beaconMinor: 1, _id: 0};
-    var callback = returnBeacon;
-    helpersDatabase.readFromDatabase(collectionName, matcher, fields, callback);
-  };
-
-  var returnBeacon = function(err, doc) {
-    helpersDatabase.errorHandling(err);
-    beaconMajor = doc[0].beaconMajor;
-    beaconMinor = doc[0].beaconMinor;
-    //Send the beacon data back to the mobile app
-    res.jsonp({beaconMajor: beaconMajor, beaconMinor: beaconMinor});
-  };
-  // End of callbacks
-
-  // Start point db retrieval based on url params
-  var collectionName = 'pgSongChoice';
-  var matcher = { pgEmail: pgEmail, ppPartyDate: todaysDate };
-  var fields = { ppPartyName: 1, _id: 0};
-  var callback = retrieveSpotifyID;
-  helpersDatabase.readFromDatabase(collectionName, matcher, fields, callback);
-};
 
 exports.songs = function(req, res) {
   var beaconMajor = req.param('beaconMajor');

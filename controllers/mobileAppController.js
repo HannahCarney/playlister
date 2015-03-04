@@ -1,7 +1,8 @@
 var mobileAppModel = require('../models/mobileAppModel');
 
 exports.getBeacon = function(req, res) {
-  mobileAppModel.getBeacon(req, res);
+  var pgEmail = req.param('email');
+  mobileAppGetBeaconModel.startSearchFromEmail(pgEmail, res);
 };
 
 exports.songs = function(req, res) {

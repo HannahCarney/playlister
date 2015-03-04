@@ -1,86 +1,26 @@
 0 info it worked if it ends with ok
-1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'grunt-instanbul' ]
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'start' ]
 2 info using npm@1.4.28
-3 info using node@v0.10.35
-4 warn package.json playlister@1.0.0 No description
-5 warn package.json playlister@1.0.0 No README data
-6 verbose readDependencies using package.json deps
-7 verbose cache add [ 'grunt-instanbul', null ]
-8 verbose cache add name=undefined spec="grunt-instanbul" args=["grunt-instanbul",null]
-9 verbose parsed url { protocol: null,
-9 verbose parsed url   slashes: null,
-9 verbose parsed url   auth: null,
-9 verbose parsed url   host: null,
-9 verbose parsed url   port: null,
-9 verbose parsed url   hostname: null,
-9 verbose parsed url   hash: null,
-9 verbose parsed url   search: null,
-9 verbose parsed url   query: null,
-9 verbose parsed url   pathname: 'grunt-instanbul',
-9 verbose parsed url   path: 'grunt-instanbul',
-9 verbose parsed url   href: 'grunt-instanbul' }
-10 silly lockFile ce5d84bf-grunt-instanbul grunt-instanbul
-11 verbose lock grunt-instanbul /Users/Mimmo/.npm/ce5d84bf-grunt-instanbul.lock
-12 silly lockFile ce5d84bf-grunt-instanbul grunt-instanbul
-13 silly lockFile ce5d84bf-grunt-instanbul grunt-instanbul
-14 verbose addNamed [ 'grunt-instanbul', '' ]
-15 verbose addNamed [ null, '*' ]
-16 silly lockFile 1519ec11-grunt-instanbul grunt-instanbul@
-17 verbose lock grunt-instanbul@ /Users/Mimmo/.npm/1519ec11-grunt-instanbul.lock
-18 silly addNameRange { name: 'grunt-instanbul', range: '*', hasData: false }
-19 verbose request where is /grunt-instanbul
-20 verbose request registry https://registry.npmjs.org/
-21 verbose request id cc1b63449aed97af
-22 verbose url raw /grunt-instanbul
-23 verbose url resolving [ 'https://registry.npmjs.org/', './grunt-instanbul' ]
-24 verbose url resolved https://registry.npmjs.org/grunt-instanbul
-25 verbose request where is https://registry.npmjs.org/grunt-instanbul
-26 info trying registry request attempt 1 at 08:51:13
-27 http GET https://registry.npmjs.org/grunt-instanbul
-28 http 404 https://registry.npmjs.org/grunt-instanbul
-29 verbose headers { date: 'Wed, 04 Mar 2015 08:51:10 GMT',
-29 verbose headers   server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
-29 verbose headers   'content-type': 'application/json',
-29 verbose headers   'cache-control': 'max-age=0',
-29 verbose headers   'content-length': '52',
-29 verbose headers   'accept-ranges': 'bytes',
-29 verbose headers   via: '1.1 varnish',
-29 verbose headers   age: '0',
-29 verbose headers   'x-served-by': 'cache-lhr6321-LHR',
-29 verbose headers   'x-cache': 'MISS',
-29 verbose headers   'x-cache-hits': '0',
-29 verbose headers   'x-timer': 'S1425459070.760914,VS0,VE155',
-29 verbose headers   'keep-alive': 'timeout=10, max=50',
-29 verbose headers   connection: 'Keep-Alive' }
-30 silly registry.get cb [ 404,
-30 silly registry.get   { date: 'Wed, 04 Mar 2015 08:51:10 GMT',
-30 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
-30 silly registry.get     'content-type': 'application/json',
-30 silly registry.get     'cache-control': 'max-age=0',
-30 silly registry.get     'content-length': '52',
-30 silly registry.get     'accept-ranges': 'bytes',
-30 silly registry.get     via: '1.1 varnish',
-30 silly registry.get     age: '0',
-30 silly registry.get     'x-served-by': 'cache-lhr6321-LHR',
-30 silly registry.get     'x-cache': 'MISS',
-30 silly registry.get     'x-cache-hits': '0',
-30 silly registry.get     'x-timer': 'S1425459070.760914,VS0,VE155',
-30 silly registry.get     'keep-alive': 'timeout=10, max=50',
-30 silly registry.get     connection: 'Keep-Alive' } ]
-31 silly lockFile 1519ec11-grunt-instanbul grunt-instanbul@
-32 silly lockFile 1519ec11-grunt-instanbul grunt-instanbul@
-33 error 404 404 Not Found: grunt-instanbul
-33 error 404
-33 error 404 'grunt-instanbul' is not in the npm registry.
-33 error 404 You should bug the author to publish it
-33 error 404 It was specified as a dependency of 'playlister'
-33 error 404
-33 error 404 Note that you can also install from a
-33 error 404 tarball, folder, or http url, or git url.
-34 error System Darwin 14.1.0
-35 error command "node" "/usr/local/bin/npm" "install" "grunt-instanbul"
-36 error cwd /Users/Mimmo/Projects/playlister
-37 error node -v v0.10.35
-38 error npm -v 1.4.28
-39 error code E404
-40 verbose exit [ 1, true ]
+3 info using node@v0.10.36
+4 verbose run-script [ 'prestart', 'start', 'poststart' ]
+5 info prestart playlister@1.0.0
+6 info start playlister@1.0.0
+7 verbose unsafe-perm in lifecycle true
+8 info playlister@1.0.0 Failed to exec start script
+9 error playlister@1.0.0 start: `node server.js`
+9 error Exit status 8
+10 error Failed at the playlister@1.0.0 start script.
+10 error This is most likely a problem with the playlister package,
+10 error not with npm itself.
+10 error Tell the author that this fails on your system:
+10 error     node server.js
+10 error You can get their info via:
+10 error     npm owner ls playlister
+10 error There is likely additional logging output above.
+11 error System Darwin 14.1.0
+12 error command "node" "/usr/local/bin/npm" "start"
+13 error cwd /Users/andygnewman/MakersAcademy/Projects/playlister
+14 error node -v v0.10.36
+15 error npm -v 1.4.28
+16 error code ELIFECYCLE
+17 verbose exit [ 1, true ]
