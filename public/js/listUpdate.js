@@ -45,7 +45,7 @@ loadSongsToForm = function(song) {
   var ppPartyName = $('#pp-party-name').text();
   var ppPartyDate = $('#pp-party-date').text();
   var singleSongChoice = song;
-  serverVerifySong("https://turnuptunein.herokuapp.com/verifySong",{ppPartyName: ppPartyName, ppPartyDate: ppPartyDate, singleSongChoice: singleSongChoice},function(json){
+  serverVerifySong("https://turnuptunein.herokuapp.com" + "/verifySong",{ppPartyName: ppPartyName, ppPartyDate: ppPartyDate, singleSongChoice: singleSongChoice},function(json){
     if (json.songChoiceAllowed == false) {
       var error = "Song has already been picked";
     $('#errormessage').text(error);
