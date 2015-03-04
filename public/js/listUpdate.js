@@ -66,18 +66,24 @@ loadSongsToForm = function(song) {
 };
 
 serverVerifySong = function(path,ext,object,callback){
-    $.ajax({
-             type: "GET", 
-             dataType: 'json', 
-             url: path+ext, //ext = '/qry'
-             data: object,
-             crossDomain: true,
-             async: true,
-             success: function(json){
-                 callback(json);
-             }
-         });
-};
+     $.ajax({
+                   type: "GET", 
+                   async: true,
+                   dataType: 'json', 
+                   // jsonp: 'callback', 
+                   // jsonpCallback: 'callbackFunction', 
+                   url: path+ext, //ext = '/qry'
+                   data: object,
+                   crossDomain: true,
+                   success: function(json){
+                       callback(json);
+                   },
+                   error: function(){
+                       myError("cannot conect to the web!");
+                   }
+               });
+
+   };
 
 validate = function(selectedSong) {
 
