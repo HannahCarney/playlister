@@ -90,6 +90,16 @@ describe('Party goer selecting songs page', function() {
         .call(done);
     });
 
+    it('Should not be able to click button without a song added', function(done) {
+      client
+        .click("#addSong")
+        .waitFor('#errormessage', 5000)
+        .getText('#errormessage', function(err, text) {
+          expect(text).to.eql('You need to select a song')
+        })
+        .call(done);
+    });
+
     it('Should get an error if that song has already been selected', function(done) {
       client
         .setValue('#query', 'superstition')

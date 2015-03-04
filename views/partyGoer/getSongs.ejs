@@ -12,20 +12,13 @@
   <link rel="stylesheet" type="text/css" href="/css/getSongs.css">
   <section class="container">
     <section class="center jumbotron" style="background:rgba(0, 0, 0, .8);">
+    
       <% if (errorID == 1) { %>
         <p class="error-message">Great minds think alike, that track has already been chosen for this party, please choose again.</p>
       <% } %>
 
       <p id='pg-title'>Please choose your party tracks for <span id="pp-party-name"><%- ppPartyName %></span> on <span id="pp-party-date"><%- ppPartyDate %></span></p>
 
-      <form action='/partygoer/getsongs' method='POST' id="party-email-form">
-        <label for="email">Email:</label>
-        <input type="email" name="email" id='email' required>
-        <input type="hidden" name="selectedSong" id="selected-song">
-        <input type="hidden" name="ppPartyName" id="pp-party-name-hidden">
-        <input type="hidden" name="ppPartyDate" id="pp-party-date-hidden">
-        <input type="submit" value="submit" id='go'>
-      </form>
 
       <h2>Search for a Track</h2>
       
@@ -43,12 +36,21 @@
         <div idName="{{artists.0.name}}: {{name}}" id="{{id}}1" style="background-image:url({{album.images.0.url}})" data-track-id="{{id}}" class="cover"></div>
         {{/each}}
       </script>
+      <span name="errormessage" id="errormessage" style="color:white;"></span>
       <button id="addSong">Add song to your choices</button>
-      <ul class="songList"></ul>
+      <ul style="list-style-type: none;" class="songList"></ul>
       <script type="text/javascript" src="../../../js/songSearch.js"></script>
       <script type="text/javascript" src="../../../js/listUpdate.js"></script>
     </section>
   </section>
+   <form action='/partygoer/getsongs' method='POST' id="party-email-form">
+        <label for="email">Email:</label>
+        <input type="email" name="email" id='email' required>
+        <input type="hidden" name="selectedSong" id="selected-song">
+        <input type="hidden" name="ppPartyName" id="pp-party-name-hidden">
+        <input type="hidden" name="ppPartyDate" id="pp-party-date-hidden">
+        <input type="submit" value="submit" id='go'>
+      </form>
   <script>
     function validateForm() {
       var song = document.forms['song-choices']['selectedSong'].value;

@@ -3,16 +3,19 @@ var maxSongs = 2; //to read from the server initially
 
 $("#addSong").click(function(){
   var selectedSong = $('#selected-song').val();
-  var id = "#"+selectedSong.substring(14)+'1';
-  var name = $(id).attr('idName');
-  list.push({spotifyID:selectedSong,name:name});
-  text = name+'<button id="'+selectedSong+'">x</button>';
-  $('<li />',{html: text}).appendTo('ul.songList');
-  if (list.length === maxSongs) {
-    $('#addSong').attr('disabled', 'disabled');
-  }
-  loadSongsToForm();
+  firstValidation(selectedSong);
 });
+
+firstValidation = function(selectedSong){
+   if (selectedSong == "") {
+    var error = "You need to select a song";
+    $('#errormessage').text(error); 
+   }
+   else {
+    validate(selectedSong);
+   }
+};
+ 
 
 $('ul').on('click','button',function(el){
   song = this.id;
@@ -44,4 +47,17 @@ loadSongsToForm = function() {
   $('#selected-song').val(songIDList);
   $('#pp-party-name-hidden').val($('#pp-party-name').text());
   $('#pp-party-date-hidden').val($('#pp-party-date').text());
+};
+
+validate = function(selectedSong) {
+
+    var id = "#"+selectedSong.substring(14)+'1';
+    var name = $(id).attr('idName');
+    list.push({spotifyID:selectedSong,name:name});
+    text = name+'<button id="'+selectedSong+'">x</button>';
+    $('<li />',{html: text}).appendTo('ul.songList');
+    if (list.length === maxSongs) {
+      $('#addSong').attr('disabled', 'disabled');
+    }
+    loadSongsToForm();
 };
