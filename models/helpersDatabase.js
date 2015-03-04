@@ -16,7 +16,6 @@ exports.saveToDatabase = function(collectionName, collectionObject) {
 };
 
 exports.readFromDatabase = function(collectionName, matcher, fields, callback) {
-  console.log('start read from db');
   var collection = db.get(collectionName);
   var options = {fields : fields, limit : 1, sort : {$natural : -1}};
   collection.find(matcher, options, callback);

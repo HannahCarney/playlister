@@ -1,18 +1,22 @@
+var SpotifyWebApi = require('spotify-web-api-node');
+var clientId = process.env.SPOTIFY_CLIENT_ID;
+var clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
 var helpersDatabase = require ('./helpersDatabase');
 var partyName;
 var partyDate;
-var playListName;
+var playlistName;
 
-exports.saveEventDetails = function(partyName, partyDate, playlistName, spotifyID) {
-  //First find party planners Spotify Credentials
-  var partyName = partyName;
-  var partyDate = partyDate;
-  var playListName = playlistName;
+exports.retrieveSpotifyCredentials = function(ppPartyName, ppPartyDate, ppPlaylistName, spotifyID) {
+  //First set up variables for later use
+  partyName = ppPartyName;
+  partyDate = ppPartyDate;
+  playlistName = ppPlaylistName;
+  // set up parameters for database read
   var collectionName = 'ppSpotifyCredentials';
   var matcher = { spotifyID: spotifyID };
   var fields = { spotifyAccessToken: 1, spotifyRefreshToken : 1, spotifyID : 1, _id: 0};
-  console.log('set up read from db');
-  helpersDatabase.readFromDatabase(collectionName, matcher, fields, createPlaylist);
+  // retrieve credentials from database with callback to createPlaylist
+  helpersDatabase.readFromDatabase(collectionName, matcher, fields, moduleSaveEventDetails.createPlaylist);
 };
 
 
@@ -36,5 +40,4 @@ exports.createPlaylist = function(err, doc) {
     }, function(err) {
       console.log('Spotify Create Playlist - something went wrong! ', err);
     });
-
 };

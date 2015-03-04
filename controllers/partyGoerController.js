@@ -15,11 +15,11 @@ exports.postSongs = function(req, res){
   var pgEmail = req.body.email;
   var pgSongChoice = req.body.selectedSong.split(",");
   partyGoerModel.saveSongChoices(ppPartyName, ppPartyDate, pgEmail, pgSongChoice);
-  if (partyGoerModel.verifySongChoices(ppPartyName, ppPartyDate, pgSongChoice) === false) {
-    res.redirect('/partygoer/getsongs/'+ppPartyName+'/'+ppPartyDate+"?error=1");
-  } else {
+  // if (partyGoerModel.verifySongChoices(ppPartyName, ppPartyDate, pgSongChoice) === false) {
+  //   res.redirect('/partygoer/getsongs/'+ppPartyName+'/'+ppPartyDate+"?error=1");
+  // } else {
     res.render('partyGoer/thankYou', {email: pgEmail,
                                       ppPartyName : ppPartyName,
                                       ppPartyDate : ppPartyDate});
-  }
+  // }
 };

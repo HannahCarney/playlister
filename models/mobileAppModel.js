@@ -21,7 +21,7 @@ exports.getBeacon = function(req, res) {
     var matcher = { partyName: ppPartyName, partyDate: todaysDate };
     var fields = { spotifyID: 1, _id:0};
     var callback = retrieveBeacon;
-    helpersDatabase.readFromDatabase(db, collectionName, matcher, fields, callback);
+    helpersDatabase.readFromDatabase(collectionName, matcher, fields, callback);
   };
 
   var retrieveBeacon = function(err, doc) {
@@ -31,7 +31,7 @@ exports.getBeacon = function(req, res) {
     var matcher = { spotifyID: ppSpotifyID };
     var fields = {beaconMajor: 1, beaconMinor: 1, _id: 0};
     var callback = returnBeacon;
-    helpersDatabase.readFromDatabase(db, collectionName, matcher, fields, callback);
+    helpersDatabase.readFromDatabase(collectionName, matcher, fields, callback);
   };
 
   var returnBeacon = function(err, doc) {
@@ -48,7 +48,7 @@ exports.getBeacon = function(req, res) {
   var matcher = { pgEmail: pgEmail, ppPartyDate: todaysDate };
   var fields = { ppPartyName: 1, _id: 0};
   var callback = retrieveSpotifyID;
-  helpersDatabase.readFromDatabase(db, collectionName, matcher, fields, callback);
+  helpersDatabase.readFromDatabase(collectionName, matcher, fields, callback);
 };
 
 exports.songs = function(req, res) {
@@ -87,7 +87,7 @@ exports.songs = function(req, res) {
     var matcher = { spotifyID: ppSpotifyID, partyDate: todaysDate };
     var fields = {playlistID: 1, partyName: 1, _id: 0};
     var callback = retrieveSongChoices;
-    helpersDatabase.readFromDatabase(db, collectionName, matcher, fields, callback);
+    helpersDatabase.readFromDatabase(collectionName, matcher, fields, callback);
   };
 
   var retrieveSongChoices = function(err, doc) {
@@ -98,7 +98,7 @@ exports.songs = function(req, res) {
     var matcher = { ppPartyName: ppPartyName, ppPartyDate: todaysDate, pgEmail: pgEmail };
     var fields = {pgSongChoice: 1, _id: 0};
     var callback = returnSongChoices;
-    helpersDatabase.readFromDatabase(db, collectionName, matcher, fields, callback);
+    helpersDatabase.readFromDatabase(collectionName, matcher, fields, callback);
 
   };
 
@@ -128,5 +128,5 @@ exports.songs = function(req, res) {
   var matcher = { beaconMajor: beaconMajor, beaconMinor: beaconMinor };
   var fields = { spotifyID: 1, _id: 0};
   var callback = retrieveAccessTokens;
-  helpersDatabase.readFromDatabase(db, collectionName, matcher, fields, callback);
+  helpersDatabase.readFromDatabase(collectionName, matcher, fields, callback);
 };

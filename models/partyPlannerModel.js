@@ -79,16 +79,14 @@ exports.saveBeacon = function(spotifyID, beaconMajor, beaconMinor) {
   helpersDatabase.saveToDatabase(collectionName, collectionObject);
 };
 
-//update this to event details
 exports.saveEventDetails = function(partyName, partyDate, playlistName, spotifyID) {
   //First find party planners Spotify Credentials
-  var collectionName = 'ppSpotifyCredentials';
-  var matcher = { spotifyID: spotifyID };
-  var fields = { spotifyAccessToken: 1, spotifyRefreshToken : 1, spotifyID : 1, _id: 0};
-  var passThroughVariables = {playlistName: playlistName, partyName: partyName, partyDate: partyDate};
-  var callback = createPlaylist;
-  console.log('set up read from db');
-  helpersDatabase.readFromDatabase(collectionName, matcher, fields, callback, passThroughVariables);
+  var partyName = partyName;
+  var partyDate = partyDate;
+  var playlistName = playlistName;
+  var spotifyID = spotifyID;
+  moduleSaveEventDetails = require('./moduleSaveEventDetails');
+  moduleSaveEventDetails.retrieveSpotifyCredentials(partyName, partyDate, playlistName, spotifyID);
 };
 
 
@@ -115,31 +113,4 @@ var saveTokensToDatabase = function(spotifyID, spotifyAccessToken, spotifyRefres
                           "spotifyAccessToken"  : spotifyAccessToken,
                           "spotifyRefreshToken" : spotifyRefreshToken};
   helpersDatabase.saveToDatabase(collectionName, collectionObject);
-};
-
-
-var createPlaylist = function(err, doc, passThroughVariables) {
-  var partyName = passThroughVariables.partyName;
-  var partyDate = passThroughVariables.partyDate;
-  var playlistName = passThroughVariables.playlistName;
-  console.log('start create playlist: partyName:' + partyName);
-  helpersDatabase.errorHandling(err);
-  var spotifyApi = new SpotifyWebApi({clientId : clientId,
-                                      clientSecret : clientSecret});
-  var spotifyID = doc[0].spotifyID;
-  spotifyApi.setAccessToken(doc[0].spotifyAccessToken);
-  spotifyApi.setRefreshToken(doc[0].spotifyRefreshToken); //Shouldn't need this
-  spotifyApi.createPlaylist(spotifyID, playlistName, { 'public' : true })
-    .then(function(data) {
-      var collectionName = 'ppEvent';
-      var collectionObject = {"spotifyID" : data.owner.id,
-                              "playlistName" : data.name,
-                              "playlistID" : data.id,
-                              "partyName" : partyName,
-                              "partyDate" : partyDate};
-      helpersDatabase.saveToDatabase(collectionName, collectionObject);
-    }, function(err) {
-      console.log('Spotify Create Playlist - something went wrong! ', err);
-    });
-
 };
