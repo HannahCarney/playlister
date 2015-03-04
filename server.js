@@ -17,6 +17,7 @@ var index = require('./routes/index');
 var partyGoer = require('./routes/partyGoer');
 var partyPlanner = require('./routes/partyPlanner');
 var mobileApp = require('./routes/mobileApp');
+var verifySong = require('./routes/verifySong');
 
 // Server Set-up
 app.set('view engine', 'ejs');
@@ -33,6 +34,7 @@ app.use(express.static(__dirname + '/public'))
 app.use('/partygoer', partyGoer);
 app.use('/partyplanner', partyPlanner);
 app.use('/mobileapp', mobileApp);
+app.use('/verifysong', verifySong);
 app.use('/', index);
 // Handle 404
 app.use(function(req, res) {
