@@ -6,6 +6,10 @@ exports.verifySongChoices = function(ppPartyName, ppPartyDate, singleSongChoice,
   var fields = {pgSongChoice: 1};
   helpersDatabase.readFromDatabaseNoLimits(collectionName,matcher,fields,function(err,doc){
       helpersDatabase.errorHandling(err);
+      if (doc.length == 0) {
+        callback(['No Songs Found']);
+      }
+      else {
       var docArray = [];
       for (var i = 0; i < doc.length; i++) {
         docArray.push(doc[i].pgSongChoice);
@@ -15,5 +19,6 @@ exports.verifySongChoices = function(ppPartyName, ppPartyDate, singleSongChoice,
       });
       console.log(flattenedArray);
       callback(flattenedArray);
+    }
   });
 };
