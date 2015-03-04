@@ -130,6 +130,7 @@ var generateRandomString = function(length) {
 
 var saveTokensToDatabase = function(req, spotifyID, spotifyAccessToken, spotifyRefreshToken) {
   var db = req.db;
+  console.log(db);
   var collectionName = 'ppSpotifyCredentials';
   var collectionObject = {"spotifyID" : spotifyID,
                           "spotifyAccessToken"  : spotifyAccessToken,
