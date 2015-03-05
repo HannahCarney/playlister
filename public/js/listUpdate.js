@@ -52,6 +52,7 @@ loadSongsToForm = function(song) {
     }
     else {
       console.log('function called');
+      validate(song);
       var songIDList = [];
       for (var i = 0; i < list.length; i++) {
         songIDList.push(list[i].spotifyID);
@@ -60,7 +61,6 @@ loadSongsToForm = function(song) {
       $('#selected-song').val(songIDList);
       $('#pp-party-name-hidden').val($('#pp-party-name').text());
       $('#pp-party-date-hidden').val($('#pp-party-date').text());
-      validate(song);
     }
   });
 };
