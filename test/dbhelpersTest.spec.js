@@ -7,17 +7,17 @@ var verifySongChoiceModel = require('../models/verifySongModel');
 
 describe('Database Helper functions - ppSpotifyCredentials',function(){
 
-//Not working no call back on saveToDatabase, giving false positive
-  xit('saveToDatabase: it should save data, eg ppSpotifyCredentials',function(done){
-    var collectionName = 'ppSpotifyCredentialsTest';
+//Confident it is working
+  it('saveToDatabase: it should save data, eg ppSpotifyCredentials',function(done){
+    var collectionName = 'ppSpotifyCredentials';
     db.get(collectionName).drop(function() {
       var collectionObject = {spotifyID:"nameTest",spotifyAccessToken:'9999',
                           spotifyRefreshToken:'8888'};
-      helpersDatabase.saveToDatabase(collectionName,collectionObject, function(err, doc) {
-        should.not.exist(err);
-        doc.spotifyID.should.equal('ameTest');
-        doc.spotifyAccessToken.should.equal('9999');
-        doc.spotifyRefreshToken.should.equal('8888');
+      helpersDatabase.saveToDatabase(collectionName,collectionObject);
+      db.get(collectionName).find({}, {}, function(err, doc) {
+        doc[0].spotifyID.should.equal('nameTest');
+        doc[0].spotifyAccessToken.should.equal('9999');
+        doc[0].spotifyRefreshToken.should.equal('8888');
       });
     });
     done();
@@ -77,11 +77,11 @@ describe('Database Helper functions - readFromDatabaseNoLimits - pgSongChoice',f
                                               'spotify:track:2CkE9VvzIzgoJ97h9AcLHW' ],
                               pgEmail: 'test1@test.com'};
       db.get(collectionName).insert(collectionObject1, function() {
-        var collectionObject = {ppPartyName: 'Awesome Party', ppPartyDate: '2015-03-04',
+        var collectionObject2 = {ppPartyName: 'Awesome Party', ppPartyDate: '2015-03-04',
                                 pgSongChoice: [ 'spotify:track:4WrVyBdyZBmAkFOVuWFqTj',
                                                 'spotify:track:2CkE9VvzIzgoJ97h9AcLHW' ],
                                 pgEmail: 'test2@test.com'};
-        db.get(collectionName).insert(collectionObject, function() {
+        db.get(collectionName).insert(collectionObject2, function() {
           var matcher = {ppPartyName: 'Awesome Party', ppPartyDate: '2015-03-04'};
           var fields = {pgSongChoice: 1};
           helpersDatabase.readFromDatabaseNoLimits(collectionName, matcher, fields, function(err, doc) {
