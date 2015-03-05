@@ -14,13 +14,13 @@ $("#search").click(function(){
 firstValidation = function(selectedSong){
    if (selectedSong == "") {
     var error = "You need to select a song";
-    $('#errormessage').text(error); 
+    $('#errormessage').text(error);
    }
    else {
     loadSongsToForm(selectedSong);
    }
 };
- 
+
 
 $('ul').on('click','button',function(el){
   song = this.id;
@@ -45,7 +45,7 @@ loadSongsToForm = function(song) {
   var ppPartyName = $('#pp-party-name').text();
   var ppPartyDate = $('#pp-party-date').text();
   var singleSongChoice = song;
-  serverVerifySong("https://turnuptunein.herokuapp.com","/verifySong",{ppPartyName: ppPartyName, ppPartyDate: ppPartyDate, singleSongChoice: singleSongChoice},function(json){
+  serverVerifySong(location.origin,"/verifySong",{ppPartyName: ppPartyName, ppPartyDate: ppPartyDate, singleSongChoice: singleSongChoice},function(json){
     if (json.songChoiceAllowed == false) {
       var error = "Song has already been picked";
     $('#errormessage').text(error);
@@ -67,8 +67,8 @@ loadSongsToForm = function(song) {
 
 serverVerifySong = function(path,ext,object,callback){
     $.ajax({
-             type: "GET", 
-             dataType: 'json', 
+             type: "GET",
+             dataType: 'json',
              url: path+ext, //ext = '/qry'
              data: object,
              success: function(json){
