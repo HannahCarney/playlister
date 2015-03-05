@@ -52,6 +52,8 @@ $(document).ready(function() {
         }
         fetchTracks(target.getAttribute('data-track-id'), function (data) {
           selectedSongId = data.uri;
+          error = "";
+          $('#errormessage').text(error);
           audioObject = new Audio(data.preview_url);
           audioObject.play();
           target.classList.add(playingCssClass);
