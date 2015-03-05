@@ -21,7 +21,6 @@ exports.retrieveSpotifyCredentials = function(ppPartyName, ppPartyDate, ppPlayli
 
 
 exports.createPlaylist = function(err, doc) {
-  console.log('start create playlist: partyName:' + partyName);
   helpersDatabase.errorHandling(err);
   var spotifyApi = new SpotifyWebApi({clientId : clientId,
                                       clientSecret : clientSecret});
