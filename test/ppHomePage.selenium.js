@@ -26,7 +26,7 @@ describe('Homepage', function() {
       client
         .getText('#welcome-title', function(err, text) {
           expect(err).to.not.be.true;
-          expect(text).to.eql('Welcome to Tuti')
+          expect(text).to.eql('Welcome to TurnUp TuneIn')
         })
         .call(done);
     });

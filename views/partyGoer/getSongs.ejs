@@ -7,7 +7,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
-    <script>
+  <script>
     function validateForm() {
       var song = document.forms['party-email-form']['selectedSong'].value;
       if (song == null || song == '') {
@@ -36,13 +36,14 @@
       <h2>Search for a Track</h2>
 
       <p id='pg-subtitle'>Type a track name and click on 'Search'. Then, click on any track from the results to get a 30 second preview.</p>
+
       <form id="song-choices">
         <div class="control-group">
           <div class="controls">
             <input type="text" id="query" value="" style="color:black;" placeholder="Type a track name"/>
           </div>
         </div>
-            <input type="submit" name="submit" id="search" class="btn btn-inverse" value="Search" />
+        <input type="submit" name="submit" id="search" class="btn btn-inverse" value="Search" />
       </form>
 
       <div id="results"></div>
@@ -55,23 +56,28 @@
       </script>
       <li style="list-style-type: none;" name="errormessage" id="errormessage" style="color:white;margin-top:1em;"></li>
       <button id="addSong" class="btn btn-inverse">Add song</button>
-       </section>
-      </section>
-           <section class="container col-sm-6">
+    </section>
+  </section>
+
+  <section class="container col-sm-6">
+
     <section class="center jumbotron" style="background:rgba(0, 0, 0, .8);">
+
       <ul style="list-style-type: none;" class="songList"></ul>
-      <script type="text/javascript" src="../../../js/songSearch.js"></script>
-      <script type="text/javascript" src="../../../js/listUpdate.js"></script>
-   <form action='/partygoer/getsongs' method='POST' id="party-email-form" onsubmit="return validateForm()">
+
+      <form action='/partygoer/getsongs' method='POST' id="party-email-form" onsubmit="return validateForm()">
         <label for="email">Email:</label>
         <input type="email" name="email" id='email' style="color:black;" required>
         <input type="hidden" name="selectedSong" id="selected-song">
         <input type="hidden" name="ppPartyName" id="pp-party-name-hidden">
         <input type="hidden" name="ppPartyDate" id="pp-party-date-hidden">
-
         <input type="submit" value="submit" id='go' class="btn btn-inverse">
-
       </form>
+    </section>
+
   </section>
-  </section>
-</body>f
+
+  <script type="text/javascript" src="../../../js/songSearch.js"></script>
+  <script type="text/javascript" src="../../../js/listUpdate.js"></script>
+
+</body>
