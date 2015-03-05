@@ -3,8 +3,7 @@ var maxSongs = 2; //to read from the server initially
 var error;
 
 $("#addSong").click(function(){
-  var selectedSong = $('#selected-song').val();
-  firstValidation(selectedSong);
+  firstValidation(selectedSongId);
 });
 
 $("#search").click(function(){
