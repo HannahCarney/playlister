@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="/css/stylesheet.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
     <script>
     function validateForm() {
       var song = document.forms['party-email-form']['selectedSong'].value;
@@ -15,6 +16,7 @@
       }
     }
   </script>
+
 </head>
 
 <body>
@@ -27,15 +29,6 @@
       <% } %>
 
       <p id='pg-title'>Please choose your party tracks for <span id="pp-party-name"><%- ppPartyName %></span> on <span id="pp-party-date"><%- ppPartyDate %></span></p>
-
-      <form action='/partygoer/getsongs' method='POST' id="party-email-form" onsubmit="return validateForm()">
-        <label for="email">Email:</label>
-        <input type="email" name="email" id='email' required>
-        <input type="hidden" name="selectedSong" id="selected-song">
-        <input type="hidden" name="ppPartyName" id="pp-party-name-hidden">
-        <input type="hidden" name="ppPartyDate" id="pp-party-date-hidden">
-        <input type="submit" value="submit" id='go'>
-      </form>
 
       <h2>Search for a Track</h2>
 
@@ -66,7 +59,7 @@
       <ul style="list-style-type: none;" class="songList"></ul>
       <script type="text/javascript" src="../../../js/songSearch.js"></script>
       <script type="text/javascript" src="../../../js/listUpdate.js"></script>
-   <form action='/partygoer/getsongs' method='POST' id="party-email-form">
+   <form action='/partygoer/getsongs' method='POST' id="party-email-form" onsubmit="return validateForm()">
         <label for="email">Email:</label>
         <input type="email" name="email" id='email' style="color:black;" required>
         <input type="hidden" name="selectedSong" id="selected-song">
@@ -78,4 +71,4 @@
       </form>
   </section>
   </section>
-</body>
+</body>f

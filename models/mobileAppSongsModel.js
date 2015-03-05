@@ -8,6 +8,7 @@ var ppSpotifyAccessToken;
 var ppSpotifyRefreshToken;
 var ppSpotifyPlaylistID;
 var ppPartyName;
+var outputRes;
 
 exports.songs = function(res, beaconMinor, beaconMajor, email, action) {
   pgEmail = email;
