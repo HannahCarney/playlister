@@ -11,7 +11,8 @@ exports.verifySongChoices = function(ppPartyName, ppPartyDate, singleSongChoice,
       if (doc.length > 0) {
         res.redirect('/partygoer/getsongs/'+req.body.ppPartyName+'/'+req.body.ppPartyDate+"?error=1");
       } else {
-        //  saveSongChoices(req,res);
+         saveSongChoices(req,res);
+
       var docArray = [];
       for (var i = 0; i < doc.length; i++) {
         docArray.push(doc[i].pgSongChoice);
@@ -21,7 +22,7 @@ exports.verifySongChoices = function(ppPartyName, ppPartyDate, singleSongChoice,
       });
       console.log(flattenedArray);
       callback(flattenedArray);
-
+      }
   });
 };
 
