@@ -4,8 +4,8 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
   <link rel="stylesheet" href="/css/stylesheet.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script>
     function validateForm() {
       var song = document.forms['party-email-form']['selectedSong'].value;
@@ -19,8 +19,9 @@
 
 <body>
   <link rel="stylesheet" type="text/css" href="/css/getSongs.css">
-  <section class="container">
+  <section class="container col-sm-6">
     <section class="center jumbotron" style="background:rgba(0, 0, 0, .8);">
+
       <% if (errorID == 1) { %>
         <p class="error-message">Great minds think alike, that track has already been chosen for this party, please choose again.</p>
       <% } %>
@@ -37,11 +38,15 @@
       </form>
 
       <h2>Search for a Track</h2>
-      
+
       <p id='pg-subtitle'>Type a track name and click on 'Search'. Then, click on any track from the results to get a 30 second preview.</p>
       <form id="song-choices">
-          <input type="text" id="query" value="" class="form-control" placeholder="Type a track name"/>
-          <input type="submit" name="submit" id="search" class="btn btn-primary" value="Search" />
+        <div class="control-group">
+          <div class="controls">
+            <input type="text" id="query" value="" style="color:black;" placeholder="Type a track name"/>
+          </div>
+        </div>
+            <input type="submit" name="submit" id="search" class="btn btn-inverse" value="Search" />
       </form>
 
       <div id="results"></div>
@@ -52,10 +57,25 @@
         <div idName="{{artists.0.name}}: {{name}}" id="{{id}}1" style="background-image:url({{album.images.0.url}})" data-track-id="{{id}}" class="cover"></div>
         {{/each}}
       </script>
-      <button id="addSong">Add song to your choices</button>
-      <ul class="songList"></ul>
+      <li style="list-style-type: none;" name="errormessage" id="errormessage" style="color:white;margin-top:1em;"></li>
+      <button id="addSong" class="btn btn-inverse">Add song</button>
+       </section>
+      </section>
+           <section class="container col-sm-6">
+    <section class="center jumbotron" style="background:rgba(0, 0, 0, .8);">
+      <ul style="list-style-type: none;" class="songList"></ul>
       <script type="text/javascript" src="../../../js/songSearch.js"></script>
       <script type="text/javascript" src="../../../js/listUpdate.js"></script>
-    </section>
+   <form action='/partygoer/getsongs' method='POST' id="party-email-form">
+        <label for="email">Email:</label>
+        <input type="email" name="email" id='email' style="color:black;" required>
+        <input type="hidden" name="selectedSong" id="selected-song">
+        <input type="hidden" name="ppPartyName" id="pp-party-name-hidden">
+        <input type="hidden" name="ppPartyDate" id="pp-party-date-hidden">
+
+        <input type="submit" value="submit" id='go' class="btn btn-inverse">
+
+      </form>
+  </section>
   </section>
 </body>

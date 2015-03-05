@@ -26,6 +26,12 @@ body {
     margin-top:1em;
 }
 
+#spotifyGlyph {
+  height: 1.5em;
+  margin-left:0;
+  padding-right:.2em;
+}
+
 #logo {
   width: 23%;
 }
@@ -96,4 +102,10 @@ section {
 
 .btn-inverse.active {
   color: rgba(255, 255, 255, 0.75);
+}
+
+.buttonX {
+  padding:.2em;
+  margin:0;
+  border:0;
 }

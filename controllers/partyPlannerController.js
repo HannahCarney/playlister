@@ -15,7 +15,15 @@ exports.beacon = function(req, res) {
 };
 
 exports.saveBeacon = function(req, res) {
-  partyPlannerModel.saveBeacon(req, res);
+  var spotifyID = req.params.spotifyID;
+  var beaconMajor = req.body.beaconMajor;
+  var beaconMinor = req.body.beaconMinor;
+  if (beaconMajor == null || beaconMajor == "" || beaconMinor == null || beaconMinor == "") {
+    res.redirect('/partyplanner/beacon/' + spotifyID + '?error=1');
+  } else {
+    partyPlannerModel.saveBeacon(spotifyID, beaconMajor, beaconMinor);
+    res.redirect('/partyplanner/eventdetails/' + spotifyID);
+  }
 };
 
 exports.eventDetails = function(req, res) {
@@ -24,14 +32,21 @@ exports.eventDetails = function(req, res) {
 };
 
 exports.saveEventDetails = function(req, res) {
-  partyPlannerModel.saveEventDetails(req, res);
+  var partyName = req.body.partyName;
+  var partyDate = req.body.partyDate;
+  var playlistName = req.body.playlistName;
+  var spotifyID = req.params.spotifyID;
+  partyPlannerModel.saveEventDetails(partyName, partyDate, playlistName, spotifyID);
+  res.redirect('/partyplanner/completed/' + partyName + '/' +
+                                            partyDate + '/' +
+                                            playlistName);
 };
 
 exports.completed = function(req, res) {
   var partyName = req.params.partyName;
   var partyDate = req.params.partyDate;
   var partyPlaylistName = req.params.playlistName;
-  var getSongsLink = "http://localhost:3000/partygoer/getsongs/" +
+  var getSongsLink = location.hostname + '/partygoer/getsongs/' +
       partyName + '/' + partyDate;
   res.render('partyPlanner/completed', { partyName: partyName,
       partyDate: partyDate, partyPlaylistName: partyPlaylistName,

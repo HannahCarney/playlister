@@ -20,7 +20,7 @@ describe('Party goer selecting songs page', function() {
     client.url('http://localhost:3000/partygoer/getsongs/partyName/partyDate')
     .call(done)
   });
- 
+
   after(function(done) {
     client.end(done);
   });
@@ -127,6 +127,16 @@ describe('Party goer selecting songs page', function() {
           expect(text).to.include("Thanks, we've saved your party track choices for")
         })
         .call(done);
+      });
+
+    it('Should not be able to click button without a song added', function(done) {
+      client
+        .click("#addSong")
+        .waitFor('#errormessage', 5000)
+        .getText('#errormessage', function(err, text) {
+          expect(text).to.eql('You need to select a song')
+        })
+        .call(done);
     });
 
     it('Should get an error if that song has already been selected', function(done) {
@@ -155,8 +165,8 @@ describe('Party goer selecting songs page', function() {
     });
   });
 
- 
-  
+
+
   table.drop();
 
 });
