@@ -7,14 +7,15 @@ var partyPlannerModel = require('../models/partyPlannerModel');
 describe('Party Planner Model', function() {
 
   it('should save beacon details', function(done) {
-    db.get('ppBeacon').drop();
-    partyPlannerModel.saveBeacon('geoffcapes', '12345', '1234');
-    db.get('ppBeacon').find({}, {}, function(err, doc) {
-      should.not.exist(err);
-      doc.length.should.equal(1);
-      doc[0].spotifyID.should.equal('geoffcapes');
-      doc[0].beaconMajor.should.equal('12345');
-      doc[0].beaconMinor.should.equal('1234');
+    db.get('ppBeacon').drop(function() {
+      partyPlannerModel.saveBeacon('geoffcapes', '12345', '1234');
+      db.get('ppBeacon').find({}, {}, function(err, doc) {
+        should.not.exist(err);
+        doc.length.should.equal(1);
+        doc[0].spotifyID.should.equal('geoffcapes');
+        doc[0].beaconMajor.should.equal('12345');
+        doc[0].beaconMinor.should.equal('1234');
+      });      
     });
     done();
   });
