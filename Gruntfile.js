@@ -2,7 +2,7 @@ module.exports = function(grunt){
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    
+
     jasmine_node: {
       options: {
         forceExit: true,
@@ -41,6 +41,15 @@ module.exports = function(grunt){
           wait: false
         },
         exec: 'selenium-standalone start &>/dev/null'
+      }
+    },
+
+    stop: {
+      selenium_server: {
+        options: {
+          wait: false
+        },
+        exec: 'selenium-standalone stop &>/dev/null'
       }
     },
 

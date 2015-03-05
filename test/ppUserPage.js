@@ -6,12 +6,14 @@ describe('Beacon details page', function() {
   var client = {};
 
   before(function(done) {
+    this.timeout(99999)
     client = webdriverio.remote({ desiredCapabilities: {browserName: 'chrome'}   });
     client.init(done);
   });
 
-  beforeEach(function() {
-    client.url('http://localhost:3000/partyplanner/beacon/username');
+  beforeEach(function(done) {
+    client.url('http://localhost:3000/partyplanner/beacon/username')
+    .call(done)
   });
  
   after(function(done) {

@@ -10,12 +10,15 @@ describe('Party goer selecting songs page', function() {
   var client = {};
 
   before(function(done) {
+    this.timeout(999999)
     client = webdriverio.remote({ desiredCapabilities: {browserName: 'chrome'}   });
     client.init(done);
   });
 
-  beforeEach(function() {
-    client.url('http://localhost:3000/partygoer/getsongs/partyName/partyDate');
+  beforeEach(function(done) {
+    this.timeout(99999)
+    client.url('http://localhost:3000/partygoer/getsongs/partyName/partyDate')
+    .call(done)
   });
  
   after(function(done) {
@@ -152,18 +155,7 @@ describe('Party goer selecting songs page', function() {
     });
   });
 
-  describe('When user does not select a song', function() {
-
-    it('Should not go through', function(done) {
-      client
-        .setValue('#email', 'rock@email.com')
-        .click('#go')
-        .getText('#pg-title', function(err, text) {
-          expect(text).to.eql('Please choose your party tracks for partyName on partyDate')
-        })
-        .call(done)
-    });
-  });
+ 
   
   table.drop();
 
