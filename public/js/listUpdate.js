@@ -1,5 +1,5 @@
 var list=[];
-var maxSongs = 2; //to read from the server initially
+var maxSongs = 3; //to read from the server initially
 var error;
 
 //Click 'add song' button
