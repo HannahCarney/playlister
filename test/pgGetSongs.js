@@ -17,7 +17,7 @@ describe('Party goer selecting songs page', function() {
   beforeEach(function() {
     client.url('http://localhost:3000/partygoer/getsongs/partyName/partyDate');
   });
- 
+
   after(function(done) {
     client.end(done);
   });
