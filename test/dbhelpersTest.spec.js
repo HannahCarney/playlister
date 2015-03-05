@@ -73,7 +73,7 @@ describe('Database Helper functions - ppSpotifyCredentials',function(){
     var collectionObject = {spotifyID:"nameTest",spotifyAccessToken:'9999',
                         spotifyRefreshToken:'8888'};
     db.get(collectionName).insert(collectionObject);
-    collectionObject = {spotifyID:"nameTest",spotifyAccessToken:'1111',
+    var collectionObject = {spotifyID:"nameTest",spotifyAccessToken:'1111',
                         spotifyRefreshToken:'2222'};
     db.get(collectionName).insert(collectionObject);
     var ppSpotifyID = 'nameTest';

@@ -21,7 +21,7 @@ module.exports = function(grunt){
       options: {
       },
       files: {
-        src: ['test/*']
+        src: ['test/*.spec.js']
       }
     },
 
@@ -32,7 +32,7 @@ module.exports = function(grunt){
         timeout: 60000,
         bail: true
       },
-      all: ['specs/*.js', 'tests/*.js']
+      all: ['test/*.selenium.js']
     },
 
     run: {

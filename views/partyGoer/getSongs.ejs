@@ -11,7 +11,7 @@
     function validateForm() {
       var song = document.forms['party-email-form']['selectedSong'].value;
       if (song == null || song == '') {
-        alert('You must choose a song');
+        var errorID = 2;
         return false;
       }
     }
@@ -26,6 +26,9 @@
 
       <% if (errorID == 1) { %>
         <p class="error-message">Great minds think alike, that track has already been chosen for this party, please choose again.</p>
+      <% } %>
+       <% if (errorID == 2) { %>
+        <p class="error-message">You should select a song.</p>
       <% } %>
 
       <p id='pg-title'>Please choose your party tracks for <span id="pp-party-name"><%- ppPartyName %></span> on <span id="pp-party-date"><%- ppPartyDate %></span></p>
