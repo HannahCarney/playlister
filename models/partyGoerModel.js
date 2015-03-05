@@ -8,6 +8,8 @@ exports.verifySongChoices = function(ppPartyName, ppPartyDate, singleSongChoice,
   var result;
   return helpersDatabase.readFromDatabaseNoLimits(collectionName,matcher,fields,function(err,doc){
       helpersDatabase.errorHandling(err);
+    if (doc.length > 0) {
+        res.redirect('/partygoer/getsongs/'+req.body.ppPartyName+'/'+req.body.ppPartyDate+"?error=1");
       var docArray = [];
       for (var i = 0; i < doc.length; i++) {
         docArray.push(doc[i].pgSongChoice);
@@ -17,6 +19,10 @@ exports.verifySongChoices = function(ppPartyName, ppPartyDate, singleSongChoice,
       });
       console.log(flattenedArray);
       callback(flattenedArray);
+     
+      } else {
+         saveSongChoices(req,res);
+      }
   });
 };
 

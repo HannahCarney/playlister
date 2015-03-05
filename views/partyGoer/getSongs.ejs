@@ -5,7 +5,19 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
   <link rel="stylesheet" href="/css/stylesheet.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<<<<<<< HEAD
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+=======
+    <script>
+    function validateForm() {
+      var song = document.forms['party-email-form']['selectedSong'].value;
+      if (song == null || song == '') {
+        alert('You must choose a song');
+        return false;
+      }
+    }
+  </script>
+>>>>>>> 59aa2961d607f399fcd2f34be58204fc63ad41b1
 </head>
 
 <body>
@@ -49,7 +61,7 @@
       <ul style="list-style-type: none;" class="songList"></ul>
       <script type="text/javascript" src="../../../js/songSearch.js"></script>
       <script type="text/javascript" src="../../../js/listUpdate.js"></script>
-   <form action='/partygoer/getsongs' method='POST' id="party-email-form">
+   <form action='/partygoer/getsongs' method='POST' id="party-email-form" onsubmit="return validateForm()>
         <label for="email">Email:</label>
         <input type="email" name="email" id='email' style="color:black;" required>
         <input type="hidden" name="selectedSong" id="selected-song">
@@ -61,4 +73,4 @@
       </form>
   </section>
   </section>
-</body>
+</body>f

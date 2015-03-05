@@ -46,7 +46,13 @@ exports.completed = function(req, res) {
   var partyName = req.params.partyName;
   var partyDate = req.params.partyDate;
   var partyPlaylistName = req.params.playlistName;
+<<<<<<< HEAD
   var getSongsLink = 'http://localhost:3000/partygoer/getsongs/' +
+||||||| merged common ancestors
+  var getSongsLink = location.hostname + '/partygoer/getsongs/' +
+=======
+  var getSongsLink = "https://turnuptunein.herokuapp.com/partygoer/getsongs/" +
+>>>>>>> 183fadb331a825336449a40b6c897552c01a152f
       partyName + '/' + partyDate;
   res.render('partyPlanner/completed', { partyName: partyName,
       partyDate: partyDate, partyPlaylistName: partyPlaylistName,
