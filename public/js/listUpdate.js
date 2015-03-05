@@ -33,41 +33,43 @@ $('ul').on('click','button',function(el){
 
 deleteFromTheList = function(list,song){
   var index = -1;
-  console.log('List: ' + list + ' Song: ' + song);
   for(var i=0; i < list.length; i++){
     if (list[i].spotifyID == song){
       index = i;
     }
   }
   if (index > -1){
-    console.log(index);
     list.splice(index,1);
     $('#selected-song').val(list);
   }
 };
 
 loadSongsToForm = function(song) {
-  var ppPartyName = $('#pp-party-name').text();
-  var ppPartyDate = $('#pp-party-date').text();
-  var singleSongChoice = song;
-  serverVerifySong(location.origin,"/verifySong",{ppPartyName: ppPartyName, ppPartyDate: ppPartyDate, singleSongChoice: singleSongChoice},function(json){
-    if (json.songChoiceAllowed == false) {
-      error = "Song has already been picked";
-    $('#errormessage').text(error);
-    }
-    else {
-      console.log('function called');
-      validate(song);
-      var songIDList = [];
-      for (var i = 0; i < list.length; i++) {
-        songIDList.push(list[i].spotifyID);
+  if (checkIfSongInList(song) === false) {
+    var ppPartyName = $('#pp-party-name').text();
+    var ppPartyDate = $('#pp-party-date').text();
+    var singleSongChoice = song;
+    serverVerifySong(location.origin,"/verifySong",{ppPartyName: ppPartyName, ppPartyDate: ppPartyDate, singleSongChoice: singleSongChoice},function(json){
+      if (json.songChoiceAllowed == false) {
+        error = "Song has already been picked";
+      $('#errormessage').text(error);
       }
-      console.log(songIDList);
-      $('#selected-song').val(songIDList);
-      $('#pp-party-name-hidden').val($('#pp-party-name').text());
-      $('#pp-party-date-hidden').val($('#pp-party-date').text());
-    }
-  });
+      else {
+        validate(song);
+        var songIDList = [];
+        for (var i = 0; i < list.length; i++) {
+          songIDList.push(list[i].spotifyID);
+        }
+        $('#selected-song').val(songIDList);
+        $('#pp-party-name-hidden').val($('#pp-party-name').text());
+        $('#pp-party-date-hidden').val($('#pp-party-date').text());
+      }
+    });
+  }
+  else {
+    error = "You already have this song in your choices";
+    $('#errormessage').text(error);
+  }
 };
 
 serverVerifySong = function(path,ext,object,callback){
@@ -92,4 +94,14 @@ validate = function(selectedSong) {
     if (list.length === maxSongs) {
       $('#addSong').attr('disabled', 'disabled');
     }
+};
+
+var checkIfSongInList = function(song) {
+  var index = -1;
+  for(var i=0; i < list.length; i++){
+    if (list[i].spotifyID == song){
+      index = i;
+    }
+  }
+  return (index != -1);
 };
