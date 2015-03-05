@@ -36,6 +36,7 @@
     "grunt-run": "^0.3.0",
     "mocha": "^2.1.0",
     "mocha-casperjs": "^0.5.3",
+    "mocha-mongo": "^0.1.1",
     "phantomjs": "^1.9.15",
     "should": "^5.0.1",
     "webdriverio": "^2.4.5"
