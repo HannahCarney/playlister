@@ -7,13 +7,11 @@ var helpersDatabase = require('../models/helpersDatabase');
 describe("connection and initialization of DB",function(){
 
   it('should be connected',function(done){
-    var db = monk('localhost/playlister');
     should.exists(db);
     done();
   });
 
   it('should get hold of a collection',function(done){
-    var db = monk('localhost/playlister');
     var collectionName = db.get("ppSpotifyCredentials");
     should.exists(collectionName);
     done();
@@ -23,20 +21,12 @@ describe("connection and initialization of DB",function(){
 
 describe('Database Helper functions - ppSpotifyCredentials',function(){
 
-  beforeEach(function(done){
-    var db = monk('localhost/playlister');
-    var collectionName = db.get('ppSpotifyCredentials');
+  beforeEach(function(done) {
+    var collectionName = 'ppSpotifyCredentials';
+    db.get(collectionName).drop();
     done();
   });
 
-  afterEach(function(done){
-    var db = monk('localhost/playlister');
-    var collection = db.get('ppSpotifyCredentials');
-    collection.drop(function(err){
-      if(err) return done(err);
-    });
-    done();
-  });
 
   it('saveToDatabase: it should save data, eg ppSpotifyCredentials',function(done){
     var collectionObject = {spotifyID:"nameTest",spotifyAccessToken:'9999',
@@ -91,22 +81,9 @@ describe('Database Helper functions - ppSpotifyCredentials',function(){
 
 describe('Database Helper functions - readFromDatabaseNoLimits - pgSongChoice',function(){
 
-  beforeEach(function(done){
-    var db = monk('localhost/playlister');
-    done();
-  });
-
-  afterEach(function(done){
-    var db = monk('localhost/playlister');
-    var collection = db.get('pgSongChoice');
-    collection.drop(function(err){
-        if(err) return done(err);
-    });
-    done();
-  });
-
   it('readFromDatabaseNoLimits: it should return all matching records', function(done){
     var collectionName = 'pgSongChoice';
+    db.get(collectionName).drop();
     var collectionObject = {ppPartyName: 'Awesome Party', ppPartyDate: '2015-03-04',
                             pgSongChoice: [ 'spotify:track:4WrVyBdyZBmAkFOVuWFqTj',
                                             'spotify:track:2CkE9VvzIzgoJ97h9AcLHW' ],
@@ -125,4 +102,5 @@ describe('Database Helper functions - readFromDatabaseNoLimits - pgSongChoice',f
         done();
     });
   });
+
 });
