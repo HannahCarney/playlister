@@ -10,21 +10,22 @@ describe("verify song choices - server model",function(){
   it('should return a flattened array of all songs in the database for a party',function(done){
     var collectionName = 'pgSongChoice';
     db.get(collectionName).drop();
-    var collectionObject = {ppPartyName: 'Awesome Party', ppPartyDate: '2015-03-04',
+    var collectionObject1 = {ppPartyName: 'Awesome Party', ppPartyDate: '2015-03-04',
                             pgSongChoice: [ 'spotify:track:4WrVyBdyZBmAkFOVuWFqTj',
                                             'spotify:track:2CkE9VvzIzgoJ97h9AcLHW' ],
                             pgEmail: 'test1@test.com'};
-    db.get(collectionName).insert(collectionObject);
-    var collectionObject = {ppPartyName: 'Awesome Party', ppPartyDate: '2015-03-04',
-                            pgSongChoice: [ 'spotify:track:4WrVyBdyZBmAkFOVuWFqTj',
-                                            'spotify:track:2CkE9VvzIzgoJ97h9AcLHW' ],
-                            pgEmail: 'test2@test.com'};
-    db.get(collectionName).insert(collectionObject);
-    verifySongChoiceModel.verifySongChoices('Awesome Party', '2015-03-04', function(flattenedArray){
-      flattenedArray.length.should.equal(4);
-      // flattenedArray.should.equal(['spotify:track:4WrVyBdyZBmAkFOVuWFqTj','spotify:track:2CkE9VvzIzgoJ97h9AcLHW','spotify:track:4WrVyBdyZBmAkFOVuWFqTj','spotify:track:2CkE9VvzIzgoJ97h9AcLHW']);
-      done();
+    db.get(collectionName).insert(collectionObject1, function() {
+      var collectionObject2 = {ppPartyName: 'Awesome Party', ppPartyDate: '2015-03-04',
+                              pgSongChoice: [ 'spotify:track:4WrVyBdyZBmAkFOVuWFqTj',
+                                              'spotify:track:2CkE9VvzIzgoJ97h9AcLHW' ],
+                              pgEmail: 'test2@test.com'};
+      db.get(collectionName).insert(collectionObject2, function() {
+        verifySongChoiceModel.verifySongChoices('Awesome Party', '2015-03-04', function(flattenedArray){
+          flattenedArray.length.should.equal(4);
+        });
+      });
     });
+    done();
   });
 
 });

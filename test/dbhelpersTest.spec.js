@@ -34,27 +34,30 @@ describe('Database Helper functions - ppSpotifyCredentials',function(){
         should.not.exist(err);
         doc.length.should.equal(1);
         doc[0].spotifyID.should.equal('JoeBloggs');
-        done();
     });
+    done();
   });
 
   it('readFromDatabase: it should only return the last matching record', function(done){
     var collectionName = 'ppBeacon';
     db.get(collectionName).drop();
     var collectionObject1 = {spotifyID:"FredJones",beaconMajor:'1234',beaconMinor:'9876'};
-    db.get(collectionName).insert(collectionObject1);
-    var collectionObject2 = {spotifyID:"FredJones",beaconMajor:'4444',beaconMinor:'5555'};
-    db.get(collectionName).insert(collectionObject2);
-    var matcher = { spotifyID: 'FredJones' };
-    var fields = {beaconMajor: 1, beaconMinor: 1, _id: 0};
-    helpersDatabase.readFromDatabase(collectionName, matcher, fields, function(err, doc) {
-        should.not.exist(err);
-        doc.length.should.equal(1);
-        doc[0].beaconMajor.should.equal('4444');
-        doc[0].beaconMinor.should.equal('5555');
-        done();
+    db.get(collectionName).insert(collectionObject1, function() {
+      var collectionObject2 = {spotifyID:"FredJones",beaconMajor:'4444',beaconMinor:'5555'};
+      db.get(collectionName).insert(collectionObject2, function() {
+        var matcher = { spotifyID: 'FredJones' };
+        var fields = {beaconMajor: 1, beaconMinor: 1, _id: 0};
+        helpersDatabase.readFromDatabase(collectionName, matcher, fields, function(err, doc) {
+            should.not.exist(err);
+            doc.length.should.equal(1);
+            doc[0].beaconMajor.should.equal('4444');
+            doc[0].beaconMinor.should.equal('5555');
+        });
+      });
     });
+    done();
   });
+
 });
 
 describe('Database Helper functions - readFromDatabaseNoLimits - pgSongChoice',function(){
@@ -62,23 +65,25 @@ describe('Database Helper functions - readFromDatabaseNoLimits - pgSongChoice',f
   it('readFromDatabaseNoLimits: it should return all matching records', function(done){
     var collectionName = 'pgSongChoice';
     db.get(collectionName).drop();
-    var collectionObject = {ppPartyName: 'Awesome Party', ppPartyDate: '2015-03-04',
+    var collectionObject1 = {ppPartyName: 'Awesome Party', ppPartyDate: '2015-03-04',
                             pgSongChoice: [ 'spotify:track:4WrVyBdyZBmAkFOVuWFqTj',
                                             'spotify:track:2CkE9VvzIzgoJ97h9AcLHW' ],
                             pgEmail: 'test1@test.com'};
-    db.get(collectionName).insert(collectionObject);
-    var collectionObject = {ppPartyName: 'Awesome Party', ppPartyDate: '2015-03-04',
-                            pgSongChoice: [ 'spotify:track:4WrVyBdyZBmAkFOVuWFqTj',
-                                            'spotify:track:2CkE9VvzIzgoJ97h9AcLHW' ],
-                            pgEmail: 'test2@test.com'};
-    db.get(collectionName).insert(collectionObject);
-    var matcher = {ppPartyName: 'Awesome Party', ppPartyDate: '2015-03-04'};
-    var fields = {pgSongChoice: 1};
-    helpersDatabase.readFromDatabaseNoLimits(collectionName, matcher, fields, function(err, doc) {
-        should.not.exist(err);
-        doc.length.should.equal(2);
-        done();
+    db.get(collectionName).insert(collectionObject1, function() {
+      var collectionObject = {ppPartyName: 'Awesome Party', ppPartyDate: '2015-03-04',
+                              pgSongChoice: [ 'spotify:track:4WrVyBdyZBmAkFOVuWFqTj',
+                                              'spotify:track:2CkE9VvzIzgoJ97h9AcLHW' ],
+                              pgEmail: 'test2@test.com'};
+      db.get(collectionName).insert(collectionObject, function() {
+        var matcher = {ppPartyName: 'Awesome Party', ppPartyDate: '2015-03-04'};
+        var fields = {pgSongChoice: 1};
+        helpersDatabase.readFromDatabaseNoLimits(collectionName, matcher, fields, function(err, doc) {
+            should.not.exist(err);
+            doc.length.should.equal(2);
+        });
+      });
     });
+    done();
   });
 
 });
