@@ -8,7 +8,7 @@ var verifySongChoiceModel = require('../models/verifySongModel');
 describe('Database Helper functions - ppSpotifyCredentials',function(){
 
   it('saveToDatabase: it should save data, eg ppSpotifyCredentials',function(done){
-    var collectionName = 'ppSpotifyCredentials';
+    var collectionName = 'ppSpotifyCredentialsTest';
     db.get(collectionName).drop();
     var collectionObject = {spotifyID:"nameTest",spotifyAccessToken:'9999',
                         spotifyRefreshToken:'8888'};
@@ -22,7 +22,7 @@ describe('Database Helper functions - ppSpotifyCredentials',function(){
   });
 
   it('readFromDatabase: it should read data - ppEvent', function(done){
-    var collectionName = 'ppEvent';
+    var collectionName = 'ppEventTest';
     db.get(collectionName).drop();
     var collectionObject = {partyName:'Awesome Party',partyDate:'2015-03-04',
                         playlistName: 'Cool Tunes', spotifyID:'JoeBloggs'};
@@ -39,7 +39,7 @@ describe('Database Helper functions - ppSpotifyCredentials',function(){
   });
 
   it('readFromDatabase: it should only return the last matching record', function(done){
-    var collectionName = 'ppBeacon';
+    var collectionName = 'ppBeaconTest';
     db.get(collectionName).drop();
     var collectionObject1 = {spotifyID:"FredJones",beaconMajor:'1234',beaconMinor:'9876'};
     db.get(collectionName).insert(collectionObject1, function() {
@@ -63,7 +63,7 @@ describe('Database Helper functions - ppSpotifyCredentials',function(){
 describe('Database Helper functions - readFromDatabaseNoLimits - pgSongChoice',function(){
 
   it('readFromDatabaseNoLimits: it should return all matching records', function(done){
-    var collectionName = 'pgSongChoice';
+    var collectionName = 'pgSongChoiceTest';
     db.get(collectionName).drop();
     var collectionObject1 = {ppPartyName: 'Awesome Party', ppPartyDate: '2015-03-04',
                             pgSongChoice: [ 'spotify:track:4WrVyBdyZBmAkFOVuWFqTj',
