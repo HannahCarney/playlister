@@ -24,7 +24,7 @@
   <link rel="stylesheet" type="text/css" href="/css/getSongs.css">
   <section class="container col-sm-6">
     <section class="center jumbotron" style="background:rgba(0, 0, 0, .8);">
-    
+
       <% if (errorID == 1) { %>
         <p class="error-message">Great minds think alike, that track has already been chosen for this party, please choose again.</p>
       <% } %>
@@ -33,7 +33,7 @@
 
 
       <h2>Search for a Track</h2>
-      
+
       <p id='pg-subtitle'>Type a track name and click on 'Search'. Then, click on any track from the results to get a 30 second preview.</p>
       <form id="song-choices">
         <div class="control-group">
@@ -43,7 +43,7 @@
         </div>
             <input type="submit" name="submit" id="search" class="btn btn-inverse" value="Search" />
       </form>
-      
+
       <div id="results"></div>
       <script src="//cdn.jsdelivr.net/handlebarsjs/3.0.0/handlebars.min.js"></script>
       <script id="results-template" type="text/x-handlebars-template">
@@ -67,10 +67,10 @@
         <input type="hidden" name="selectedSong" id="selected-song">
         <input type="hidden" name="ppPartyName" id="pp-party-name-hidden">
         <input type="hidden" name="ppPartyDate" id="pp-party-date-hidden">
-    
+
         <input type="submit" value="submit" id='go' class="btn btn-inverse">
 
       </form>
   </section>
   </section>
-</body>
+</body>f
