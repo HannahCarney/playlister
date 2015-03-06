@@ -26,7 +26,7 @@ $(document).ready(function() {
 
   var searchTracks = function (query) {
     $.ajax({
-      url: 'https://api.spotify.com/v1/search?&market=GB&limit=6&offset=0',
+      url: 'https://api.spotify.com/v1/search?&market=GB&limit=4&offset=0',
       data: {
           q: query,
           type: 'track'

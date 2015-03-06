@@ -6,20 +6,11 @@
   <link rel="stylesheet" href="/css/stylesheet.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-  <script>
-    function validateForm() {
-      var song = document.forms['party-email-form']['selectedSong'].value;
-      if (song == null || song == '') {
-        alert('You must choose a song');
-        return false;
-      }
-    }
-  </script>
 </head>
 
 <body>
   <link rel="stylesheet" type="text/css" href="/css/getSongs.css">
-  <section class="container col-sm-6">
+  <section class="container col-sm-6" style="padding:0;">
     <section class="center jumbotron" style="background:rgba(0, 0, 0, .8);">
 
       <% if (errorID == 1) { %>
@@ -40,39 +31,94 @@
         </div>
         <input type="submit" name="submit" id="search" class="btn btn-inverse" value="Search" />
       </form>
-
-      <div id="results"></div>
-      <script src="//cdn.jsdelivr.net/handlebarsjs/3.0.0/handlebars.min.js"></script>
-      <script id="results-template" type="text/x-handlebars-template">
-        {{#each tracks.items}}
-        <div>{{artists.0.name}}: {{name}}</div>
-        <div idName="{{artists.0.name}}: {{name}}" id="{{id}}1" style="background-image:url({{album.images.0.url}})" data-track-id="{{id}}" class="cover"></div>
-        {{/each}}
-      </script>
-      <li style="list-style-type: none;" name="errormessage" id="errormessage" style="color:white;margin-top:1em;"></li>
-      <button id="addSong" class="btn btn-inverse">Add song</button>
-    </section>
-  </section>
-
-  <section class="container col-sm-6">
-
-    <section class="center jumbotron" style="background:rgba(0, 0, 0, .8);">
-
-      <ul style="list-style-type: none;" class="songList"></ul>
-
-      <form action='/partygoer/getsongs' method='POST' id="party-email-form" onsubmit="return validateForm()">
+      </section>
+     
+  
+         <section class="center jumbotron" style="background:rgba(0, 0, 0, .8);" style="padding:0;">
+       <form action='/partygoer/getsongs' method='POST' id="party-email-form" onsubmit="return validateForm()">
         <label for="email">Email:</label>
         <input type="email" name="email" id='email' style="color:black;" required>
         <input type="hidden" name="selectedSong" id="selected-song">
         <input type="hidden" name="ppPartyName" id="pp-party-name-hidden">
         <input type="hidden" name="ppPartyDate" id="pp-party-date-hidden">
-        <input type="submit" value="submit" id='go' class="btn btn-inverse">
-      </form>
-    </section>
 
+        <input type="submit" value="submit" id='go' class="btn btn-inverse" style="margin-right:1em;margin-bottom:.9em;">
+
+      </form>
+      </section>
+     </section>
+  
+      <section class="container-fluid col-sm-6" style="padding:0;">
+
+    <section class="center jumbotron" style="background:rgba(0, 0, 0, .8);">
+      <div id="results"></div>
+      <script src="//cdn.jsdelivr.net/handlebarsjs/3.0.0/handlebars.min.js"></script>
+      <script id="results-template" id="column" type="text/x-handlebars-template">
+   
+            <div class="row-fluid">
+              <div class="span12">
+                <div class="row-fluid">
+        {{#each tracks.items}}
+          <div class="span6">   
+          {{#ifItIsBelow3 @index}}
+            
+                
+                    <div>{{artists.0.name}}: {{name}}</div>
+                    <div idName="{{artists.0.name}}: {{name}}" id="{{id}}1"
+                      style="background-image:url({{album.images.0.url}})"
+                      data-track-id="{{id}}" class="cover firsthalf">
+                    </div>
+                 
+  
+        
+          {{/ifItIsBelow3}}
+           </div>
+           <div class="span6">
+          {{#ifItIsAbove3 @index}}
+            
+                  
+                    <div>{{artists.0.name}}: {{name}}</div>
+                    <div idName="{{artists.0.name}}: {{name}}" id="{{id}}1"
+                      style="background-image:url({{album.images.0.url}})"
+                      data-track-id="{{id}}" class="cover secondhalf">
+                    </div>
+                  
+      
+          {{/ifItIsAbove3}}
+          </div>
+        {{/each}}
+
+            </div>
+          </div>
+        </div>
+   
+      </script>
+      <script type="text/javascript">
+      Handlebars.registerHelper('ifItIsBelow3',function(value, artists){
+        if (value <3){
+          return artists.fn(this);
+        }
+      });
+      Handlebars.registerHelper('ifItIsAbove3',function(value, artists){
+        if (value >=3){
+          return artists.fn(this);
+        }
+      });
+
+      </script>
+      <li style="list-style-type: none;" name="errormessage" id="errormessage" style="color:white;margin-top:1em;"></li>
+      <button id="addSong" class="btn btn-inverse">Add song</button>
+
+    </section>
   </section>
 
-  <script type="text/javascript" src="../../../js/songSearch.js"></script>
-  <script type="text/javascript" src="../../../js/listUpdate.js"></script>
+ 
+
+      <ul style="list-style-type: none;" class="songList"></ul>
+      <script type="text/javascript" src="../../../js/songSearch.js"></script>
+      <script type="text/javascript" src="../../../js/listUpdate.js"></script>
+
+
+
 
 </body>
