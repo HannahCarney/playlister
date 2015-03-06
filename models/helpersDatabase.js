@@ -30,6 +30,5 @@ exports.readFromDatabaseNoLimits = function(collectionName, matcher, fields, cal
 exports.errorHandling = function(err) {
   if (err) {
     console.log(err);
-    res
   }
 };
