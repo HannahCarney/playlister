@@ -24,7 +24,7 @@
 
   <section class="container col-sm-6">
     <section class="center jumbotron" style="background:rgba(0, 0, 0, .8);">
-     
+
       <% if (errorID == 2) { %>
         <p class="error-message">You should select a song.</p>
       <% } %>
@@ -70,7 +70,7 @@
       <button id="addSong" class="btn btn-inverse">Add song</button>
     </section>
 
-  
+
     <section class="center jumbotron" style="background:rgba(0, 0, 0, .8);">
       <ul style="list-style-type: none;" class="songList"></ul>
       <form action='/partygoer/getsongs' method='POST' id="party-email-form" onsubmit="return validateForm()">

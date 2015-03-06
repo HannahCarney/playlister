@@ -1,6 +1,7 @@
 {
   "name": "playlister",
   "version": "1.0.0",
+  "description": "",
   "main": "Gruntfile.js",
   "directories": {
     "test": "test"
@@ -33,10 +34,8 @@
     "grunt-mocha-cli": "^1.12.0",
     "grunt-mocha-test": "^0.12.7",
     "grunt-run": "^0.3.0",
-    "istanbul": "^0.3.6",
     "mocha": "^2.1.0",
     "mocha-casperjs": "^0.5.3",
-    "mocha-istanbul": "^0.2.0",
     "phantomjs": "^1.9.15",
     "should": "^5.0.1",
     "webdriverio": "^2.4.5"
