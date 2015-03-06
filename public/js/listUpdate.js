@@ -14,7 +14,16 @@ $("#search").click(function(){
   $('#errormessage').text(error);
 });
 
-//Click 'delete from short list' song button
+firstValidation = function(selectedSong){
+  if (selectedSong == "") {
+    var error = "You need to select a song";
+    $('#errormessage').text(error);
+  }
+  else {
+    loadSongsToForm(selectedSong);
+  }
+};
+
 $('ul').on('click','button',function(el){
   song = this.id;
   deleteFromTheList(list,song);
@@ -23,13 +32,13 @@ $('ul').on('click','button',function(el){
 });
 
 var firstValidation = function(selectedSong){
-   if (selectedSong == "") {
+  if (selectedSong == "") {
     error = "You need to select a song";
     $('#errormessage').text(error);
-   }
-   else {
+  }
+  else {
     validateSongChoice(selectedSong);
-   }
+  }
 };
 
 var deleteFromTheList = function(list,song){
@@ -83,6 +92,7 @@ var serverVerifySong = function(path,ext,object,callback){
             callback(json);
           }
         });
+
 };
 
 var loadSongsToList = function(selectedSong) {

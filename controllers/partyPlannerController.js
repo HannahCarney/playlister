@@ -1,4 +1,5 @@
 var partyPlannerModel = require('../models/partyPlannerModel');
+var getSongsURI = process.env.getSongsURI || 'http://localhost:3000/partygoer/getsongs/';
 
 exports.authorize = function(req, res) {
   partyPlannerModel.authorizeSpotify(req, res);
@@ -46,7 +47,7 @@ exports.completed = function(req, res) {
   var partyName = req.params.partyName;
   var partyDate = req.params.partyDate;
   var partyPlaylistName = req.params.playlistName;
-  var getSongsLink = 'localhost:3000/partygoer/getsongs/' +
+  var getSongsLink = getSongsURI +
       partyName + '/' + partyDate;
   res.render('partyPlanner/completed', { partyName: partyName,
       partyDate: partyDate, partyPlaylistName: partyPlaylistName,

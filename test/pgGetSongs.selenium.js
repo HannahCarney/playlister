@@ -10,12 +10,15 @@ describe('Party goer selecting songs page', function() {
   var client = {};
 
   before(function(done) {
+    this.timeout(999999)
     client = webdriverio.remote({ desiredCapabilities: {browserName: 'chrome'}   });
     client.init(done);
   });
 
-  beforeEach(function() {
-    client.url('http://localhost:3000/partygoer/getsongs/partyName/partyDate');
+  beforeEach(function(done) {
+    this.timeout(99999)
+    client.url('http://localhost:3000/partygoer/getsongs/partyName/partyDate')
+    .call(done);
   });
 
   after(function(done) {
@@ -105,22 +108,12 @@ describe('Party goer selecting songs page', function() {
         .call(done);
     });
 
-    it('Should not be able to click button without a song added', function(done) {
-      client
-        .click("#addSong")
-        .waitFor('#errormessage', 5000)
-        .getText('#errormessage', function(err, text) {
-          expect(text).to.eql('You need to select a song')
-        })
-        .call(done);
-    });
-
     it('Should be able to add two songs to his choices', function(done) {
       client
         .setValue('#query', 'give it all')
         .click('#search')
-        .waitFor('#6VTTQnBOJE8OP1Kh7yDvZd1', 5000)
-        .click('#6VTTQnBOJE8OP1Kh7yDvZd1')
+        .waitFor('#4d4AIYFkR8MSWtKBmphyir1', 5000)
+        .click('#4d4AIYFkR8MSWtKBmphyir1')
         .click('#addSong')
         .setValue('#query', 'stone sour')
         .click('#search')
@@ -134,6 +127,18 @@ describe('Party goer selecting songs page', function() {
           expect(text).to.include("Thanks, we've saved your party track choices for")
         })
         .call(done);
+      });
+
+    it('Should not be able to click button without a song added', function(done) {
+      client
+        .setValue('#query', 'superstition')
+        .click('#search')
+        .click("#addSong")
+        .waitFor('#errormessage', 5000)
+        .getText('#errormessage', function(err, text) {
+          expect(text).to.eql('You need to select a song')
+        })
+        .call(done);
     });
 
     it('Should get an error if that song has already been selected', function(done) {
@@ -145,24 +150,19 @@ describe('Party goer selecting songs page', function() {
         .click('#addSong')
         .setValue('#email', 'partygoer@email.com')
         .click('#go')
-        .refresh()
+        .url('http://localhost:3000/partygoer/getsongs/partyName/partyDate')
         .waitForExist('#search', 5000)
         .setValue('#query', 'superstition')
         .click('#search')
         .waitFor('.cover', 5000)
         .click('#300RfAPZ57B0y6YYj9n6DN1')
         .click('#addSong')
-        .setValue('#email', 'anothergoer@email.com')
-        .click('#go')
-        .waitFor('.error-message', 5000)
-        .getText('.error-message', function(err, text) {
-          expect(text).to.eql('Great minds think alike, that track has already been chosen for this party, please choose again.')
+        .waitFor('#errormessage', 5000)
+        .getText('#errormessage', function(err, text) {
+          expect(text).to.eql('Song has been picked for this party already')
         })
         .call(done);
     });
-  });
-
-  describe('When user does not select a song', function() {
 
     it('Should not go through', function(done) {
       client
