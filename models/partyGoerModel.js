@@ -19,7 +19,7 @@ exports.verifySongChoices = function(ppPartyName, ppPartyDate, singleSongChoice,
       });
       console.log(flattenedArray);
       callback(flattenedArray);
-     
+
       } else {
          saveSongChoices(req,res);
       }

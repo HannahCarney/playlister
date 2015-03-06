@@ -174,7 +174,7 @@ describe('Party goer selecting songs page', function() {
         .call(done)
     });
   });
-  
+
   table.drop();
 
 });
