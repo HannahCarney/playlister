@@ -9,7 +9,7 @@ describe('Database Helper functions - ppSpotifyCredentials',function(){
 
 //Confident it is working
   it('saveToDatabase: it should save data, eg ppSpotifyCredentials',function(done){
-    var collectionName = 'ppSpotifyCredentials';
+    var collectionName = 'ppSpotifyCredentialsTest';
     db.get(collectionName).drop(function() {
       var collectionObject = {spotifyID:"nameTest",spotifyAccessToken:'9999',
                           spotifyRefreshToken:'8888'};
