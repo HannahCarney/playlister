@@ -1,6 +1,6 @@
 var helpersDatabase = require('./helpersDatabase');
 
-exports.verifySongChoices = function(ppPartyName, ppPartyDate, singleSongChoice,callback){
+exports.verifySongChoices = function(ppPartyName, ppPartyDate, callback){
   var collectionName = 'pgSongChoice';
   var matcher = {ppPartyName: ppPartyName, ppPartyDate: ppPartyDate};
   var fields = {pgSongChoice: 1};
@@ -17,7 +17,6 @@ exports.verifySongChoices = function(ppPartyName, ppPartyDate, singleSongChoice,
       var flattenedArray = docArray.reduce(function(a,b) {
         return a.concat(b);
       });
-      console.log(flattenedArray);
       callback(flattenedArray);
     }
   });
