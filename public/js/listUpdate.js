@@ -32,8 +32,8 @@ $('ul').on('click','button',function(el){
 });
 
 var firstValidation = function(selectedSong){
-  if (selectedSong == "") {
-    error = "You need to select a song";
+  if (selectedSong == "" || !selectedSong) {
+    error = "You need to select a song first.";
     $('#errormessage').text(error);
   }
   else {

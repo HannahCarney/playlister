@@ -11,7 +11,7 @@
     function validateForm() {
       var song = document.forms['party-email-form']['selectedSong'].value;
       if (song == null || song == '') {
-        var errorID = 2;
+        $('#errormessage').text('You need to select a song first.')
         return false;
       }
     }
