@@ -18,7 +18,7 @@ describe('Party goer selecting songs page', function() {
   beforeEach(function(done) {
     this.timeout(99999)
     client.url('http://localhost:3000/partygoer/getsongs/partyName/partyDate')
-    .call(done)
+    .call(done);
   });
 
   after(function(done) {
