@@ -18,6 +18,8 @@ var partyGoer = require('./routes/partyGoer');
 var partyPlanner = require('./routes/partyPlanner');
 var mobileApp = require('./routes/mobileApp');
 var verifySong = require('./routes/verifySong');
+var about = require('./routes/about');
+var contact = require('./routes/contact');
 
 // Server Set-up
 app.set('view engine', 'ejs');
@@ -35,6 +37,8 @@ app.use('/partygoer', partyGoer);
 app.use('/partyplanner', partyPlanner);
 app.use('/mobileapp', mobileApp);
 app.use('/verifysong', verifySong);
+app.use('/about', about);
+app.use('/contact', contact);
 app.use('/', index);
 // Handle 404
 app.use(function(req, res) {
