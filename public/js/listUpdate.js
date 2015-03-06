@@ -15,13 +15,13 @@ $("#search").click(function(){
 });
 
 firstValidation = function(selectedSong){
-   if (selectedSong == "") {
+  if (selectedSong == "") {
     var error = "You need to select a song";
     $('#errormessage').text(error);
-   }
-   else {
+  }
+  else {
     loadSongsToForm(selectedSong);
-   }
+  }
 };
 
 $('ul').on('click','button',function(el){
@@ -32,13 +32,13 @@ $('ul').on('click','button',function(el){
 });
 
 var firstValidation = function(selectedSong){
-   if (selectedSong == "") {
+  if (selectedSong == "") {
     error = "You need to select a song";
     $('#errormessage').text(error);
-   }
-   else {
+  }
+  else {
     validateSongChoice(selectedSong);
-   }
+  }
 };
 
 var deleteFromTheList = function(list,song){
