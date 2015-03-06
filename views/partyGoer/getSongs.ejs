@@ -11,7 +11,7 @@
     function validateForm() {
       var song = document.forms['party-email-form']['selectedSong'].value;
       if (song == null || song == '') {
-        var errorID = 2;
+        $('#errormessage').text('You need to select a song first.')
         return false;
       }
     }
@@ -24,10 +24,6 @@
 
   <section class="container col-sm-6">
     <section class="center jumbotron" style="background:rgba(0, 0, 0, .8);">
-
-      <% if (errorID == 2) { %>
-        <p class="error-message">You should select a song.</p>
-      <% } %>
 
       <p id='pg-title'>Please choose your party tracks for <span id="pp-party-name"><%- ppPartyName %></span> on <span id="pp-party-date"><%- ppPartyDate %></span></p>
 
@@ -59,12 +55,12 @@
       {{/each}}
       </script>
       <script>
-      $.each(staticData.datas, function (index, value) {
-      var html = Mustache.render($('#column').html(), value);
-      var $div = $(html);
-      $div.addClass("col" + (index%2 + 1));
-      $('#results').append($div);
-      });
+        $.each(staticData.datas, function (index, value) {
+        var html = Mustache.render($('#column').html(), value);
+        var $div = $(html);
+        $div.addClass("col" + (index%2 + 1));
+        $('#results').append($div);
+        });
       </script>
       <li style="list-style-type: none;" name="errormessage" id="errormessage" style="color:white;margin-top:1em;"></li>
       <button id="addSong" class="btn btn-inverse">Add song</button>

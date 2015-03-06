@@ -117,8 +117,8 @@ describe('Party goer selecting songs page', function() {
         .click('#addSong')
         .setValue('#query', 'stone sour')
         .click('#search')
-        .waitFor('#76aadnUFFANRNDs6L3aqxw1', 5000)
-        .click('#76aadnUFFANRNDs6L3aqxw1')
+        .waitFor('#6UFhNbE4sLRUoM52kC4Xl41', 5000)
+        .click('#6UFhNbE4sLRUoM52kC4Xl41')
         .click('#addSong')
         .setValue('#email', 'rock@email.com')
         .click('#go')
@@ -136,7 +136,7 @@ describe('Party goer selecting songs page', function() {
         .click("#addSong")
         .waitFor('#errormessage', 5000)
         .getText('#errormessage', function(err, text) {
-          expect(text).to.eql('You need to select a song')
+          expect(text).to.eql('You need to select a song first.')
         })
         .call(done);
     });
